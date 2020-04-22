@@ -1,4 +1,6 @@
-import { LOGIN_PATH, REGISTRATION_PATH } from './../../config/router-paths';
+import { ROLE_ADMIN, ROLE_BUYER, ROLE_SELLER } from './../../config/user-roles-keys';
+import { AuthService } from './../../services/auth.service';
+import { LOGIN_PATH, REGISTRATION_PATH, HOME_PATH, PRODUCT_CATEGORIES_PATH, ADMIN_HOME_PATH } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,10 +11,27 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
+  }
+
+  isUserLoggedIn(): boolean {
+    return this.authService.isUserLoggedIn();
+  }
+
+  isAdminLoggedIn(): boolean {
+    return this.authService.isUserRoleLoggedIn(ROLE_ADMIN);
+  }
+
+  isBuyerLoggedIn(): boolean {
+    return this.authService.isUserRoleLoggedIn(ROLE_BUYER);
+  }
+
+  isSellerLoggedIn(): boolean {
+    return this.authService.isUserRoleLoggedIn(ROLE_SELLER);
   }
 
   onClickLogin(): void {
@@ -21,5 +40,14 @@ export class NavbarComponent implements OnInit {
 
   onClickRegister(): void {
     this.router.navigate([REGISTRATION_PATH]);
+  }
+
+  onClickLogout(): void {
+    this.authService.logout();
+    this.router.navigate([HOME_PATH]);
+  }
+
+  onClickCategories(): void {
+    this.router.navigate([ADMIN_HOME_PATH, PRODUCT_CATEGORIES_PATH]);
   }
 }

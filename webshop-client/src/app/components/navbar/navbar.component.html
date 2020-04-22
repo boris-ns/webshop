@@ -1,6 +1,30 @@
 <div class="container">
     <span class="title">WebShop</span>
 
-    <button class="ui button primary" (click)="onClickLogin()">Login</button>
-    <button class="ui button" (click)="onClickRegister()">Register</button>
+    <!-- ADMIN -->
+    <div *ngIf="isAdminLoggedIn()">
+        <button class="ui button" (click)="onClickCategories()">Categories</button>
+    </div>
+
+    <!-- BUYER -->
+    <div *ngIf="isBuyerLoggedIn()">
+
+    </div>
+
+    <!-- SELLER -->
+    <div *ngIf="isSellerLoggedIn()">
+
+    </div>
+
+    <!-- ALL LOGGED IN USERS -->
+    <div *ngIf="isUserLoggedIn()">
+        <button class="ui button" (click)="onClickLogout()">Logout</button>
+    </div>
+
+    <!-- NON-LOGGED IN USERS -->
+    <div *ngIf="!isUserLoggedIn()">
+        <button class="ui button primary" (click)="onClickLogin()">Login</button>
+        <button class="ui button" (click)="onClickRegister()">Register</button>
+    </div>
+    
 </div>

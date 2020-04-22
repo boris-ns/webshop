@@ -1,3 +1,4 @@
+import { ROLE_ADMIN } from './../config/user-roles-keys';
 import { USER_ID_KEY, USER_ROLE_KEY, USERNAME_KEY, USER_TOKEN_KEY } from './../config/local-storage-keys';
 import LoginDTO from '../models/login-dto.model';
 import { LOGIN_URL } from './../config/api-paths';
@@ -15,6 +16,10 @@ export class AuthService {
 
   isUserLoggedIn(): boolean {
     return localStorage.getItem(USER_ID_KEY) != null;
+  }
+
+  isUserRoleLoggedIn(role: string): boolean {
+    return localStorage.getItem(USER_ROLE_KEY) === role;
   }
 
   login(credentials: LoginDTO): Observable<any> {
