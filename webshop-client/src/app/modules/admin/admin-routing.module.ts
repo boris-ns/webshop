@@ -1,5 +1,5 @@
 import { HomeComponent } from './components/home/home.component';
-import { SELLERS_PATH } from './../../config/router-paths';
+import { PRODUCT_CATEGORIES_PATH } from './../../config/router-paths';
 import { ProductCategoriesComponent } from './components/product-categories/product-categories.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -10,7 +10,7 @@ const routes: Routes = [
         component: HomeComponent
     },
     {
-        path: SELLERS_PATH,
+        path: PRODUCT_CATEGORIES_PATH,
         component: ProductCategoriesComponent
     }
 ];
