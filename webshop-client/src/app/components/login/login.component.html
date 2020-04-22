@@ -1,0 +1,43 @@
+<div class="container">
+    <h2>WebShop Login</h2>
+
+    <form [formGroup]="loginForm" (submit)="onLogin()">
+        <div class="ui left icon input input-field">
+            <input id="username-input"
+                type="text" 
+                placeholder="Username"
+                formControlName="username"
+            />
+            <i class="users icon"></i>
+
+            <small id="username-error" class="text-danger"
+                *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors?.required">
+                Username is required
+            </small>
+        </div>
+
+        <div class="ui left icon input input-field">
+            <input id="password-input" 
+                type="password" 
+                placeholder="Password"
+                formControlName="password"
+            />
+            <i class="users icon"></i>
+
+            <small id="password-error" class="text-danger"
+                *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required">
+                Password is required
+            </small>
+        </div>
+
+        <div>
+            <button (click)="onClickRegister()" class="ui button">
+                Register
+            </button>
+            
+            <button id="login-btn" type="submit" class="ui button primary" [disabled]="loginForm.invalid">
+                Login
+            </button>
+        </div>
+    </form>
+</div>
