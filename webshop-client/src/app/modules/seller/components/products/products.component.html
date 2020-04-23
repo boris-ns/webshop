@@ -1,0 +1,95 @@
+<div class="container">
+    <h2 class="ui header">My products</h2>
+
+    <button class="ui button primary icon">
+        <i class="add icon"></i>
+        Add
+    </button>
+
+    <table class="ui table celled striped">
+        <thead>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Shipping</th>
+            <th>Quantity</th>
+            <th>Details</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.shippingPrice }}$</td>
+                <td>{{ product.quantity }}</td>
+                <td>
+                    <button class="ui icon button" (click)="onClickShowDetails(product)">
+                        <i class="expand icon"></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="ui icon button"><i class="edit icon"></i></button>
+                    <button class="ui icon button red"><i class="trash icon"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal" *ngIf="showDetails">
+        <table>
+            <h3 class="ui header">{{ productOnModal.name }}</h3>
+            <tr>
+                <td class="bold">Category:</td>
+                <td>{{ productOnModal.category }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Price:</td>
+                <td>{{ productOnModal.price }}$</td>
+            </tr>
+            <tr>
+                <td class="bold">Discount:</td>
+                <td>{{ productOnModal.discount }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Shipping price:</td>
+                <td>{{ productOnModal.shippingPrice }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Max. discount:</td>
+                <td>{{ productOnModal.maxDiscount }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Max. quantity:</td>
+                <td>{{ productOnModal.maxQuantity }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Coupon discount:</td>
+                <td>{{ productOnModal.couponDiscount }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Max. quantity for 1 order:</td>
+                <td>{{ productOnModal.maxOrderQuantity }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Discount for quantity:</td>
+                <td>{{ productOnModal.orderQuantityDiscount }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Quantity discount:</td>
+                <td>{{ productOnModal.quantityDiscount }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Available quantity:</td>
+                <td>{{ productOnModal.quantity }}</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <button class="ui button" (click)="onClickCloseModal()">Close</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>

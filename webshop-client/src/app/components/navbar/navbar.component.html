@@ -4,6 +4,7 @@
     <!-- ADMIN -->
     <div *ngIf="isAdminLoggedIn()">
         <button class="ui button" (click)="onClickCategories()">Categories</button>
+        <button class="ui button" (click)="onClickStores()">Stores</button>
     </div>
 
     <!-- BUYER -->
@@ -13,7 +14,7 @@
 
     <!-- SELLER -->
     <div *ngIf="isSellerLoggedIn()">
-
+        <button class="ui button" (click)="onClickProducts()">Products</button>
     </div>
 
     <!-- ALL LOGGED IN USERS -->

@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
       this.loginSuccess = true;
       this.loginError = false;
 
-      // TODO: U zavisnosti od role prebaci korisnika na odredjeni homepage
       switch (data.authorities[0]) {
         case ROLE_ADMIN:  this.router.navigate([ADMIN_HOME_PATH]); break;
         case ROLE_SELLER: this.router.navigate([SELLER_HOME_PATH]); break;

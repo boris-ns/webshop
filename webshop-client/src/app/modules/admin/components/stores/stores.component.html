@@ -1,0 +1,25 @@
+<div class="container">
+    <h2 class="ui header">Stores</h2>
+
+    <table class="ui celled striped table">
+        <thead>
+            <th>Name</th>
+            <th>Discount</th>
+            <th>Owner</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let store of stores">
+                <td>{{ store.name }}</td>
+                <td>{{ store.frequentBuyerDiscount * 100 }}%</td>
+                <td>{{ store.ownerName }}</td>
+                <td>
+                    <button class="ui icon button red" (click)="onClickDelete(store.id)">
+                        <i class="trash icon"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
