@@ -13,6 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="user_type", discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorValue("0")
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;

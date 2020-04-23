@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ProductCategoryService {
 
+    ProductCategory findById(Long id);
     List<ProductCategory> findAll();
     ProductCategory add(AddProductCategoryDTO category);
     void delete(Long id);

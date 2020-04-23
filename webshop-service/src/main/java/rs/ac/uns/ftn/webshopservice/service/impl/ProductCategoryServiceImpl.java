@@ -18,6 +18,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     private ProductCategoryRepository productCategoryRepository;
 
     @Override
+    public ProductCategory findById(Long id) {
+        return productCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product category with id " + id + " doesn't exist."));
+    }
+
+    @Override
     public List<ProductCategory> findAll() {
         return productCategoryRepository.findAll();
     }

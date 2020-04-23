@@ -24,5 +24,6 @@ public class Store {
     private Float frequentBuyerDiscount;
 
     @OneToOne
+    @JoinColumn(name = "owner_id")
     private Owner owner;
 }
