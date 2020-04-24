@@ -14,7 +14,7 @@ import LoginDTO from 'src/app/models/login-dto.model';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup
+  loginForm: FormGroup;
   loginSuccess: boolean = false;
   loginError: boolean = false;
 

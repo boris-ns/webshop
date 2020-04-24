@@ -1,5 +1,5 @@
 import { AddProductCategoryDTO } from './../../../../models/add-product-category-dto.model';
-import { ProductCategoriesService } from './../../services/product-categories.service';
+import { ProductCategoriesService } from '../../../../services/product-categories.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

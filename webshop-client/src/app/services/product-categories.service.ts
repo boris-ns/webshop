@@ -1,5 +1,5 @@
-import { AddProductCategoryDTO } from './../../../models/add-product-category-dto.model';
-import { PRODUCT_CATEGORIES_URL } from './../../../config/api-paths';
+import { AddProductCategoryDTO } from '../models/add-product-category-dto.model';
+import { PRODUCT_CATEGORIES_URL } from '../config/api-paths';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';

@@ -1,4 +1,4 @@
-import { ProductsService } from './../../services/products.service';
+import { ProductsService } from '../../services/products.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,6 +10,7 @@ export class ProductsComponent implements OnInit {
 
   products: [] = [];
   showDetails: boolean = false;
+  showAddProductModal: boolean = false;
   productOnModal = {};
 
   constructor(private productsService: ProductsService) { 
@@ -35,6 +36,15 @@ export class ProductsComponent implements OnInit {
 
   onClickCloseModal(): void {
     this.showDetails = false;
+  }
+
+  onClickAdd(): void {
+    this.showAddProductModal = true;
+  }
+
+  onClickCloseAddProductModal(): void {
+    this.showAddProductModal = false;
+    this.getProducts();
   }
 
   onClickDelete(id: number): void {

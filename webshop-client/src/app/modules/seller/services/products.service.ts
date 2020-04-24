@@ -1,7 +1,8 @@
-import { MY_PRODUCTS_URL, PRODUCTS_URL } from './../../../config/api-paths';
 import { Observable } from 'rxjs';
+import { MY_PRODUCTS_URL, PRODUCTS_URL } from '../../../config/api-paths';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import AddProductDTO from 'src/app/models/add-product-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,9 @@ export class ProductsService {
 
   delete(id: number): Observable<any> {
     return this.http.delete(`${PRODUCTS_URL}/${id}`);
+  }
+
+  add(product: AddProductDTO): Observable<any> {
+    return this.http.post(PRODUCTS_URL, product);
   }
 }

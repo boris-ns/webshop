@@ -1,0 +1,17 @@
+.container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.container form div {
+    margin: 2px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-danger {
+    color: red;
+}

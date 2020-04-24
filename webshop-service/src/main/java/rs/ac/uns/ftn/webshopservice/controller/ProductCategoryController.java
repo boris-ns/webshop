@@ -20,8 +20,7 @@ public class ProductCategoryController {
     @Autowired
     private ProductCategoryService productCategoryService;
 
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/public")
     public ResponseEntity<List<ProductCategoryDTO>> getAll() {
         List<ProductCategory> categories = productCategoryService.findAll();
         return new ResponseEntity<>(ProductCategoryMapper.toListDto(categories), HttpStatus.OK);

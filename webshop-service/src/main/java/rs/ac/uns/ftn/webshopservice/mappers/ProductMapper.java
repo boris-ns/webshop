@@ -32,6 +32,7 @@ public class ProductMapper {
         product.setMaxDiscount(productToAdd.getMaxDiscount());
         product.setCoupon(productToAdd.getCoupon());
         product.setCouponDiscount(productToAdd.getCouponDiscount());
+        product.setMaxOrderQuantity(productToAdd.getMaxOrderQuantity());
 
         return product;
     }

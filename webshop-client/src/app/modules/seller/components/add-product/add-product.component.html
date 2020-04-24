@@ -1,0 +1,126 @@
+<div class="container">
+    <h3 class="ui header">Add new product</h3>
+    
+    <form [formGroup]="addForm" (submit)="onAdd()">
+        <div class="ui input">
+            <input id="name-input" type="text" placeholder="Product name" formControlName="name" />
+
+            <small id="name-error" class="text-danger"
+                *ngIf="addForm.controls.name.touched && addForm.controls.name.errors?.required">
+                Name is required
+            </small>
+        </div>
+
+        <div>
+            <select class="ui dropdown" formControlName="categoryId">
+                <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name }}</option>
+            </select>
+    
+            <div class="ui input">
+                <input id="price-input" type="number" placeholder="Price" min="0" formControlName="price" />
+            
+                <small id="price-error" class="text-danger"
+                    *ngIf="addForm.controls.price.touched && addForm.controls.price.errors?.required">
+                    Price is required
+                </small>
+            </div>
+        </div>
+
+        <div>
+            <div class="ui input">
+                <input id="shipping-input" type="number" placeholder="Shipping price" min="0" formControlName="shipping" />
+            
+                <small id="shipping-error" class="text-danger"
+                    *ngIf="addForm.controls.shipping.touched && addForm.controls.shipping.errors?.required">
+                    Shipping price is required
+                </small>
+            </div>
+    
+            <div class="ui input">
+                <input id="quantity-input" type="number" placeholder="Quantity" min="0" formControlName="quantity" />
+            
+                <small id="quantity-error" class="text-danger"
+                    *ngIf="addForm.controls.quantity.touched && addForm.controls.quantity.errors?.required">
+                    Quantity is required
+                </small>
+            </div>
+        </div>
+
+        <div>
+            <div class="ui input">
+                <input id="max-quantity-input" type="number" placeholder="Max quantity" min="0" formControlName="maxQuantity" />
+            
+                <small id="max-quantity-error" class="text-danger"
+                    *ngIf="addForm.controls.maxQuantity.touched && addForm.controls.maxQuantity.errors?.required">
+                    Max quantity is required
+                </small>
+            </div>
+            
+            <div class="ui input">
+                <input id="max-order-quantity-input" type="number" placeholder="Max order quantity" min="0" formControlName="maxOrderQuantity" />
+            
+                <small id="quantity-error" class="text-danger"
+                    *ngIf="addForm.controls.maxOrderQuantity.touched && addForm.controls.maxOrderQuantity.errors?.required">
+                    Max order quantity is required
+                </small>
+            </div>
+        </div>
+
+        <div>
+            <div class="ui input">
+                <input id="quantityDiscount-input" type="number" placeholder="Quantity discount" min="0" formControlName="quantityDiscount" />
+            
+                <small id="quantityDiscount-error" class="text-danger"
+                    *ngIf="addForm.controls.quantityDiscount.touched && addForm.controls.quantityDiscount.errors?.required">
+                    Quantity discount is required
+                </small>
+            </div>
+    
+            <div class="ui input">
+                <input id="orderQuantityDiscount-input" type="number" placeholder="Order quantity discount" min="0" formControlName="orderQuantityDiscount" />
+            
+                <small id="orderQuantityDiscount-error" class="text-danger"
+                    *ngIf="addForm.controls.orderQuantityDiscount.touched && addForm.controls.orderQuantityDiscount.errors?.required">
+                    Order quantity discount is required
+                </small>
+            </div>
+        </div>
+
+        <div>
+            <div class="ui input">
+                <input id="discount-input" type="number" placeholder="Discount" min="0" formControlName="discount" />
+            
+                <small id="discount-error" class="text-danger"
+                    *ngIf="addForm.controls.discount.touched && addForm.controls.discount.errors?.required">
+                    Discount is required
+                </small>
+            </div>
+    
+            <div class="ui input">
+                <input id="maxDiscount-input" type="number" placeholder="Max discount" min="0" formControlName="maxDiscount" />
+            
+                <small id="maxDiscount-error" class="text-danger"
+                    *ngIf="addForm.controls.maxDiscount.touched && addForm.controls.maxDiscount.errors?.required">
+                    Max discount is required
+                </small>
+            </div>
+        </div>
+
+        <div>
+            <div class="ui input">
+                <input id="coupon-input" type="text" placeholder="Coupon" formControlName="coupon" />
+            </div>
+    
+            <div class="ui input">
+                <input id="couponDiscount-input" type="number" placeholder="Coupon discount" min="0" formControlName="couponDiscount" />
+            </div>
+        </div>
+
+        <div>
+            <button id="add-btn" type="submit" class="ui button primary icon" [disabled]="addForm.invalid">
+                <i class="add icon"></i>
+                Add
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,10 +1,15 @@
 <div class="container">
     <h2 class="ui header">My products</h2>
 
-    <button class="ui button primary icon">
+    <button class="ui button primary icon" (click)="onClickAdd()">
         <i class="add icon"></i>
         Add
     </button>
+
+    <div class="modal" *ngIf="showAddProductModal">
+        <app-add-product></app-add-product>
+        <button class="ui button" (click)="onClickCloseAddProductModal()">Close</button>
+    </div>
 
     <table class="ui table celled striped">
         <thead>
