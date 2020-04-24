@@ -1,3 +1,4 @@
+import { PRODUCT_ALL_CATEGORIES_URL } from './../config/api-paths';
 import { AddProductCategoryDTO } from '../models/add-product-category-dto.model';
 import { PRODUCT_CATEGORIES_URL } from '../config/api-paths';
 import { Observable } from 'rxjs';
@@ -13,7 +14,7 @@ export class ProductCategoriesService {
   }
 
   getAll(): Observable<any> {
-    return this.http.get(PRODUCT_CATEGORIES_URL);
+    return this.http.get(PRODUCT_ALL_CATEGORIES_URL);
   }
 
   add(category: AddProductCategoryDTO): Observable<any> {
