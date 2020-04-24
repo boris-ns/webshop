@@ -39,4 +39,11 @@ public class ProductController {
         Product newProduct = productService.add(product);
         return new ResponseEntity<>(new ProductDTO(newProduct), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_SELLER')")
+    public ResponseEntity delete(@PathVariable Long id) {
+        productService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

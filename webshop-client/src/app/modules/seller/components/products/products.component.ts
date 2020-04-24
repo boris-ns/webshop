@@ -22,7 +22,6 @@ export class ProductsComponent implements OnInit {
   private getProducts(): void {
     this.productsService.getProducts().subscribe(data => {
       this.products = data;
-      console.log(data);
     }, error => {
       // @TODO: dodati toster
       console.log(error);
@@ -30,7 +29,6 @@ export class ProductsComponent implements OnInit {
   }
 
   onClickShowDetails(product): void {
-    console.log("KLIK")
     this.showDetails = true;
     this.productOnModal = product;
   }
@@ -39,4 +37,13 @@ export class ProductsComponent implements OnInit {
     this.showDetails = false;
   }
 
+  onClickDelete(id: number): void {
+    this.productsService.delete(id).subscribe(data => {
+      this.getProducts();
+      // @TODO: dodati toster
+    }, error => {
+      // @TODO: dodati toster
+      console.log(error);
+    });
+  }
 }

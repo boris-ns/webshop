@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
+import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
+import rs.ac.uns.ftn.webshopservice.exception.exceptions.ResourceNotFoundException;
 import rs.ac.uns.ftn.webshopservice.mappers.ProductMapper;
 import rs.ac.uns.ftn.webshopservice.model.*;
 import rs.ac.uns.ftn.webshopservice.repository.ProductRepository;
@@ -43,5 +45,19 @@ public class ProductServiceImpl implements ProductService {
 
         product = productRepository.save(product);
         return product;
+    }
+
+    @Override
+    public void delete(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " doesn't exist"));
+
+        Owner user = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (!product.getStore().getId().equals(user.getStore().getId())) {
+            throw new ApiRequestException("You can't delete product that isn't in your store.");
+        }
+
+        productRepository.delete(product);
     }
 }

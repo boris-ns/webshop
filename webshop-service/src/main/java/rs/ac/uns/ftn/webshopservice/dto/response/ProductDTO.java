@@ -10,6 +10,7 @@ import rs.ac.uns.ftn.webshopservice.model.Product;
 @Setter
 public class ProductDTO {
 
+    private Long id;
     private String name;
     private Double price;
     private Double shippingPrice;
@@ -25,6 +26,7 @@ public class ProductDTO {
     private String category;
 
     public ProductDTO(Product product) {
+        this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
         this.shippingPrice = product.getShippingPrice();
