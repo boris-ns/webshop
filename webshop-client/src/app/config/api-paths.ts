@@ -9,3 +9,4 @@ export const STORES_URL = `${BASE_URL}/api/stores`;
 
 export const PRODUCTS_URL = `${BASE_URL}/api/products`;
 export const MY_PRODUCTS_URL = `${PRODUCTS_URL}/my-store`;
+export const ALL_PRODUCTS_URL = `${PRODUCTS_URL}/public`;

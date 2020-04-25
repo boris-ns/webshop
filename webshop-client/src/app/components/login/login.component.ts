@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       switch (data.authorities[0]) {
         case ROLE_ADMIN:  this.router.navigate([ADMIN_HOME_PATH]); break;
         case ROLE_SELLER: this.router.navigate([SELLER_HOME_PATH]); break;
-        case ROLE_BUYER: break;
+        case ROLE_BUYER: this.router.navigate([HOME_PATH]); break;
       }
     }, error => {
       this.loginSuccess = false;

@@ -1,1 +1,25 @@
-<p>home works!</p>
+<div class="container">
+
+    <div class="ui cards">
+        <div class="ui card" *ngFor="let product of products">
+            <div class="image">
+                <img src="../../../assets/images/default_product.png" />
+            </div>
+            <div class="content">
+                <span class="header">{{ product.name }}</span>
+                <div class="meta">
+                    <span>Store:</span><span>{{ product.storeName }}</span>
+                </div>
+                <div class="description">
+                    <span>Price: </span><span>{{ product.price }}</span> <br />
+                    <span>Discount: </span><span>{{ product.discount }}</span>
+                </div>
+            </div>
+            <div class="extra content">
+                <button class="ui button primary" *ngIf="isUserLoggedIn()">Buy</button>
+                <span *ngIf="!isUserLoggedIn()">Login or register to buy</span>
+            </div>
+        </div>
+    </div>
+
+</div>

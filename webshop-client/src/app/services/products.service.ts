@@ -1,5 +1,6 @@
+import { ALL_PRODUCTS_URL } from '../config/api-paths';
 import { Observable } from 'rxjs';
-import { MY_PRODUCTS_URL, PRODUCTS_URL } from '../../../config/api-paths';
+import { MY_PRODUCTS_URL, PRODUCTS_URL } from '../config/api-paths';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import AddProductDTO from 'src/app/models/add-product-dto.model';
@@ -10,6 +11,10 @@ import AddProductDTO from 'src/app/models/add-product-dto.model';
 export class ProductsService {
 
   constructor(private http: HttpClient) { 
+  }
+
+  getAll(): Observable<any> {
+    return this.http.get(ALL_PRODUCTS_URL);
   }
 
   getProducts(): Observable<any> {

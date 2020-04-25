@@ -1,5 +1,5 @@
 import { ProductCategoriesService } from './../../../../services/product-categories.service';
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../../services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import AddProductDTO from 'src/app/models/add-product-dto.model';
