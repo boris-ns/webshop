@@ -2,11 +2,22 @@ package rs.ac.uns.ftn.webshopservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.webshopservice.common.TimeProvider;
+import rs.ac.uns.ftn.webshopservice.config.consts.UserRoles;
+import rs.ac.uns.ftn.webshopservice.dto.request.UserRegistrationDTO;
 import rs.ac.uns.ftn.webshopservice.dto.response.UserDTO;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
+import rs.ac.uns.ftn.webshopservice.mappers.UserMapper;
+import rs.ac.uns.ftn.webshopservice.model.Buyer;
+import rs.ac.uns.ftn.webshopservice.model.ConfirmationToken;
 import rs.ac.uns.ftn.webshopservice.model.User;
+import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
+import rs.ac.uns.ftn.webshopservice.repository.AuthorityRepository;
+import rs.ac.uns.ftn.webshopservice.repository.ConfirmationTokenRepository;
 import rs.ac.uns.ftn.webshopservice.repository.UserRepository;
+import rs.ac.uns.ftn.webshopservice.service.MailSenderService;
 import rs.ac.uns.ftn.webshopservice.service.UserService;
 
 import java.util.List;
@@ -18,6 +29,21 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ConfirmationTokenRepository tokenRepository;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
+    @Autowired
+    private MailSenderService mailSenderService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private TimeProvider timeProvider;
 
     @Override
     public UserDTO findById(Long id) throws ApiRequestException {
@@ -43,5 +69,41 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> findAll() {
         return userRepository.findAll().stream()
                 .map(user -> new UserDTO(user)).collect(Collectors.toList());
+    }
+
+    @Override
+    public User addUser(UserRegistrationDTO userInfo) {
+        if (userRepository.findByUsername(userInfo.getUsername()) != null) {
+            throw new ApiRequestException("Username '" + userInfo.getUsername() + "' already exists.");
+        }
+
+        if (!userInfo.getPassword().equals(userInfo.getRepeatPassword())) {
+            throw new ApiRequestException("Provided passwords must be the same.");
+        }
+
+        if (userRepository.findByEmail(userInfo.getEmail()) != null) {
+            throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+        }
+
+        User user = createNewUserObject(userInfo);
+        userRepository.save(user);
+
+        ConfirmationToken token = new ConfirmationToken(user);
+        tokenRepository.save(token);
+
+        mailSenderService.sendRegistrationMail(token);
+
+        return user;
+    }
+
+    private User createNewUserObject(UserRegistrationDTO userInfo) {
+        Buyer user = UserMapper.toBuyerEntity(userInfo);
+        user.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+        user.setLastPasswordResetDate(timeProvider.nowTimestamp());
+        user.getUserAuthorities().add(authorityRepository.findByName(UserRoles.ROLE_BUYER));
+        user.setTotalMoneySpent(0.0);
+        user.setCategory(BuyerCategory.REGULAR);
+
+        return user;
     }
 }

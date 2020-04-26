@@ -6,9 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -46,7 +44,7 @@ public class User implements UserDetails {
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
-    private List<Authority> authorities;
+    private Set<Authority> authorities;
 
 
     public Long getId() {
@@ -83,8 +81,16 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public void setAuthorities(List<Authority> authorities) {
+    public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Set<Authority> getUserAuthorities() {
+        if (this.authorities == null) {
+            this.authorities = new HashSet<>();
+        }
+
+        return this.authorities;
     }
 
     public String getEmail() {
