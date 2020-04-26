@@ -9,6 +9,7 @@ import rs.ac.uns.ftn.webshopservice.config.consts.UserRoles;
 import rs.ac.uns.ftn.webshopservice.dto.request.UserRegistrationDTO;
 import rs.ac.uns.ftn.webshopservice.dto.response.UserDTO;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
+import rs.ac.uns.ftn.webshopservice.exception.exceptions.ResourceNotFoundException;
 import rs.ac.uns.ftn.webshopservice.mappers.UserMapper;
 import rs.ac.uns.ftn.webshopservice.model.Buyer;
 import rs.ac.uns.ftn.webshopservice.model.ConfirmationToken;
@@ -105,5 +106,33 @@ public class UserServiceImpl implements UserService {
         user.setCategory(BuyerCategory.REGULAR);
 
         return user;
+    }
+
+    @Override
+    public boolean activateAccount(String token) {
+        ConfirmationToken confirmationToken = tokenRepository.findByToken(token);
+
+        if (confirmationToken == null) {
+            throw new ResourceNotFoundException("Confirmation token doesn't exist.");
+        }
+
+        if (confirmationToken.isUsed()) {
+            throw new ApiRequestException("This token has been already used.");
+        }
+
+        User user = confirmationToken.getUser();
+        long timeDifference = timeProvider.timeDifferenceInMinutes(timeProvider.now(), confirmationToken.getDatetimeCreated());
+
+        if (timeDifference < 30) {
+            user.setEnabled(true);
+            userRepository.save(user);
+            confirmationToken.setUsed(true);
+            tokenRepository.save(confirmationToken);
+            return true;
+        } else {
+            tokenRepository.delete(confirmationToken);
+            userRepository.delete(user);
+            throw new ApiRequestException("Confirmation token timed out.");
+        }
     }
 }

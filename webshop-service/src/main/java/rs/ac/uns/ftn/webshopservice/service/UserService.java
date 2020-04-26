@@ -12,4 +12,5 @@ public interface UserService {
     UserDTO findByUsername(String username);
     List<UserDTO> findAll();
     User addUser(UserRegistrationDTO userInfo);
+    boolean activateAccount(String token);
 }
