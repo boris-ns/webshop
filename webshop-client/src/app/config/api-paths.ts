@@ -10,3 +10,7 @@ export const STORES_URL = `${BASE_URL}/api/stores`;
 export const PRODUCTS_URL = `${BASE_URL}/api/products`;
 export const MY_PRODUCTS_URL = `${PRODUCTS_URL}/my-store`;
 export const ALL_PRODUCTS_URL = `${PRODUCTS_URL}/public`;
+
+export const USERS_URL = `${BASE_URL}/api/users`;
+export const REGISTER_URL = `${USERS_URL}/public/register`;
+export const VERIFY_ACC_URL = `${USERS_URL}/public/verify-account`;
