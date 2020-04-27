@@ -1,1 +1,73 @@
-<p>registration works!</p>
+<div class="container">
+    <ng-template [ngIf]="isUserInfoSent" [ngIfElse]="infoNotSent">
+        <div id="request-sent">
+            <h2>Account activation</h2>
+            <p>Check out your email for activation link. After activation you can use this account.</p>
+        </div>
+    </ng-template>
+
+    <ng-template #infoNotSent>
+        <h2 class="ui header">Create new account</h2>
+    
+        <form [formGroup]="registrationForm" (submit)="onRegisterSubmit()">
+            <div class="ui left icon input input-field">
+                <input id="name-input" type="text" placeholder="Name" formControlName="name" />
+                <i class="users icon"></i>
+
+                <small id="firstname-error-msg" class="text-danger"
+                    *ngIf="registrationForm.controls.name.touched && registrationForm.controls.name.errors?.required">
+                    Name is required
+                </small>
+            </div>
+        
+            <div class="ui left icon input input-field">
+                <input id="username-input" type="text" placeholder="Username" formControlName="username" />
+                <i class="users icon"></i>
+
+                <small id="username-error-msg" class="text-danger"
+                    *ngIf="registrationForm.controls.username.touched && registrationForm.controls.username.errors?.required">
+                    Username is required
+                </small>
+            </div>
+        
+            <div class="ui left icon input input-field">
+                <input id="email-input" type="email" placeholder="E-mail" formControlName="email" />
+                <i class="users icon"></i>
+
+                <small id="email-error-msg-req" class="text-danger"
+                    *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.errors?.required">
+                    Email is required
+                </small>
+
+                <small id="email-error-msg" class="text-danger"
+                    *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.errors?.email">
+                    Email is not valid
+                </small>
+            </div>
+        
+            <div class="ui left icon input input-field">
+                <input id="password-input" type="password" placeholder="Password" formControlName="password" />
+                <i class="users icon"></i>
+
+                <small id="password-error-msg" class="text-danger"
+                    *ngIf="registrationForm.controls.password.touched && registrationForm.controls.password.errors?.required">
+                    Password is required
+                </small>
+            </div>
+        
+            <div class="ui left icon input input-field">
+                <input id="repeatpassword-input" type="password" placeholder="Repeat password" formControlName="repeatPassword" />
+                <i class="users icon"></i>
+
+                <small id="repeatpassword-error-msg" class="text-danger"
+                    *ngIf="registrationForm.controls.repeatPassword.touched && registrationForm.controls.repeatPassword.errors?.required">
+                    Repeat password is required
+                </small>
+            </div>
+            
+            <button id="register-btn" class="ui button primary" type="submit" [disabled]="registrationForm.invalid">
+                Register
+            </button>
+        </form>
+    </ng-template>
+</div>
