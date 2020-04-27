@@ -21,15 +21,15 @@ public class SeasonDiscount {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private Date from;
+    @Column(name = "date_from", nullable = false)
+    private Date dateFrom;
 
-    @Column(nullable = false)
-    private Date to;
+    @Column(name = "date_to", nullable = false)
+    private Date dateTo;
 
     public SeasonDiscount(String name, Date from, Date to) {
         this.name = name;
-        this.from = from;
-        this.to = to;
+        this.dateFrom = from;
+        this.dateTo = to;
     }
 }
