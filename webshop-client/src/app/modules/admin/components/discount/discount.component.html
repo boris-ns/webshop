@@ -36,7 +36,15 @@
 
     <h3 class="ui header">Product category discounts</h3>
 
-    <app-add-category-discount></app-add-category-discount>
+    <button class="ui button icon primary" (click)='onClickAddCategoryDiscount()'>
+        <i class="add icon"></i>
+        Add
+    </button>
+
+    <div *ngIf="showAddCategoryDiscountDialog">
+        <app-add-category-discount (discountAdded)="categoryDiscountAdded($event)"></app-add-category-discount>
+        <button class="ui button" (click)="onClickCloseAddCategoryDiscountDialog()">Close</button>
+    </div>
 
     <table class="ui table celled striped">
         <thead>

@@ -62,11 +62,23 @@ export class DiscountComponent implements OnInit {
     this.getSeasonDiscounts();
   }
 
+  categoryDiscountAdded(added: boolean): void {
+    this.getCategoryDiscounts();
+  }
+
   onClickAddSeasonDiscount(): void {
     this.showAddSeasonDiscountDialog = true;
   }
 
   onClickCloseAddSeasonDiscountDialog(): void {
     this.showAddSeasonDiscountDialog = false;
+  }
+
+  onClickAddCategoryDiscount(): void {
+    this.showAddCategoryDiscountDialog = true;
+  }
+
+  onClickCloseAddCategoryDiscountDialog(): void {
+    this.showAddCategoryDiscountDialog = false;
   }
 }
