@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.webshopservice.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.webshopservice.dto.request.AddSeasonDiscountDTO;
+import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ResourceNotFoundException;
 import rs.ac.uns.ftn.webshopservice.model.SeasonDiscount;
 import rs.ac.uns.ftn.webshopservice.repository.SeasonDiscountRepository;
@@ -34,6 +35,10 @@ public class SeasonDiscountServiceImpl implements SeasonDiscountService {
         newDiscount.setName(discount.getName());
         newDiscount.setDateFrom(new GregorianCalendar(discount.getFrom()[2], discount.getFrom()[1] - 1, discount.getFrom()[0]).getTime());
         newDiscount.setDateTo(new GregorianCalendar(discount.getTo()[2], discount.getTo()[1] - 1, discount.getTo()[0]).getTime());
+
+        if (newDiscount.getDateFrom().after(newDiscount.getDateTo())) {
+            throw new ApiRequestException("Start date can't be after end date.");
+        }
 
         newDiscount = discountRepository.save(newDiscount);
         return newDiscount;

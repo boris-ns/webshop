@@ -18,18 +18,18 @@ public class ProductCategoryDiscount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Date from;
+    @Column(name = "date_from", nullable = false)
+    private Date dateFrom;
 
-    @Column(nullable = false)
-    private Date to;
+    @Column(name = "date_to", nullable = false)
+    private Date dateTo;
 
     @OneToOne
     private ProductCategory category;
 
     public ProductCategoryDiscount(ProductCategory category, Date from, Date to) {
         this.category = category;
-        this.from = from;
-        this.to = to;
+        this.dateFrom = from;
+        this.dateTo = to;
     }
 }
