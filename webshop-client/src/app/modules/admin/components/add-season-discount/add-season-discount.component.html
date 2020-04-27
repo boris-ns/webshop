@@ -1,0 +1,41 @@
+<div class="container">
+
+    <form [formGroup]="addForm" (submit)="onSubmit()">
+        <div class="ui left icon input input-field">
+            <input type="text" placeholder="Name" formControlName="name" />
+            <i class="users icon"></i>
+
+            <small class="text-danger"
+                *ngIf="addForm.controls.name.touched && addForm.controls.name.errors?.required">
+                Name is required
+            </small>
+        </div>
+
+        <div class="ui left icon input input-field">
+            <input type="date" placeholder="Date from" formControlName="dateFrom" />
+            <i class="users icon"></i>
+
+            <small class="text-danger"
+                *ngIf="addForm.controls.dateFrom.touched && addForm.controls.dateFrom.errors?.required">
+                Start date is required
+            </small>
+        </div>
+
+        <div class="ui left icon input input-field">
+            <input type="date" placeholder="Date to" formControlName="dateTo" />
+            <i class="users icon"></i>
+
+            <small class="text-danger"
+                *ngIf="addForm.controls.dateTo.touched && addForm.controls.dateTo.errors?.required">
+                End date is required
+            </small>
+        </div>
+
+        <div>
+            <button type="submit" class="ui button primary" [disabled]="addForm.invalid">
+                Add
+            </button>
+        </div>
+    </form>
+
+</div>

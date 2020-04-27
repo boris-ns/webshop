@@ -11,6 +11,9 @@ export class DiscountComponent implements OnInit {
   seasonDiscounts: [] = [];
   categoryDiscounts: [] = [];
 
+  showAddSeasonDiscountDialog: boolean = false;
+  showAddCategoryDiscountDialog: boolean = false;
+
   constructor(private discountService: DiscountService) { 
   }
 
@@ -53,5 +56,17 @@ export class DiscountComponent implements OnInit {
     }, error => {
       // @TODO: dodati toster
     });
+  }
+
+  seasonDiscountAdded(added: boolean): void {
+    this.getSeasonDiscounts();
+  }
+
+  onClickAddSeasonDiscount(): void {
+    this.showAddSeasonDiscountDialog = true;
+  }
+
+  onClickCloseAddSeasonDiscountDialog(): void {
+    this.showAddSeasonDiscountDialog = false;
   }
 }

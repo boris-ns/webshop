@@ -3,6 +3,16 @@
 
     <h3 class="ui header">Season discounts</h3>
 
+    <button class="ui button primary icon" (click)="onClickAddSeasonDiscount()">
+        <i class="add icon"></i>
+        Add
+    </button>
+
+    <div *ngIf="showAddSeasonDiscountDialog">
+        <app-add-season-discount (discountAdded)="seasonDiscountAdded($event)"></app-add-season-discount>
+        <button class="ui button" (click)="onClickCloseAddSeasonDiscountDialog()">Close</button>
+    </div>
+
     <table class="ui table celled striped">
         <thead>
             <th>Name</th>
@@ -25,6 +35,8 @@
     </table>
 
     <h3 class="ui header">Product category discounts</h3>
+
+    <app-add-category-discount></app-add-category-discount>
 
     <table class="ui table celled striped">
         <thead>

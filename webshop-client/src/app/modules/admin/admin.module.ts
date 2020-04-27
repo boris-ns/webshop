@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminRoutingModule } from './admin-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -6,14 +6,17 @@ import { ProductCategoriesComponent } from './components/product-categories/prod
 import { HomeComponent } from './components/home/home.component';
 import { StoresComponent } from './components/stores/stores.component';
 import { DiscountComponent } from './components/discount/discount.component';
+import { AddSeasonDiscountComponent } from './components/add-season-discount/add-season-discount.component';
+import { AddCategoryDiscountComponent } from './components/add-category-discount/add-category-discount.component';
 
 
 @NgModule({
-  declarations: [ProductCategoriesComponent, HomeComponent, StoresComponent, DiscountComponent],
+  declarations: [ProductCategoriesComponent, HomeComponent, StoresComponent, DiscountComponent, AddSeasonDiscountComponent, AddCategoryDiscountComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

@@ -2,6 +2,7 @@ import { SEASON_DISCOUNTS_URL, CATEGORY_DISCOUNTS_URL } from './../../../config/
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import AddSeasonDiscountDTO from 'src/app/models/add-season-discount-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,10 @@ export class DiscountService {
 
   getAllSeasonDiscounts(): Observable<any> {
     return this.http.get(SEASON_DISCOUNTS_URL);
+  }
+
+  addSeasonDiscount(discount: AddSeasonDiscountDTO): Observable<any> {
+    return this.http.post(SEASON_DISCOUNTS_URL, discount);
   }
 
   deleteSeasonDiscount(id: number): Observable<any> {
