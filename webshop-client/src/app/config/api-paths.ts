@@ -14,3 +14,6 @@ export const ALL_PRODUCTS_URL = `${PRODUCTS_URL}/public`;
 export const USERS_URL = `${BASE_URL}/api/users`;
 export const REGISTER_URL = `${USERS_URL}/public/register`;
 export const VERIFY_ACC_URL = `${USERS_URL}/public/verify-account`;
+
+export const SEASON_DISCOUNTS_URL = `${BASE_URL}/api/season-discounts`;
+export const CATEGORY_DISCOUNTS_URL = `${BASE_URL}/api/category-discounts`;

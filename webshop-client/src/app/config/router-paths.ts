@@ -9,6 +9,7 @@ export const ADMIN_HOME_PATH = 'admin';
 export const SELLERS_PATH = 'sellers';
 export const PRODUCT_CATEGORIES_PATH = 'product-categories';
 export const STORES_PATH = 'stores';
+export const DISCOUNTS_PATH = 'discounts';
 
 // Seller paths
 export const SELLER_HOME_PATH = 'seller';

@@ -1,6 +1,6 @@
 import { ROLE_ADMIN, ROLE_BUYER, ROLE_SELLER } from './../../config/user-roles-keys';
 import { AuthService } from './../../services/auth.service';
-import { LOGIN_PATH, REGISTRATION_PATH, HOME_PATH, PRODUCT_CATEGORIES_PATH, ADMIN_HOME_PATH, STORES_PATH, SELLER_HOME_PATH, SELLER_MY_PRODUCTS_PATH } from './../../config/router-paths';
+import { LOGIN_PATH, REGISTRATION_PATH, HOME_PATH, PRODUCT_CATEGORIES_PATH, ADMIN_HOME_PATH, STORES_PATH, SELLER_HOME_PATH, SELLER_MY_PRODUCTS_PATH, DISCOUNTS_PATH } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -57,5 +57,9 @@ export class NavbarComponent implements OnInit {
 
   onClickProducts(): void {
     this.router.navigate([SELLER_HOME_PATH, SELLER_MY_PRODUCTS_PATH]);
+  }
+
+  onClickDiscounts(): void {
+    this.router.navigate([ADMIN_HOME_PATH, DISCOUNTS_PATH]);
   }
 }

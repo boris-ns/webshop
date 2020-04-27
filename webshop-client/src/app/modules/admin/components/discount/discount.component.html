@@ -1,0 +1,50 @@
+<div class="container">
+    <h2 class="ui header">Discounts</h2>
+
+    <h3 class="ui header">Season discounts</h3>
+
+    <table class="ui table celled striped">
+        <thead>
+            <th>Name</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let discount of seasonDiscounts">
+                <td>{{ discount.name }}</td>
+                <td>{{ discount.from | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ discount.to | date: 'dd/MM/yyyy'}}</td>
+                <td>
+                    <button class="ui button icon red" (click)="onClickDeleteSeasonDiscount(discount.id)">
+                        <i class="trash icon"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 class="ui header">Product category discounts</h3>
+
+    <table class="ui table celled striped">
+        <thead>
+            <th>Category</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let discount of categoryDiscounts">
+                <td>{{ discount.category.name }}</td>
+                <td>{{ discount.from | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ discount.to | date: 'dd/MM/yyyy'}}</td>
+                <td>
+                    <button class="ui button icon red" (click)="onClickDeleteCategoryDiscount(discount.id)">
+                        <i class="trash icon"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
