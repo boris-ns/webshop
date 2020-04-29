@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from '../../../../services/products.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -13,7 +14,8 @@ export class ProductsComponent implements OnInit {
   showAddProductModal: boolean = false;
   productOnModal = {};
 
-  constructor(private productsService: ProductsService) { 
+  constructor(private productsService: ProductsService,
+              private toastr: ToastrService) { 
   }
 
   ngOnInit() {
@@ -24,8 +26,7 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts().subscribe(data => {
       this.products = data;
     }, error => {
-      // @TODO: dodati toster
-      console.log(error);
+      this.toastr.error('There was an error while getting your products');
     });
   }
 
@@ -50,10 +51,9 @@ export class ProductsComponent implements OnInit {
   onClickDelete(id: number): void {
     this.productsService.delete(id).subscribe(data => {
       this.getProducts();
-      // @TODO: dodati toster
+      this.toastr.success('Product has been deleted');
     }, error => {
-      // @TODO: dodati toster
-      console.log(error);
+      this.toastr.error(error.error.message);
     });
   }
 }

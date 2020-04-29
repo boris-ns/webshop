@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { LOGIN_PATH } from './../../config/router-paths';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +15,8 @@ export class ActivateAccountComponent implements OnInit {
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) { 
+              private router: Router,
+              private toastr: ToastrService) { 
     this.activatedRoute.queryParams.subscribe(params => {
       this.confirmationToken = params['token'];
       this.activateAccount();
@@ -27,10 +29,9 @@ export class ActivateAccountComponent implements OnInit {
   private activateAccount(): void {
     this.userService.verifyAccount(this.confirmationToken).subscribe(data => {
       this.router.navigate([LOGIN_PATH]);
-      // @TODO: dodati toster
+      this.toastr.success('Your account has been activated!');
     }, error => {
-      console.log(error);
-      // @TODO: dodati toster
+      this.toastr.error(error.error.message);
     });
   }
 }

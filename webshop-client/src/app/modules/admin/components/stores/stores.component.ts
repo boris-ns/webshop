@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { StoresService } from './../../services/stores.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,7 +11,8 @@ export class StoresComponent implements OnInit {
 
   stores: [] = [];
 
-  constructor(private storesService: StoresService) { 
+  constructor(private storesService: StoresService,
+              private toastr: ToastrService) { 
   }
 
   ngOnInit() {
@@ -21,8 +23,7 @@ export class StoresComponent implements OnInit {
     this.storesService.getAll().subscribe(data => {
       this.stores = data;
     }, error => {
-      console.log(error);
-      // @TODO: dodati toster
+      this.toastr.error('There was an error while getting the stores.');
     });
   }
 

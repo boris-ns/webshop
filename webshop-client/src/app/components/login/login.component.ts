@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import LoginDTO from 'src/app/models/login-dto.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private authService: AuthService) { 
+              private authService: AuthService,
+              private toastr: ToastrService) { 
     this.createForm();
   }
 
@@ -60,6 +62,7 @@ export class LoginComponent implements OnInit {
     }, error => {
       this.loginSuccess = false;
       this.loginError = true;
+      this.toastr.error(error.error.message);
     });
   }
 

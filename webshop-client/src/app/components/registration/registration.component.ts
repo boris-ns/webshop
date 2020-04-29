@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { HOME_PATH, LOGIN_PATH } from './../../config/router-paths';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
@@ -19,13 +20,13 @@ export class RegistrationComponent implements OnInit {
   constructor(private userService: UserService,
               private authService: AuthService,
               private fb: FormBuilder,
-              private router: Router) { 
+              private router: Router,
+              private toastr: ToastrService) { 
   }
 
   ngOnInit() {
     if (this.authService.isUserLoggedIn()) {
-      // @TODO: dodaj toster
-      // this.toastr.warning('Please logout if you want to create a new account.', 'Warning');
+      this.toastr.warning('Please logout if you want to create a new account.', 'Warning');
       this.router.navigate([HOME_PATH]);
     }
 
@@ -47,9 +48,7 @@ export class RegistrationComponent implements OnInit {
     const repeatPassword = this.registrationForm.controls.repeatPassword.value;
 
     if (password !== repeatPassword) {
-      // this.toastr.warning('Passwords don\'t match', 'Warning');
-      // @TODO: dodaj toster
-      console.log("sifre se ne podudaraju");
+      this.toastr.warning('Passwords don\'t match', 'Warning');
       return;
     }
 
@@ -63,10 +62,9 @@ export class RegistrationComponent implements OnInit {
 
     this.userService.register(userInfo).subscribe(data => {
       this.isUserInfoSent = true;
-      // @TODO: mozda i ove dodati toster ?
+      this.toastr.success('You account has been created, go to your email to verify it.');
     }, error => {
-      // @TODO: dodati toster
-      // this.toastr.error('There was an error while adding your account. Try again later.');
+      this.toastr.error('There was an error while adding your account. Try again later.');
     });
   }
 }

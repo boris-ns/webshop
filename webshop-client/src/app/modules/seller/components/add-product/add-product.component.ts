@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { ProductCategoriesService } from './../../../../services/product-categories.service';
 import { ProductsService } from '../../../../services/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,7 +17,8 @@ export class AddProductComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private productsService: ProductsService,
-              private categoriesService: ProductCategoriesService) { 
+              private categoriesService: ProductCategoriesService,
+              private toastr: ToastrService) { 
     this.createForm();
   }
 
@@ -28,8 +30,7 @@ export class AddProductComponent implements OnInit {
     this.categoriesService.getAll().subscribe(data => {
       this.categories = data;
     }, error => {
-      // @TODO: dodaj toster
-      console.log(error);
+      this.toastr.error('There was an error while getting the product categories');
     });
   }
 
@@ -69,7 +70,7 @@ export class AddProductComponent implements OnInit {
     };
 
     this.productsService.add(product).subscribe(data => {
-      // @TODO: dodati toster
+      this.toastr.success('Product has been successfully added');
       // @TODO: poslati dodati element nazad na prvu komponentu nekako
       // @TODO: da li cemo zatvarati formu ili je ostaviti otvorenu ?
       // @TODO: treba uraditi clear forme

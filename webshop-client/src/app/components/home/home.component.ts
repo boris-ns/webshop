@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { ROLE_BUYER } from './../../config/user-roles-keys';
 import { AuthService } from './../../services/auth.service';
 import { ProductsService } from './../../services/products.service';
@@ -13,7 +14,8 @@ export class HomeComponent implements OnInit {
   products: [] = [];
 
   constructor(private productsService: ProductsService,
-              private authService: AuthService) { 
+              private authService: AuthService,
+              private toastr: ToastrService) { 
   }
 
   ngOnInit() {
@@ -28,8 +30,7 @@ export class HomeComponent implements OnInit {
     this.productsService.getAll().subscribe(data => {
       this.products = data;
     }, error => {
-      // @TODO: dodati toster
-      console.log(error);
+      this.toastr.error('There was and error while getting the products.');
     });
   }
 

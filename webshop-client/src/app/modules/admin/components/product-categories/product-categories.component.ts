@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { AddProductCategoryDTO } from './../../../../models/add-product-category-dto.model';
 import { ProductCategoriesService } from '../../../../services/product-categories.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,8 @@ export class ProductCategoriesComponent implements OnInit {
   categories = [];
   categoryName: string = '';
 
-  constructor(private categoriesService: ProductCategoriesService) { 
+  constructor(private categoriesService: ProductCategoriesService,
+              private toastr: ToastrService) { 
   }
 
   ngOnInit() {
@@ -23,8 +25,7 @@ export class ProductCategoriesComponent implements OnInit {
     this.categoriesService.getAll().subscribe(data => {
       this.categories = data;
     }, error => {
-      // @TODO: Dodaj toster
-      console.log(error);
+      this.toastr.error('There was an error while getting the product categories');
     });
   }
 
@@ -36,19 +37,18 @@ export class ProductCategoriesComponent implements OnInit {
     this.categoriesService.add(category).subscribe(data => {
       this.categories.push(data);
       this.categoryName = '';
+      this.toastr.success('Category has been successfully added');
     }, error => {
-      // @TODO: Dodati toster
-      console.log(error);
+      this.toastr.error(error.error.message);
     });
   }
 
   onClickDelete(id: number): void {
     this.categoriesService.delete(id).subscribe(data => {
-      // @TODO: dodati toster
+      this.toastr.success('Category has been deleted');
       this.getAll();
     }, error => {
-      // @TODO: dodati toster
-      console.log(error);
+      this.toastr.error(error.error.message);
     });
   }
 }

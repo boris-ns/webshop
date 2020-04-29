@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { DiscountService } from './../../services/discount.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -14,7 +15,8 @@ export class DiscountComponent implements OnInit {
   showAddSeasonDiscountDialog: boolean = false;
   showAddCategoryDiscountDialog: boolean = false;
 
-  constructor(private discountService: DiscountService) { 
+  constructor(private discountService: DiscountService,
+              private toastr: ToastrService) { 
   }
 
   ngOnInit() {
@@ -26,8 +28,7 @@ export class DiscountComponent implements OnInit {
     this.discountService.getAllSeasonDiscounts().subscribe(data => {
       this.seasonDiscounts = data;
     }, error => {
-      // @TODO: dodati toster
-      console.log(error);
+      this.toastr.error('There was an error while getting the season discounts.');
     });
   }
 
@@ -35,34 +36,35 @@ export class DiscountComponent implements OnInit {
     this.discountService.getAllCategoryDiscounts().subscribe(data => {
       this.categoryDiscounts = data;
     }, error => {
-      // @TODO: dodati toster
-      console.log(error);
+      this.toastr.error('There was an error while getting the category discounts.');
     });
   }
 
   onClickDeleteSeasonDiscount(id: number): void {
     this.discountService.deleteSeasonDiscount(id).subscribe(data => {
-      // @TODO: dodati toster
+      this.toastr.success('Season discount has been deleted');
       this.getSeasonDiscounts();
     }, error => {
-      // @TODO: dodati toster
+      this.toastr.error(error.error.message);
     });
   }
 
   onClickDeleteCategoryDiscount(id: number): void {
     this.discountService.deleteCategoryDiscount(id).subscribe(data => {
+      this.toastr.success('Category discount has been deleted');
       this.getCategoryDiscounts();
-      // @TODO: dodati toster
     }, error => {
-      // @TODO: dodati toster
+      this.toastr.error(error.error.message);
     });
   }
 
   seasonDiscountAdded(added: boolean): void {
+    this.toastr.success('Season discount has been successfully added');
     this.getSeasonDiscounts();
   }
 
   categoryDiscountAdded(added: boolean): void {
+    this.toastr.success('Category discount has been successfully added');
     this.getCategoryDiscounts();
   }
 
