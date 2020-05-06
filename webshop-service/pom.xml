@@ -103,6 +103,12 @@
 			<version>2.1.9.RELEASE</version>
 		</dependency>
 
+		<dependency>
+			<groupId>webshop-service-rules</groupId>
+			<artifactId>webshop-service-kjar</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

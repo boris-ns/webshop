@@ -1,6 +1,7 @@
-package sbnz.integracija;
+package webshop.rules;
 
-import sbnz.integracija.example.facts.Item;
+import rs.ac.uns.ftn.webshopservice.model.Item;
+
 
 rule "Classify Item - High Range"
     when

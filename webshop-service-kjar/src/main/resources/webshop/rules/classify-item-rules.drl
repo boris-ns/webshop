@@ -1,6 +1,6 @@
-package sbnz.integracija;
+package webshop.rules;
 
-import sbnz.integracija.example.facts.Item;
+import rs.ac.uns.ftn.webshopservice.model.Item;
 
 
 rule "Classify Item - Low Range"
@@ -8,5 +8,6 @@ rule "Classify Item - Low Range"
         $i: Item( cost <= 300, category == Category.NA )
     then
         $i.setCategory(Item.Category.LOW_RANGE);
+        System.out.println("Aktiviralo se pravilo");
         update($i);
 end
