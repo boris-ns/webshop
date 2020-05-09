@@ -3,20 +3,20 @@ package rs.ac.uns.ftn.webshopservice.controller;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.webshopservice.dto.response.UserDTO;
+import rs.ac.uns.ftn.webshopservice.model.Buyer;
 import rs.ac.uns.ftn.webshopservice.model.Item;
 
 @RestController
-@RequestMapping("/api/public/drools")
+@RequestMapping("/api")
 public class DroolsTestController {
 
     @Autowired
     private KieContainer kieContainer;
 
-    @RequestMapping(value = "/item", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/public/drools/item", method = RequestMethod.GET, produces = "application/json")
     public Item getQuestions(@RequestParam(required = true) String id, @RequestParam(required = true) String name,
                              @RequestParam(required = true) double cost, @RequestParam(required = true) double salePrice) {
 
@@ -33,4 +33,23 @@ public class DroolsTestController {
         kieSession.dispose();
         return i;
     }
+
+    @GetMapping(value = "/drools/buyer-category")
+    public UserDTO buyerCategory() {
+        Buyer buyer = (Buyer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        buyer = getClassifiedBuyer(buyer);
+        System.out.println(buyer.getCategory());
+        return new UserDTO(buyer);
+    }
+
+    public Buyer getClassifiedBuyer(Buyer buyer) {
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(buyer);
+        int fired = kieSession.fireAllRules();
+        System.out.println("Fired rules: " + fired);
+        kieSession.dispose();
+        return buyer;
+    }
+
+
 }

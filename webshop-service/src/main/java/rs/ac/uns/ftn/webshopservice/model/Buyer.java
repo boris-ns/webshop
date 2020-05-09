@@ -22,6 +22,6 @@ public class Buyer extends User {
     @Column(name = "total_money_spent")
     private Double totalMoneySpent;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Order> orders;
 }

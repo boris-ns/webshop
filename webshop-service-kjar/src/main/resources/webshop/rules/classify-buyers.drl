@@ -1,0 +1,38 @@
+package webshop.rules;
+
+import rs.ac.uns.ftn.webshopservice.model.Buyer;
+import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
+
+rule "Set buyer category to SILVER"
+    no-loop true
+    when
+        $user: Buyer(category == BuyerCategory.REGULAR, orders.size() == 50)
+    then
+        modify($user) {
+            setCategory(BuyerCategory.SILVER);
+        }
+        System.out.println("[DROOLS] Buyer with id=" + $user.getId() + " category set to SILVER");
+end
+
+rule "Set buyer category to GOLD"
+    no-loop true
+    when
+        $user: Buyer(category == BuyerCategory.SILVER, orders.size() == 100, totalMoneySpent > 3000)
+    then
+        modify($user) {
+            setCategory(BuyerCategory.GOLD);
+        }
+        System.out.println("[DROOLS] Buyer with id=" + $user.getId() + " category set to GOLD");
+end
+
+
+rule "Set buyer category to DIAMOND"
+    no-loop true
+    when
+        $user: Buyer(category == BuyerCategory.GOLD, orders.size() == 500, totalMoneySpent > 8000)
+    then
+        modify($user) {
+            setCategory(BuyerCategory.DIAMOND);
+        }
+        System.out.println("[DROOLS] Buyer with id=" + $user.getId() + " category set to DIAMOND");
+end
