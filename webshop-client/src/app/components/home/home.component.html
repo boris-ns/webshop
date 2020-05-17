@@ -16,10 +16,15 @@
                 </div>
             </div>
             <div class="extra content">
-                <button class="ui button primary" *ngIf="isUserLoggedIn()">Buy</button>
+                <button class="ui button primary" *ngIf="isUserLoggedIn()" (click)="onClickBuy(product)">Buy</button>
                 <span *ngIf="!isUserLoggedIn()">Login or register to buy</span>
             </div>
         </div>
+    </div>
+
+    <div class="buy-dialog modal" *ngIf="showBuyDialog">
+        <app-buy-product [product]="productToBuy"></app-buy-product>
+        <button class="ui button" (click)="onClickModalClose()">Close</button>
     </div>
 
 </div>

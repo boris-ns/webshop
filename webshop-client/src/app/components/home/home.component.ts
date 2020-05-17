@@ -12,6 +12,8 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   products: [] = [];
+  productToBuy: any = {};
+  showBuyDialog = false;
 
   constructor(private productsService: ProductsService,
               private authService: AuthService,
@@ -34,4 +36,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  onClickBuy(product) {
+    this.productToBuy = product;
+    this.showBuyDialog = true;
+  }
+
+  onClickModalClose() {
+    this.showBuyDialog = false;
+  }
 }

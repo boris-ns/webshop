@@ -3,3 +3,18 @@
     flex-direction: row;
     margin: 10px;
 }
+
+.modal {
+    position: fixed; /* Stay in place */
+    margin:auto;
+    z-index: 1; /* Sit on top */
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 10px 8px grey;
+}
