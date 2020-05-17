@@ -23,11 +23,18 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	- [x] kupac ce postati SILVER ako je trenutna kategorija REGULAR i ako je broj narudzbina 50
 	- [x] kupac ce postati GOLD ako je trenutna kategorija SILVER, broj narudzbina 100 i suma potrosenog novca 3000$
 	- [x] kupac ce postati DIAMOND ako je trenutna kategorija GOLD, broj narudzbina 500 i suma potrosenog novca 8000$
-- [ ] kupci sa kategorijom GOLD imaju popust na sve artikle od 5%
-- [ ] kupci sa kategorijom DIAMOND imaju popust na sve artikle od 10%
-- kupci sa kategorijom SILVER, GOLD i DIAMOND ne plaćaju poštarinu
+- [x] kupci sa kategorijom GOLD imaju popust na sve artikle od 5%
+- [x] kupci sa kategorijom DIAMOND imaju popust na sve artikle od 10%
+- [x] kupci sa kategorijom SILVER, GOLD i DIAMOND ne plaćaju poštarinu
+- [x] uracunavanje popusta samog artikla
+- [ ] uracunavanje popusta na kolicinu
+- [ ] uracunavanje sezonskog popusta
+- [ ] uracunavanje popusta na kategoriju
+- [ ] uracunavanje popusta za ceste kupce
+- [ ] uracunavanje popusta na osnovu kupona
+- [ ] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti
+- [ ] ?? preporuka za kupovinu artikala
 - računanje svih popusta prilikom kupovine: klasičan popust na artikal, popust na količinu, sezonski popust, popust na kategoriju, popust za česte kupce kod jednog prodavca i popust na osnovu kupona. Ovde bi se vodilo računa da ukupni popust ne može da pređe neku predefinisanu vrednost, a i da se ne mogu baš sve vrste popusta iskoristiti istovremeno.
-- obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti
 
 ## Primer rezonovanja za kupovinu artikla:
 - korisnik filtrira i pretrazuje artikle
