@@ -1,3 +1,5 @@
+import { PLACE_ORDER_URL } from './../config/api-paths';
+import { PlaceOrderDTO } from './../models/place-order-dto.model';
 import { ALL_PRODUCTS_URL } from '../config/api-paths';
 import { Observable } from 'rxjs';
 import { MY_PRODUCTS_URL, PRODUCTS_URL } from '../config/api-paths';
@@ -27,5 +29,9 @@ export class ProductsService {
 
   add(product: AddProductDTO): Observable<any> {
     return this.http.post(PRODUCTS_URL, product);
+  }
+
+  buy(order: PlaceOrderDTO): Observable<any> {
+    return this.http.post(PLACE_ORDER_URL, order);
   }
 }

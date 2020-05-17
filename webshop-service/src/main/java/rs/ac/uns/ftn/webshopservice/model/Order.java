@@ -27,6 +27,17 @@ public class Order {
     @Column(nullable = false)
     private Double price;
 
+    @Column(nullable = false)
+    private Float discount;
+
     @ManyToOne
     private Product product;
+
+    public Order(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+        this.price = product.getPrice();
+        this.date = new Date();
+        this.discount = 0f;
+    }
 }

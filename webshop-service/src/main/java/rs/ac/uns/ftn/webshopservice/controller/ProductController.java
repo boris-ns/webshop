@@ -5,12 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
+import rs.ac.uns.ftn.webshopservice.dto.response.OrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.response.ProductDTO;
 import rs.ac.uns.ftn.webshopservice.mappers.ProductMapper;
 import rs.ac.uns.ftn.webshopservice.model.Product;
 import rs.ac.uns.ftn.webshopservice.service.ProductService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -45,5 +48,11 @@ public class ProductController {
     public ResponseEntity delete(@PathVariable Long id) {
         productService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/place-order")
+    @PreAuthorize("hasRole('ROLE_BUYER')")
+    public ResponseEntity<OrderDTO> placeOrder(@Valid @RequestBody PlaceOrderDTO order) {
+        return new ResponseEntity<>(new OrderDTO(productService.buy(order)), HttpStatus.OK);
     }
 }

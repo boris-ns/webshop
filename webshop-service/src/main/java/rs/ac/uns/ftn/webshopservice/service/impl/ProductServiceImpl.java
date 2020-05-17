@@ -1,13 +1,17 @@
 package rs.ac.uns.ftn.webshopservice.service.impl;
 
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ResourceNotFoundException;
 import rs.ac.uns.ftn.webshopservice.mappers.ProductMapper;
 import rs.ac.uns.ftn.webshopservice.model.*;
+import rs.ac.uns.ftn.webshopservice.repository.OrderRepository;
 import rs.ac.uns.ftn.webshopservice.repository.ProductRepository;
 import rs.ac.uns.ftn.webshopservice.service.ProductCategoryService;
 import rs.ac.uns.ftn.webshopservice.service.ProductService;
@@ -21,11 +25,24 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
     private ProductCategoryService productCategoryService;
+
+    @Autowired
+    private KieContainer kieContainer;
+
 
     @Override
     public List<Product> getAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public Product getById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " doesn't exist"));
     }
 
     @Override
@@ -59,5 +76,24 @@ public class ProductServiceImpl implements ProductService {
         }
 
         productRepository.delete(product);
+    }
+
+    @Override
+    public Order buy(PlaceOrderDTO order) {
+        Buyer buyer = (Buyer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Product product = this.getById(order.getProductId());
+        Order productOrder = new Order(product, order.getQuantity());
+
+        KieSession kieSession = kieContainer.newKieSession();
+//        kieSession.setGlobal("order", productOrder);
+        kieSession.insert(productOrder);
+        kieSession.insert(buyer);
+        kieSession.fireAllRules();
+//        Order newProductOrder = (Order) kieSession.getGlobal("order");
+        kieSession.dispose();
+
+        productOrder = orderRepository.save(productOrder);
+
+        return productOrder;
     }
 }

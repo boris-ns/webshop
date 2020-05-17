@@ -1,49 +1,63 @@
 <div class="container">
     <h3 class="ui header">Buy product</h3>
 
-    <table>
-        <tr>
-            <td class="bold">Product: </td>
-            <td>{{ product.name }}</td>
-        </tr>
-        <tr>
-            <td class="bold">Store: </td>
-            <td>{{ product.storeName }}</td>
-        </tr>
-        <tr>
-            <td class="bold">Original price: </td>
-            <td>$ {{ product.price }}</td>
-        </tr>
-        <tr *ngIf="product.couponDiscount != 0">
-            <td class="bold">Coupon discount</td>
-            <td>{{ product.couponDiscount }}</td>
-        </tr>
-        <tr *ngIf="product.couponDiscount != 0">
-            <td class="bold">Enter coupon</td>
-            <td>
-                <div class="ui input">
-                    <input type="text" placeholder="Coupon" [(ngModel)]="coupon" />
-                </div>
-            </td>
-        </tr>
-        <tr *ngIf="product.maxOrderQuantity == 1">
-            <td class="bold">Quantity:</td>
-            <td>1</td>
-        </tr>
-        <tr *ngIf="product.maxOrderQuantity > 1">
-            <td class="bold">Quantity</td>
-            <td>
-                <div class="ui input">
-                    <input type="number" min="1" placeholder="Quantity" [(ngModel)]="quantity" />
-                </div>
-            </td>
-        </tr>
-    </table>
+    <div *ngIf="!showOrderInfo">
+        <table>
+            <tr>
+                <td class="bold">Product: </td>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Store: </td>
+                <td>{{ product.storeName }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Original price: </td>
+                <td>$ {{ product.price }}</td>
+            </tr>
+            <tr *ngIf="product.couponDiscount != 0">
+                <td class="bold">Coupon discount</td>
+                <td>{{ product.couponDiscount }}</td>
+            </tr>
+            <tr *ngIf="product.couponDiscount != 0">
+                <td class="bold">Enter coupon</td>
+                <td>
+                    <div class="ui input">
+                        <input type="text" placeholder="Coupon" [(ngModel)]="coupon" />
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="product.maxOrderQuantity == 1">
+                <td class="bold">Quantity:</td>
+                <td>1</td>
+            </tr>
+            <tr *ngIf="product.maxOrderQuantity > 1">
+                <td class="bold">Quantity</td>
+                <td>
+                    <div class="ui input">
+                        <input type="number" min="1" placeholder="Quantity" [(ngModel)]="quantity" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    
+        <button class="ui button primary" (click)="onClickPlaceOrder()">Place order</button>
+    </div>
 
-    <button class="ui button primary" (click)="onClickPlaceOrder()">Place order</button>
-
-    <div *ngIf="showBuy">
-        <p><span class="bold">Price with discounts: </span><span>$ TODO</span></p>
-        <button class="ui button primary" (click)="onClickBuy()">Buy</button>
+    <div *ngIf="showOrderInfo">
+        <table>
+            <tr>
+                <td class="bold">Old price: </td>
+                <td>$ {{ order.originalPrice }}</td>
+            </tr>
+            <tr>
+                <td class="bold">Discount: </td>
+                <td>{{ order.discount }}%</td>
+            </tr>
+            <tr>
+                <td class="bold">New price: </td>
+                <td>$ {{ order.newPrice }}</td>
+            </tr>
+        </table>
     </div>
 </div>
