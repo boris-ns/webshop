@@ -10,20 +10,20 @@ import rs.ac.uns.ftn.webshopservice.model.Order;
 rule "GOLD buyers have 5% discount on all articles"
     no-loop true
     when
-        $order: Order(product.maxDiscount >= discount + 0.05)
+        $order: Order(product.maxDiscount >= discount + 0.05, $discount: discount)
         $buyer: Buyer(category == BuyerCategory.GOLD)
     then
-        modify($order) { setDiscount($order.discount + 0.05) }
+        modify($order) { setDiscount((float) ($discount + 0.05)) }
         System.out.println("[DROOLS] Added discount for GOLD buyer");
 end
 
 rule "DIAMOND buyers have 10% discount on all articles"
     no-loop true
     when
-        $order: Order(product.maxDiscount >= discount + 0.1)
+        $order: Order(product.maxDiscount >= discount + 0.1, $discount: discount)
         $buyer: Buyer(category == BuyerCategory.DIAMOND)
     then
-        modify($order) { setDiscount($order.discount + 0.1) }
+        modify($order) { setDiscount((float) ($discount + 0.1)) }
         System.out.println("[DROOLS] Added discount for DIAMOND buyer");
 end
 
@@ -31,9 +31,9 @@ rule "Regular users pay shipment"
     no-loop true
     when
         $buyer: Buyer(category == BuyerCategory.REGULAR)
-        $order: Order(product.shippingPrice != 0)
+        $order: Order(product.shippingPrice != 0, $price: price)
     then
-        modify($order) { setPrice(price + $order.product.shippingPrice); }
+        modify($order) { setPrice($price + $order.getProduct().getShippingPrice()); }
         System.out.println("[DROOLS] Added shipping price to the order");
 end
 
@@ -42,6 +42,6 @@ rule "Add product discount"
     when
         $order: Order(product.maxDiscount >= discount)
     then
-        modify($order) { setDiscount($order.discount + $order.product.discount); }
+        modify($order) { setDiscount($order.getDiscount() + $order.getProduct().getDiscount()); }
         System.out.println("[DROOLS] Added product discount to the order");
 end
