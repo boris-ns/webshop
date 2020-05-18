@@ -92,6 +92,9 @@ public class ProductServiceImpl implements ProductService {
 //        Order newProductOrder = (Order) kieSession.getGlobal("order");
         kieSession.dispose();
 
+        double priceDiscount =
+                (productOrder.getPrice() - productOrder.getProduct().getShippingPrice()) * productOrder.getDiscount();
+        productOrder.setPrice(productOrder.getPrice() - priceDiscount);
         productOrder = orderRepository.save(productOrder);
 
         return productOrder;

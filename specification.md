@@ -27,7 +27,8 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 - [x] kupci sa kategorijom DIAMOND imaju popust na sve artikle od 10%
 - [x] kupci sa kategorijom SILVER, GOLD i DIAMOND ne plaćaju poštarinu
 - [x] uracunavanje popusta samog artikla
-- [ ] uracunavanje popusta na kolicinu
+- [x] uracunavanje popusta na kolicinu
+- [x] racunanje nove cene ako se narucuje vise od jednog proizvoda
 - [ ] uracunavanje sezonskog popusta
 - [ ] uracunavanje popusta na kategoriju
 - [ ] uracunavanje popusta za ceste kupce

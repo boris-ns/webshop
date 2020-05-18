@@ -11,8 +11,9 @@
                     <span>Store:</span><span>{{ product.storeName }}</span>
                 </div>
                 <div class="description">
-                    <span>Price: </span><span>{{ product.price }}</span> <br />
-                    <span>Discount: </span><span>{{ product.discount }}</span>
+                    <span>Price: </span><span>$ {{ product.price }}</span> <br />
+                    <span>Shipping: </span><span>$ {{ product.shippingPrice }}</span> <br />
+                    <span>Discount: </span><span>{{ product.discount * 100 }} %</span>
                 </div>
             </div>
             <div class="extra content">

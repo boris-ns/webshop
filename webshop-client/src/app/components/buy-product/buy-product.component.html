@@ -51,12 +51,16 @@
                 <td>$ {{ order.originalPrice }}</td>
             </tr>
             <tr>
+                <td class="bold">Shipping: </td>
+                <td>$ {{ order.product.shippingPrice }}</td>
+            </tr>
+            <tr>
                 <td class="bold">Discount: </td>
-                <td>{{ order.discount }}%</td>
+                <td>{{ order.discount * 100 }}%</td>
             </tr>
             <tr>
                 <td class="bold">New price: </td>
-                <td>$ {{ order.newPrice }}</td>
+                <td>$ {{ order.newPrice | number : '1.2' }}</td>
             </tr>
         </table>
     </div>

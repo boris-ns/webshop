@@ -5,7 +5,6 @@ import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import rs.ac.uns.ftn.webshopservice.model.Product;
 import rs.ac.uns.ftn.webshopservice.model.Order;
 
-// global Order order;
 
 rule "GOLD buyers have 5% discount on all articles"
     no-loop true
@@ -17,6 +16,7 @@ rule "GOLD buyers have 5% discount on all articles"
         System.out.println("[DROOLS] Added discount for GOLD buyer");
 end
 
+
 rule "DIAMOND buyers have 10% discount on all articles"
     no-loop true
     when
@@ -26,6 +26,17 @@ rule "DIAMOND buyers have 10% discount on all articles"
         modify($order) { setDiscount((float) ($discount + 0.1)) }
         System.out.println("[DROOLS] Added discount for DIAMOND buyer");
 end
+
+
+rule "User orders more than 1 product"
+    no-loop true
+    when
+        $order: Order(quantity > 1, $price: price, $quantity: quantity)
+    then
+        modify($order) { setPrice($order.getProduct().getPrice() * $quantity); }
+        System.out.println("[DROOLS] Multiplied price because quantity is > 1");
+end
+
 
 rule "Regular users pay shipment"
     no-loop true
@@ -37,6 +48,7 @@ rule "Regular users pay shipment"
         System.out.println("[DROOLS] Added shipping price to the order");
 end
 
+
 rule "Add product discount"
     no-loop true
     when
@@ -44,4 +56,14 @@ rule "Add product discount"
     then
         modify($order) { setDiscount($order.getDiscount() + $order.getProduct().getDiscount()); }
         System.out.println("[DROOLS] Added product discount to the order");
+end
+
+
+rule "Quantity discount"
+    no-loop true
+    when
+        $order: Order(quantity >= product.orderQuantityDiscount)
+    then
+        modify($order) { setDiscount($order.getDiscount() + $order.getProduct().getQuantityDiscount()); }
+        System.out.println("[DROOLS] Added quantity discount");
 end
