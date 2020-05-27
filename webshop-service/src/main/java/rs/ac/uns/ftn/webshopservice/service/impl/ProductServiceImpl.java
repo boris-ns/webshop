@@ -5,6 +5,7 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.webshopservice.config.consts.KieAgendaGroups;
 import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
@@ -88,6 +89,7 @@ public class ProductServiceImpl implements ProductService {
 //        kieSession.setGlobal("order", productOrder);
         kieSession.insert(productOrder);
         kieSession.insert(buyer);
+        kieSession.getAgenda().getAgendaGroup(KieAgendaGroups.ORDER_DISCOUNTS).setFocus();
         kieSession.fireAllRules();
 //        Order newProductOrder = (Order) kieSession.getGlobal("order");
         kieSession.dispose();

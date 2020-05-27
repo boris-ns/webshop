@@ -7,7 +7,9 @@ import rs.ac.uns.ftn.webshopservice.model.Order;
 
 
 rule "GOLD buyers have 5% discount on all articles"
+    agenda-group "order-discounts"
     no-loop true
+    lock-on-active true
     when
         $order: Order(product.maxDiscount >= discount + 0.05, $discount: discount)
         $buyer: Buyer(category == BuyerCategory.GOLD)
@@ -18,7 +20,9 @@ end
 
 
 rule "DIAMOND buyers have 10% discount on all articles"
+    agenda-group "order-discounts"
     no-loop true
+    lock-on-active true
     when
         $order: Order(product.maxDiscount >= discount + 0.1, $discount: discount)
         $buyer: Buyer(category == BuyerCategory.DIAMOND)
@@ -29,7 +33,9 @@ end
 
 
 rule "User orders more than 1 product"
+    agenda-group "order-discounts"
     no-loop true
+    lock-on-active true
     when
         $order: Order(quantity > 1, $price: price, $quantity: quantity)
     then
@@ -39,7 +45,9 @@ end
 
 
 rule "Regular users pay shipment"
+    agenda-group "order-discounts"
     no-loop true
+    lock-on-active true
     when
         $buyer: Buyer(category == BuyerCategory.REGULAR)
         $order: Order(product.shippingPrice != 0, $price: price)
@@ -50,9 +58,11 @@ end
 
 
 rule "Add product discount"
+    agenda-group "order-discounts"
     no-loop true
+    lock-on-active true
     when
-        $order: Order(product.maxDiscount >= discount)
+        $order: Order(product.discount > 0, discount + product.discount <= product.maxDiscount)
     then
         modify($order) { setDiscount($order.getDiscount() + $order.getProduct().getDiscount()); }
         System.out.println("[DROOLS] Added product discount to the order");
@@ -60,9 +70,11 @@ end
 
 
 rule "Quantity discount"
+    agenda-group "order-discounts"
     no-loop true
+    lock-on-active true
     when
-        $order: Order(quantity >= product.orderQuantityDiscount)
+        $order: Order(product.orderQuantityDiscount > 0, quantity >= product.orderQuantityDiscount)
     then
         modify($order) { setDiscount($order.getDiscount() + $order.getProduct().getQuantityDiscount()); }
         System.out.println("[DROOLS] Added quantity discount");
