@@ -30,14 +30,18 @@ public class Order {
     @Column(nullable = false)
     private Float discount;
 
+    @Column
+    private String usersCoupon;
+
     @ManyToOne
     private Product product;
 
-    public Order(Product product, int quantity) {
+    public Order(Product product, String usersCoupon, int quantity) {
         this.product = product;
         this.quantity = quantity;
         this.price = product.getPrice();
         this.date = new Date();
         this.discount = 0f;
+        this.usersCoupon = usersCoupon;
     }
 }

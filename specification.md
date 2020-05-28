@@ -19,22 +19,30 @@ Ulaz u sistem predstavljaju artikli koji se kupuju sa njihovim informacijama o p
 U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom popunjavati sa podacima o korisnicima i artiklima, tj. rezonovanje isključivo zavisi od kupca i artikla koji kupuje i eventualno njegovih prethodnih kupovina ako je prodavac omogućio popust za kupce koji često kupuju od njega.
 	
 ## Pravila
-- [x] aplikacija sama menja kategoriju kupca na osnovu broja kupovina ili potrošene sume novca
+- Klasifikacija korisnika  
+	Aplikacija sama menja kategoriju kupca na osnovu broja kupovina ili potrošene sume novca
 	- [x] kupac ce postati SILVER ako je trenutna kategorija REGULAR i ako je broj narudzbina 50
 	- [x] kupac ce postati GOLD ako je trenutna kategorija SILVER, broj narudzbina 100 i suma potrosenog novca 3000$
 	- [x] kupac ce postati DIAMOND ako je trenutna kategorija GOLD, broj narudzbina 500 i suma potrosenog novca 8000$
-- [x] kupci sa kategorijom GOLD imaju popust na sve artikle od 5%
-- [x] kupci sa kategorijom DIAMOND imaju popust na sve artikle od 10%
-- [x] kupci sa kategorijom SILVER, GOLD i DIAMOND ne plaćaju poštarinu
-- [x] uracunavanje popusta samog artikla
-- [x] uracunavanje popusta na kolicinu
-- [x] racunanje nove cene ako se narucuje vise od jednog proizvoda
-- [ ] uracunavanje sezonskog popusta
-- [ ] uracunavanje popusta na kategoriju
-- [ ] uracunavanje popusta za ceste kupce
-- [ ] uracunavanje popusta na osnovu kupona
-- [ ] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti
-- [ ] ?? preporuka za kupovinu artikala
+
+- Popusti prilikom kupovine
+	- [x] kupci sa kategorijom GOLD imaju popust na sve artikle od 5%
+	- [x] kupci sa kategorijom DIAMOND imaju popust na sve artikle od 10%
+	- [x] kupci sa kategorijom SILVER, GOLD i DIAMOND ne plaćaju poštarinu
+	- [x] uracunavanje popusta samog artikla
+	- [x] uracunavanje popusta na kolicinu
+	- [x] racunanje nove cene ako se narucuje vise od jednog proizvoda
+	- [ ] uracunavanje sezonskog popusta
+	- [ ] uracunavanje popusta na kategoriju
+	- [ ] uracunavanje popusta za ceste kupce
+	- [x] uracunavanje popusta na osnovu kupona
+	- [ ] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti
+
+- Sistem preporuke za kupovinu artikala
+	- [ ] Preporuciti artikle iz kategorije za koju korisnik ima najvise porudzbina
+	- [x] Preporuciti artikle koji su na snizenju
+	- [ ] Ako preko 60% korisnikovih narudzbina ima besplatnu postarinu, preporuciti mu artikle sa besplatnom postarinom (ovo vazi samo za korisnike sa REGULAR kategorijom) 
+
 - računanje svih popusta prilikom kupovine: klasičan popust na artikal, popust na količinu, sezonski popust, popust na kategoriju, popust za česte kupce kod jednog prodavca i popust na osnovu kupona. Ovde bi se vodilo računa da ukupni popust ne može da pređe neku predefinisanu vrednost, a i da se ne mogu baš sve vrste popusta iskoristiti istovremeno.
 
 ## Primer rezonovanja za kupovinu artikla:

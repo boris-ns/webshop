@@ -14,9 +14,12 @@ import rs.ac.uns.ftn.webshopservice.mappers.ProductMapper;
 import rs.ac.uns.ftn.webshopservice.model.*;
 import rs.ac.uns.ftn.webshopservice.repository.OrderRepository;
 import rs.ac.uns.ftn.webshopservice.repository.ProductRepository;
+import rs.ac.uns.ftn.webshopservice.repository.UserRepository;
 import rs.ac.uns.ftn.webshopservice.service.ProductCategoryService;
 import rs.ac.uns.ftn.webshopservice.service.ProductService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -27,6 +30,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private ProductCategoryService productCategoryService;
@@ -83,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
     public Order buy(PlaceOrderDTO order) {
         Buyer buyer = (Buyer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Product product = this.getById(order.getProductId());
-        Order productOrder = new Order(product, order.getQuantity());
+        Order productOrder = new Order(product, order.getCoupon(), order.getQuantity());
 
         KieSession kieSession = kieContainer.newKieSession();
 //        kieSession.setGlobal("order", productOrder);
@@ -97,8 +103,28 @@ public class ProductServiceImpl implements ProductService {
         double priceDiscount =
                 (productOrder.getPrice() - productOrder.getProduct().getShippingPrice()) * productOrder.getDiscount();
         productOrder.setPrice(productOrder.getPrice() - priceDiscount);
+
         productOrder = orderRepository.save(productOrder);
+        buyer.getOrders().add(productOrder);
+        userRepository.save(buyer);
 
         return productOrder;
+    }
+
+    @Override
+    public List<Product> recommendations() {
+        Buyer buyer = (Buyer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Product> products = this.getAll();
+        ArrayList<Product> recommendations = new ArrayList<>();
+
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.setGlobal("g_recommendations", recommendations);
+        kieSession.setGlobal("g_products", products);
+        kieSession.insert(buyer);
+        kieSession.getAgenda().getAgendaGroup(KieAgendaGroups.RECOMMENDATIONS).setFocus();
+        kieSession.fireAllRules();
+        kieSession.dispose();
+
+        return recommendations;
     }
 }

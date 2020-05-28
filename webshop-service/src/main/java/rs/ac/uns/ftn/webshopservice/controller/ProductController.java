@@ -55,4 +55,11 @@ public class ProductController {
     public ResponseEntity<OrderDTO> placeOrder(@Valid @RequestBody PlaceOrderDTO order) {
         return new ResponseEntity<>(new OrderDTO(productService.buy(order)), HttpStatus.OK);
     }
+
+    @GetMapping("/recommendations")
+    @PreAuthorize("hasRole('ROLE_BUYER')")
+    public ResponseEntity<List<ProductDTO>> recommendations() {
+        List<Product> products = productService.recommendations();
+        return new ResponseEntity<>(ProductMapper.toListDto(products), HttpStatus.OK);
+    }
 }

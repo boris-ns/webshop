@@ -15,4 +15,5 @@ public interface ProductService {
     Product add(ProductToAddDTO productToAdd);
     void delete(Long id);
     Order buy(PlaceOrderDTO order);
+    List<Product> recommendations();
 }

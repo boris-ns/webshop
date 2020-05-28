@@ -79,3 +79,19 @@ rule "Quantity discount"
         modify($order) { setDiscount($order.getDiscount() + $order.getProduct().getQuantityDiscount()); }
         System.out.println("[DROOLS] Added quantity discount");
 end
+
+
+rule "Coupon discount"
+    agenda-group "order-discounts"
+    no-loop true
+    lock-on-active true
+    when
+        $order: Order(
+            product.couponDiscount > 0, 
+            usersCoupon == product.coupon,
+            $couponDiscount: product.couponDiscount
+        )
+    then
+        modify($order) { setDiscount($order.getDiscount() + $couponDiscount) }
+        System.out.println("[DROOLS] Added coupon discount");
+end

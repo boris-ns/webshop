@@ -1,0 +1,86 @@
+package webshop.rules;
+
+import rs.ac.uns.ftn.webshopservice.model.Buyer;
+import rs.ac.uns.ftn.webshopservice.model.Product;
+import rs.ac.uns.ftn.webshopservice.model.ProductCategory;
+import rs.ac.uns.ftn.webshopservice.model.Order;
+import java.util.ArrayList;
+import java.util.List;
+
+global ArrayList<Product> g_recommendations;
+global ArrayList<Product> g_products;
+
+rule "Recommend by categories"
+    agenda-group "recommendations"
+    salience 10
+    no-loop true
+    lock-on-active true
+    when
+        $buyer: Buyer($buyerOrders: orders)
+        // TODO: pronaci prve 2 kategorije koje korisnik najvise 
+        // konzumira i onda dodati sve elemente tih kategorija u g_rec
+        $oftenCategories: List() from collect(
+            Order($product: product) from $buyerOrders
+        )
+
+        // ovde mozes onda ici na fazon - prolazak kroz produkte i not member of $oftenCategory
+        // i onda ga dodas u listu
+        // $recommendedProducts: List() from collect()
+
+    then
+        g_recommendations.addAll(g_products);
+        System.out.println($buyerOrders.size());
+        System.out.println($oftenCategories.size());
+        // System.out.println(g_recommendations.size());
+        System.out.println("[DROOLS] Recommended " + g_recommendations.size() + " products by categories");
+end
+
+
+rule "Recommend by product discount"
+    agenda-group "recommendations"
+    salience 9
+    no-loop true
+    lock-on-active true
+    when
+        // This rule actually finds products that don't have any discount
+        // because it is easier to remove those in 'then' part of the rule
+        // than to search products with discount and query previous recommendations
+        // to remove those without discount
+        $productsWithoutDiscount: List() from collect(
+            Product(discount == 0) from g_products // TODO: maybe it will be better to use g_recommendations, but that doesn't work for some reason
+        )
+    then
+        g_recommendations.removeAll($productsWithoutDiscount);
+        System.out.println("[DROOLS] Recommend by product discount");
+        // todo
+end
+
+
+rule "Recommend free shipping"
+    agenda-group "recommendations"
+    salience 8
+    no-loop true
+    lock-on-active true
+    when
+        // prvo videti da li je korisnik REGULAR - posto ostali ne placaju shipping
+        
+        // prebrojati ordere koji imaju free shipping
+
+        // ako je taj broj veci od 60% svih svih ordera onda mozes da mu preporucujes 
+        // proizvode sa free shipping
+    then
+
+end
+
+rule "Recommend by price range"
+    agenda-group "recommendations"
+    no-loop true
+    lock-on-active true
+    when
+        // todo
+        // definisait neke price rangeove manuelno 
+        // i videti onda u kojima je korisnik najvise kupovao
+        // a ostale stvari izbaciti iz g_rec 
+    then
+        // todo
+end
