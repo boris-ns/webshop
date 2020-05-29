@@ -4,6 +4,7 @@ import rs.ac.uns.ftn.webshopservice.model.Buyer;
 import rs.ac.uns.ftn.webshopservice.model.Product;
 import rs.ac.uns.ftn.webshopservice.model.ProductCategory;
 import rs.ac.uns.ftn.webshopservice.model.Order;
+import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,24 +53,28 @@ rule "Recommend by product discount"
     then
         g_recommendations.removeAll($productsWithoutDiscount);
         System.out.println("[DROOLS] Recommend by product discount");
-        // todo
 end
 
 
-rule "Recommend free shipping"
+rule "Recommend by free shipping"
     agenda-group "recommendations"
     salience 8
     no-loop true
     lock-on-active true
     when
-        // prvo videti da li je korisnik REGULAR - posto ostali ne placaju shipping
+        // First check if the user's category is REGULAR, because shipping only applies to them
+        Buyer(category == BuyerCategory.REGULAR, $buyersOrders: orders)
         
-        // prebrojati ordere koji imaju free shipping
-
-        // ako je taj broj veci od 60% svih svih ordera onda mozes da mu preporucujes 
-        // proizvode sa free shipping
+        // Check if 60% of users orders have free shipping
+        // If it is higher, then we will recommend products with free shipping
+        Number(intValue >= 0.6 * $buyersOrders.size()) from accumulate(
+            Order(product.shippingPrice == 0) from $buyersOrders,
+            count()
+        )
     then
-
+        // Remove all products that don't have free shipping
+        g_recommendations.removeIf(product -> ((Product)product).getShippingPrice() != 0);
+        System.out.println("[DROOLS] Recommend by free shipping");
 end
 
 rule "Recommend by price range"

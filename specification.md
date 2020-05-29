@@ -41,7 +41,8 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 - Sistem preporuke za kupovinu artikala
 	- [ ] Preporuciti artikle iz kategorije za koju korisnik ima najvise porudzbina
 	- [x] Preporuciti artikle koji su na snizenju
-	- [ ] Ako preko 60% korisnikovih narudzbina ima besplatnu postarinu, preporuciti mu artikle sa besplatnom postarinom (ovo vazi samo za korisnike sa REGULAR kategorijom) 
+	- [x] Ako bar 60% korisnikovih narudzbina ima besplatnu postarinu, preporuciti mu artikle sa besplatnom postarinom (ovo vazi samo za korisnike sa REGULAR kategorijom) 
+	- [ ] Preporuciti artikle po cenovnom rangu - naci srednju vrednost korisnikovih porudzbina i preporuciti artikle koji imaju cenu +-20% od srednje vrednosti
 
 - računanje svih popusta prilikom kupovine: klasičan popust na artikal, popust na količinu, sezonski popust, popust na kategoriju, popust za česte kupce kod jednog prodavca i popust na osnovu kupona. Ovde bi se vodilo računa da ukupni popust ne može da pređe neku predefinisanu vrednost, a i da se ne mogu baš sve vrste popusta iskoristiti istovremeno.
 
