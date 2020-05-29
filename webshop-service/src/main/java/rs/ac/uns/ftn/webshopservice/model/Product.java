@@ -30,7 +30,7 @@ public class Product {
     private Integer quantity;
 
     @Column(nullable = false)
-    private Integer maxQuantity;
+    private Integer maxQuantity; // sta je ovaj atribut, jel to isto kao i ovaj ispod ?
 
     @Column(nullable = false)
     private Integer maxOrderQuantity;

@@ -11,6 +11,8 @@ import java.util.List;
 global ArrayList<Product> g_recommendations;
 global ArrayList<Product> g_products;
 
+
+// TODO: Implement this 
 rule "Recommend by categories"
     agenda-group "recommendations"
     salience 10
@@ -100,4 +102,25 @@ rule "Recommend by price range"
         });
 
         System.out.println("[DROOLS] Recommend by price range");
+end
+
+
+rule "Recommend by quantity"
+    agenda-group "recommendations"
+    salience 6
+    no-loop true
+    lock-on-active true
+    when
+        Buyer($buyersOrders: orders)
+
+        // Find how many orders have quantity more than 1. If that count is more than 70% of users orders
+        // then we will recommend those kind of products (leave them  in g_recommendations) otherwise
+        // we will delete them for g_recommendations
+        Number(intValue < 0.7 * $buyersOrders.size()) from accumulate(
+            Order(quantity > 1) from $buyersOrders,
+            count()
+        )
+    then
+        g_recommendations.removeIf(product -> ((Product) product).getMaxOrderQuantity() != 1);
+        System.out.println("[DROOLS] Recommend by quantity");
 end
