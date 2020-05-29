@@ -79,13 +79,25 @@ end
 
 rule "Recommend by price range"
     agenda-group "recommendations"
+    salience 7
     no-loop true
     lock-on-active true
     when
-        // todo
-        // definisait neke price rangeove manuelno 
-        // i videti onda u kojima je korisnik najvise kupovao
-        // a ostale stvari izbaciti iz g_rec 
+        Buyer($buyersOrders: orders)
+
+        // First, find mean value of users orders
+        $meanPrice: Double() from accumulate(
+            Order($price: price) from $buyersOrders,
+            average($price)
+        )
     then
-        // todo
+        // Remove all products from recommendations whose price is 
+        // not in the range of +-20% of mean price value
+        g_recommendations.removeIf(product -> {
+            Product p = (Product) product;
+            double price = p.getPrice();
+            return !(price >= ($meanPrice - $meanPrice * 0.2) || price <= ($meanPrice + $meanPrice * 0.2));
+        });
+
+        System.out.println("[DROOLS] Recommend by price range");
 end
