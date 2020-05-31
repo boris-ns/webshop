@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  recommendedProducts: [] = [];
   products: [] = [];
   productToBuy: any = {};
   showBuyDialog = false;
@@ -22,17 +23,26 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getProducts();
+    this.getRecommendedProducts();
   }
 
   isUserLoggedIn(): boolean {
     return this.authService.isUserRoleLoggedIn(ROLE_BUYER);
   }
 
-  getProducts(): void {
+  private getProducts(): void {
     this.productsService.getAll().subscribe(data => {
       this.products = data;
     }, error => {
       this.toastr.error('There was and error while getting the products.');
+    });
+  }
+
+  private getRecommendedProducts(): void {
+    this.productsService.getRecommendedProducts().subscribe(data => {
+      this.recommendedProducts = data;
+    }, error => {
+      this.toastr.error('There was an error while getting recommended products.');
     });
   }
 

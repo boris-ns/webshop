@@ -1,4 +1,4 @@
-import { PLACE_ORDER_URL } from './../config/api-paths';
+import { PLACE_ORDER_URL, RECOMMENDED_PRODUCTS_URL } from './../config/api-paths';
 import { PlaceOrderDTO } from './../models/place-order-dto.model';
 import { ALL_PRODUCTS_URL } from '../config/api-paths';
 import { Observable } from 'rxjs';
@@ -21,6 +21,10 @@ export class ProductsService {
 
   getProducts(): Observable<any> {
     return this.http.get(MY_PRODUCTS_URL);
+  }
+
+  getRecommendedProducts(): Observable<any> {
+    return this.http.get(RECOMMENDED_PRODUCTS_URL);
   }
 
   delete(id: number): Observable<any> {
