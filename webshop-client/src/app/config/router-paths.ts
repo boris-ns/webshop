@@ -14,3 +14,7 @@ export const DISCOUNTS_PATH = 'discounts';
 // Seller paths
 export const SELLER_HOME_PATH = 'seller';
 export const SELLER_MY_PRODUCTS_PATH = 'products';
+
+// Buyer paths
+export const BUYER_HOME_PATH = 'buyer';
+export const BUYER_MY_ORDERS_PATH = 'my-orders';

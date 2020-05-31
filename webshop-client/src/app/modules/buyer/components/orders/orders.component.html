@@ -1,0 +1,26 @@
+<div class="container">
+    <h1 class="ui header">My orders</h1>
+
+    <table class="ui table celled striped">
+        <thead>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Store</th>
+            <th>Order date</th>
+            <th>Quantity</th>
+            <th>Discount</th>
+            <th>Price</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders">
+                <td>{{ order.product.name }}</td>
+                <td>{{ order.product.category }}</td>
+                <td>{{ order.product.storeName }}</td>
+                <td>{{ order.date | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.discount * 100 }} %</td>
+                <td>$ {{ order.newPrice | number : '1.2-2' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

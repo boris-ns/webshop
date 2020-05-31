@@ -10,6 +10,10 @@ export const PRODUCT_ALL_CATEGORIES_URL = `${BASE_URL}/api/product-categories/pu
 // Stores
 export const STORES_URL = `${BASE_URL}/api/stores`;
 
+// Orders
+export const ORDERS_URL = `${BASE_URL}/api/orders`;
+export const MY_ORDERS_URL = `${ORDERS_URL}/my`;
+
 // Products
 export const PRODUCTS_URL = `${BASE_URL}/api/products`;
 export const MY_PRODUCTS_URL = `${PRODUCTS_URL}/my-store`;
