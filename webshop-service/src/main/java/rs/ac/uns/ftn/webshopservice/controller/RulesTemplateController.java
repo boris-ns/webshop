@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.webshopservice.dto.request.AddClassifyBuyerTemplateDTO;
 import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import rs.ac.uns.ftn.webshopservice.model.template.ClassifyBuyerTemplate;
+import rs.ac.uns.ftn.webshopservice.utils.KieSessionCreator;
 
 import javax.validation.Valid;
 import java.io.InputStream;
@@ -46,24 +47,7 @@ public class RulesTemplateController {
         String drl = compiler.compile(data, templateFile);
 
         System.out.print(drl);
-
-        // DRL string se lepo kreira, ali kako to ukuponovati u kiecontainer
-        // koji ce praviti sve sledece sesije u kojima zelim da imam
-        // taj novi DRL fajl
-        KieHelper kieHelper = new KieHelper();
-        kieHelper.addContent(drl, ResourceType.DRL);
-        Results results = kieHelper.verify();
-
-        if (results.hasMessages(Message.Level.WARNING, Message.Level.ERROR)){
-            List<Message> messages = results.getMessages(Message.Level.WARNING, Message.Level.ERROR);
-            for (Message message : messages) {
-                System.out.println("Error: "+message.getText());
-            }
-
-            throw new IllegalStateException("Compilation errors were found. Check the logs.");
-        }
-
-//        return kieHelper.build().newKieSession();
+        KieSessionCreator.createClassifyBuyersSessionFromDRL(drl);
 
         return ResponseEntity.ok().build();
     }

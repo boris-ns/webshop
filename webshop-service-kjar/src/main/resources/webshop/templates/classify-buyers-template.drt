@@ -12,7 +12,7 @@ import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 template "classify-buyers"
 
 rule "Classify customers_@{row.rowNumber}"
-    agenda-group "classify-buyers-template"
+    agenda-group "classify-buyers"
     no-loop true
     when
         $user: Buyer(category == BuyerCategory.@{buyerCategory}, 

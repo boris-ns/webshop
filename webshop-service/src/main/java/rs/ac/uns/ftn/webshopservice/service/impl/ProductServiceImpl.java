@@ -17,9 +17,9 @@ import rs.ac.uns.ftn.webshopservice.repository.ProductRepository;
 import rs.ac.uns.ftn.webshopservice.repository.UserRepository;
 import rs.ac.uns.ftn.webshopservice.service.ProductCategoryService;
 import rs.ac.uns.ftn.webshopservice.service.ProductService;
+import rs.ac.uns.ftn.webshopservice.utils.KieSessionCreator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -91,6 +91,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = this.getById(order.getProductId());
         Order productOrder = new Order(product, order.getCoupon(), order.getQuantity());
 
+        // Calculate discount for order
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(productOrder);
         kieSession.insert(buyer);
@@ -105,11 +106,18 @@ public class ProductServiceImpl implements ProductService {
         productOrder = orderRepository.save(productOrder);
         buyer.getOrders().add(productOrder);
 
-        KieSession kieSessionClassify = kieContainer.newKieSession();
-        kieSessionClassify.insert(buyer);
-        kieSessionClassify.getAgenda().getAgendaGroup(KieAgendaGroups.CLASSIFY_BUYERS_TEMPLATE).setFocus();
-        kieSessionClassify.fireAllRules();
-        kieSessionClassify.dispose();
+        // Classify buyers
+        KieSession kieClassifyBuyers = KieSessionCreator.classifyBuyersSession;
+
+        // If session created from templates doesn't exist, use the default one
+        if (kieClassifyBuyers == null) {
+            kieClassifyBuyers = kieContainer.newKieSession();
+        }
+
+        kieClassifyBuyers.insert(buyer);
+        kieClassifyBuyers.getAgenda().getAgendaGroup(KieAgendaGroups.CLASSIFY_BUYERS).setFocus();
+        kieClassifyBuyers.fireAllRules();
+        kieClassifyBuyers.dispose();
 
         userRepository.save(buyer);
 
