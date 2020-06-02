@@ -4,6 +4,7 @@ import rs.ac.uns.ftn.webshopservice.model.Buyer;
 import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 
 rule "Set buyer category to SILVER"
+    agenda-group "classify-buyers"
     no-loop true
     when
         $user: Buyer(category == BuyerCategory.REGULAR, orders.size() == 50)
@@ -15,6 +16,7 @@ rule "Set buyer category to SILVER"
 end
 
 rule "Set buyer category to GOLD"
+    agenda-group "classify-buyers"
     no-loop true
     when
         $user: Buyer(category == BuyerCategory.SILVER, orders.size() == 100, totalMoneySpent > 3000)
@@ -27,6 +29,7 @@ end
 
 
 rule "Set buyer category to DIAMOND"
+    agenda-group "classify-buyers"
     no-loop true
     when
         $user: Buyer(category == BuyerCategory.GOLD, orders.size() == 500, totalMoneySpent > 8000)

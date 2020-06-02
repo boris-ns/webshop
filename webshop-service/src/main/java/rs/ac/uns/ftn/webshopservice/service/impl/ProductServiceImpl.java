@@ -92,12 +92,10 @@ public class ProductServiceImpl implements ProductService {
         Order productOrder = new Order(product, order.getCoupon(), order.getQuantity());
 
         KieSession kieSession = kieContainer.newKieSession();
-//        kieSession.setGlobal("order", productOrder);
         kieSession.insert(productOrder);
         kieSession.insert(buyer);
         kieSession.getAgenda().getAgendaGroup(KieAgendaGroups.ORDER_DISCOUNTS).setFocus();
         kieSession.fireAllRules();
-//        Order newProductOrder = (Order) kieSession.getGlobal("order");
         kieSession.dispose();
 
         double priceDiscount =
@@ -106,6 +104,13 @@ public class ProductServiceImpl implements ProductService {
 
         productOrder = orderRepository.save(productOrder);
         buyer.getOrders().add(productOrder);
+
+        KieSession kieSessionClassify = kieContainer.newKieSession();
+        kieSessionClassify.insert(buyer);
+        kieSessionClassify.getAgenda().getAgendaGroup(KieAgendaGroups.CLASSIFY_BUYERS).setFocus();
+        kieSessionClassify.fireAllRules();
+        kieSessionClassify.dispose();
+
         userRepository.save(buyer);
 
         return productOrder;
