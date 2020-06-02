@@ -1,0 +1,27 @@
+template header
+buyerCategory
+newCategory
+ordersSize
+moneySpent
+
+package webshop.templates;
+
+import rs.ac.uns.ftn.webshopservice.model.Buyer;
+import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
+
+template "classify-buyers"
+
+rule "Classify customers_@{row.rowNumber}"
+    agenda-group "classify-buyers-template"
+    no-loop true
+    when
+        $user: Buyer(category == BuyerCategory.@{buyerCategory}, 
+                    orders.size() == @{ordersSize}, 
+                    totalMoneySpent > @{moneySpent}
+        )
+    then
+        modify($user) { setCategory(BuyerCategory.@{newCategory}); }
+        System.out.println("[DROOLS] Buyer with id=" + $user.getId() + ", category set to @{newCategory}");
+end
+
+end template

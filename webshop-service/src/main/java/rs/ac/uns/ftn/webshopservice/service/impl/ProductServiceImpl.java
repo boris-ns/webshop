@@ -107,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
 
         KieSession kieSessionClassify = kieContainer.newKieSession();
         kieSessionClassify.insert(buyer);
-        kieSessionClassify.getAgenda().getAgendaGroup(KieAgendaGroups.CLASSIFY_BUYERS).setFocus();
+        kieSessionClassify.getAgenda().getAgendaGroup(KieAgendaGroups.CLASSIFY_BUYERS_TEMPLATE).setFocus();
         kieSessionClassify.fireAllRules();
         kieSessionClassify.dispose();
 
