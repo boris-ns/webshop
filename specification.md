@@ -20,7 +20,10 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	
 ## Pravila
 - Klasifikacija korisnika  
-	Aplikacija sama menja kategoriju kupca na osnovu broja kupovina ili potrošene sume novca
+	Aplikacija sama menja kategoriju kupca na osnovu broja kupovina ili potrošene sume novca.  
+	Admin ima mogucnost da generise ova 3 (ili vise) pravila koriscenjem rule template-a i popunjavanjem forme za granicne 
+	vrednosti. Posto se ova pravila aktiviraju samo u slucaju kupovine, postoje i implementirana defaultna pravila
+	koja ce se koristiti ukoliko admin eksplicitno ne kreira svoja pravila. 
 	- [x] kupac ce postati SILVER ako je trenutna kategorija REGULAR i ako je broj narudzbina 50
 	- [x] kupac ce postati GOLD ako je trenutna kategorija SILVER, broj narudzbina 100 i suma potrosenog novca 3000$
 	- [x] kupac ce postati DIAMOND ako je trenutna kategorija GOLD, broj narudzbina 500 i suma potrosenog novca 8000$
