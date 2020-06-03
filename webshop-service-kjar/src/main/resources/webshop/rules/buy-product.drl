@@ -112,3 +112,14 @@ rule "Discount for frequent customers"
         modify($order) { setDiscount($order.getDiscount() + $frequentBuyerDiscount) }
         System.out.println("[DROOLS] Discount for frequent customers. Num.of orders in this store: " + $numOfOrders);
 end
+
+
+rule "Check for maximum discount"
+    agenda-group "order-discounts"
+    no-loop true
+    when
+        $order: Order(discount > product.maxDiscount, $maxDiscount: product.maxDiscount)
+    then
+        modify($order) { setDiscount($maxDiscount) }
+        System.out.println("[DROOLS] Discount set to max discount");
+end

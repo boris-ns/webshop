@@ -39,6 +39,7 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	- [x] uracunavanje popusta na osnovu kupona
 	- [ ] uracunavanje sezonskog popusta
 	- [ ] uracunavanje popusta na kategoriju
+	- [x] ograniciti popust na maksimalnu zadatu vrednost (ovo je napravljeno kao zasebno pravilo koje se aktivira nakon svake promene popusta, realizovano je kao zasebno pravilo tako da se ne mora voditi racuna o maksimalnom popustu tokom kreiranja ostalih pravila - uslovi ce biti jednostavniji)
 	- [ ] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti
 
 - Sistem preporuke za kupovinu artikala
