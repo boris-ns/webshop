@@ -126,7 +126,7 @@ rule "Recommend by quantity"
 end
 
 
-rule "Recommend left-over products"
+rule "Recommend leftover products"
     agenda-group "recommendations"
     salience 5
     no-loop true
@@ -134,11 +134,18 @@ rule "Recommend left-over products"
     when
         // If 40% of all recommendations has quantity lower than 20
         // we will delete the others. Otherwise, everything stays the same.
+        $leftoverProducts: List() from collect(
+            Product(quantity <= 20) from g_recommendations
+        )
+
+        // For some reason this doesn't work. It throws an error when activating
+        // order-discount rules. Current solution is workaroud. 
+        /* 
         Number(intValue >= 0.4 * g_recommendations.size()) from accumulate(
             Product(quantity <= 20) from g_recommendations,
             count()
-        )
+        )*/
     then
-        g_recommendations.removeIf(product -> ((Product) product).getQuantity() > 20);
-        System.out.println("[DROOLS] Recommend left-over products");
+        g_recommendations.removeIf(product -> ((Product) product).getQuantity() > 20 && $leftoverProducts.size() >= 0.4 * g_recommendations.size());
+        System.out.println("[DROOLS] Recommend leftover products");
 end

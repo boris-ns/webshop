@@ -89,6 +89,15 @@ public class ProductServiceImpl implements ProductService {
     public Order buy(PlaceOrderDTO order) {
         Buyer buyer = (Buyer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Product product = this.getById(order.getProductId());
+
+        if (order.getQuantity() > product.getQuantity()) {
+            throw new ApiRequestException("Not enough products in the store.");
+        }
+
+        if (order.getQuantity() > product.getMaxOrderQuantity()) {
+            throw new ApiRequestException("You can't order that much products at once");
+        }
+
         Order productOrder = new Order(product, order.getCoupon(), order.getQuantity());
 
         // Calculate discount for order
@@ -105,6 +114,9 @@ public class ProductServiceImpl implements ProductService {
 
         productOrder = orderRepository.save(productOrder);
         buyer.getOrders().add(productOrder);
+
+        product.setQuantity(product.getQuantity() - productOrder.getQuantity());
+        productRepository.save(product);
 
         // Classify buyers
         KieSession kieClassifyBuyers = KieSessionCreator.classifyBuyersSession;
