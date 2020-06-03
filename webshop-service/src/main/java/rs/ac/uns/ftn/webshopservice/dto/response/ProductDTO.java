@@ -24,6 +24,7 @@ public class ProductDTO {
     private Float couponDiscount;
     private String storeName;
     private String category;
+    private boolean needsRestock;
 
     public ProductDTO(Product product) {
         this.id = product.getId();
@@ -40,5 +41,6 @@ public class ProductDTO {
         this.couponDiscount = product.getCouponDiscount();
         this.storeName = product.getStore().getName();
         this.category = product.getCategory().getName();
+        this.needsRestock = product.getNeedsRestock();
     }
 }

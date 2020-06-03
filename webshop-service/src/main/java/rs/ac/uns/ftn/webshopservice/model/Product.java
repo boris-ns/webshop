@@ -53,6 +53,9 @@ public class Product {
     @Column(nullable = false)
     private Float couponDiscount;
 
+    @Column(nullable = false)
+    private Boolean needsRestock;
+
     @ManyToOne
     private Store store;
 

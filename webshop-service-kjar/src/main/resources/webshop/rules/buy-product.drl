@@ -123,3 +123,38 @@ rule "Check for maximum discount"
         modify($order) { setDiscount($maxDiscount) }
         System.out.println("[DROOLS] Discount set to max discount");
 end
+
+
+rule "Finish buying products"
+    agenda-group "order-discounts"
+    no-loop true
+    salience -10
+    lock-on-active true
+    when
+        $order: Order($product: product)
+    then
+        modify($order) {
+            setPrice(
+                $order.getPrice() - ($order.getPrice() - $order.getProduct().getShippingPrice()) * $order.getDiscount()
+            )
+        };
+        
+        modify($product) {
+            setQuantity($product.getQuantity() - $order.getQuantity())
+        };
+                
+        System.out.println("[DROOLS] Finish buying products");
+end
+
+
+rule "Notify seller if product quantity is small"
+    agenda-group "order-discounts"
+    no-loop true
+    salience -11
+    lock-on-active true
+    when
+        Order(product.quantity < 20, $product: product)
+    then
+        modify($product) { setNeedsRestock(true) }
+        System.out.println("[DROOLS] Notify seller becase product quantity is smaller than 20");
+end

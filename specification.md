@@ -1,4 +1,3 @@
-
 # SISTEMI BAZIRANI NA ZNANJU SIIT - PREDLOG PROJEKTA
 
 ## Članovi tima:
@@ -40,7 +39,8 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	- [ ] uracunavanje sezonskog popusta
 	- [ ] uracunavanje popusta na kategoriju
 	- [x] ograniciti popust na maksimalnu zadatu vrednost (ovo je napravljeno kao zasebno pravilo koje se aktivira nakon svake promene popusta, realizovano je kao zasebno pravilo tako da se ne mora voditi racuna o maksimalnom popustu tokom kreiranja ostalih pravila - uslovi ce biti jednostavniji)
-	- [ ] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti
+	- [x] zavrsavanje kupovine - pravilo koje ce se pretposlednje aktivirati i izvrsice racunanje konacne cene proizvoda i smanjice broj artikala u magacinu, sto ce dovesti do aktivacije pravila ispod (obavestavanje prodavca)
+	- [x] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti - ovo pravilo se aktivira poslednje u grupi pravila za kupovinu i sluzi da postavi flag na true ako je broj artikala pao ispod 20
 
 - Sistem preporuke za kupovinu artikala
 	Sistem preporuke se sastoji od pravila koja se izvrsavaju u nizu (koriscenjem 'salience' atributa) i sluze kao filter za sve dostupne artikle. U svakom sledecem koraku (pravilu) niz preporuke ce se smanjiti ukoliko su uslovi ispunjeni. Izlaz iz poslednjeg pravila predstavlja konacnu listu preporucenih artikala.

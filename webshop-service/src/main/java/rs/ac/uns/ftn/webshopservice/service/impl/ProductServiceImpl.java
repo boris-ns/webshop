@@ -66,6 +66,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = ProductMapper.toProduct(productToAdd);
         product.setStore(user.getStore());
         product.setCategory(category);
+        product.setNeedsRestock(false);
 
         product = productRepository.save(product);
         return product;
@@ -104,18 +105,19 @@ public class ProductServiceImpl implements ProductService {
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(productOrder);
         kieSession.insert(buyer);
+        kieSession.insert(product);
         kieSession.getAgenda().getAgendaGroup(KieAgendaGroups.ORDER_DISCOUNTS).setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
 
-        double priceDiscount =
-                (productOrder.getPrice() - productOrder.getProduct().getShippingPrice()) * productOrder.getDiscount();
-        productOrder.setPrice(productOrder.getPrice() - priceDiscount);
+//        double priceDiscount =
+//                (productOrder.getPrice() - productOrder.getProduct().getShippingPrice()) * productOrder.getDiscount();
+//        productOrder.setPrice(productOrder.getPrice() - priceDiscount);
 
         productOrder = orderRepository.save(productOrder);
         buyer.getOrders().add(productOrder);
 
-        product.setQuantity(product.getQuantity() - productOrder.getQuantity());
+//        product.setQuantity(product.getQuantity() - productOrder.getQuantity());
         productRepository.save(product);
 
         // Classify buyers
