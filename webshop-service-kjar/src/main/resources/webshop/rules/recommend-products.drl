@@ -124,3 +124,21 @@ rule "Recommend by quantity"
         g_recommendations.removeIf(product -> ((Product) product).getMaxOrderQuantity() != 1);
         System.out.println("[DROOLS] Recommend by quantity");
 end
+
+
+rule "Recommend left-over products"
+    agenda-group "recommendations"
+    salience 5
+    no-loop true
+    lock-on-active true
+    when
+        // If 40% of all recommendations has quantity lower than 20
+        // we will delete the others. Otherwise, everything stays the same.
+        Number(intValue >= 0.4 * g_recommendations.size()) from accumulate(
+            Product(quantity <= 20) from g_recommendations,
+            count()
+        )
+    then
+        g_recommendations.removeIf(product -> ((Product) product).getQuantity() > 20);
+        System.out.println("[DROOLS] Recommend left-over products");
+end

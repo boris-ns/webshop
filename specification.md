@@ -42,11 +42,13 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	- [ ] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti
 
 - Sistem preporuke za kupovinu artikala
+	Sistem preporuke se sastoji od pravila koja se izvrsavaju u nizu (koriscenjem 'salience' atributa) i sluze kao filter za sve dostupne artikle. U svakom sledecem koraku (pravilu) niz preporuke ce se smanjiti ukoliko su uslovi ispunjeni. Izlaz iz poslednjeg pravila predstavlja konacnu listu preporucenih artikala.
 	- [ ] Preporuciti artikle iz kategorije za koju korisnik ima najvise porudzbina
 	- [x] Preporuciti artikle koji su na snizenju
 	- [x] Ako bar 60% korisnikovih narudzbina ima besplatnu postarinu, preporuciti mu artikle sa besplatnom postarinom (ovo vazi samo za korisnike sa REGULAR kategorijom) 
 	- [x] Preporuciti artikle po cenovnom rangu - naci srednju vrednost korisnikovih porudzbina i preporuciti artikle koji imaju cenu u rangu +-20% od srednje vrednosti
 	- [x] Preporuciti artikle koji se mogu kupovati na veliko - u listi preporuka ce se naci artikli koji se mogu kupovati na veliko ako je korisnik u proslosti narucio bar 70% artikala na veliko
+	- [x] Preporuciti artikle koji je ostalo malo u prodavnici (ovo pravilo se izvrsava poslenje u nizu pravila za preporuke, ako je ostalo bar 40% artikala ciji je kvantitet manji ili jednak od 20, zanemaricemo sve ostale artikle i preporucicemo samo ove)
 
 - računanje svih popusta prilikom kupovine: klasičan popust na artikal, popust na količinu, sezonski popust, popust na kategoriju, popust za česte kupce kod jednog prodavca i popust na osnovu kupona. Ovde bi se vodilo računa da ukupni popust ne može da pređe neku predefinisanu vrednost, a i da se ne mogu baš sve vrste popusta iskoristiti istovremeno.
 
