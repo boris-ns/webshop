@@ -95,3 +95,20 @@ rule "Coupon discount"
         modify($order) { setDiscount($order.getDiscount() + $couponDiscount) }
         System.out.println("[DROOLS] Added coupon discount");
 end
+
+
+rule "Discount for frequent customers"
+    agenda-group "order-discounts"
+    no-loop true
+    lock-on-active true
+    when
+        $buyer: Buyer($buyersOrders: orders)
+        $order: Order($storeName: product.store.name, $frequentBuyerDiscount: product.store.frequentBuyerDiscount)
+        $numOfOrders: Number(intValue >= 10) from accumulate(
+            Order(product.store.name == $storeName) from $buyersOrders,
+            count()
+        )
+    then
+        modify($order) { setDiscount($order.getDiscount() + $frequentBuyerDiscount) }
+        System.out.println("[DROOLS] Discount for frequent customers. Num.of orders in this store: " + $numOfOrders);
+end

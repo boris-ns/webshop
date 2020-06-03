@@ -35,10 +35,10 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	- [x] uracunavanje popusta samog artikla
 	- [x] uracunavanje popusta na kolicinu
 	- [x] racunanje nove cene ako se narucuje vise od jednog proizvoda
+	- [x] uracunavanje popusta za ceste kupce (ako je kupac narucio 10 ili vise artikala iz jedne prodavnice, dobice popust koji je definisan prilikom registracije prodavnice)
+	- [x] uracunavanje popusta na osnovu kupona
 	- [ ] uracunavanje sezonskog popusta
 	- [ ] uracunavanje popusta na kategoriju
-	- [ ] uracunavanje popusta za ceste kupce
-	- [x] uracunavanje popusta na osnovu kupona
 	- [ ] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti
 
 - Sistem preporuke za kupovinu artikala
