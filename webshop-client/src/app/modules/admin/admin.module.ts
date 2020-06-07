@@ -8,10 +8,11 @@ import { StoresComponent } from './components/stores/stores.component';
 import { DiscountComponent } from './components/discount/discount.component';
 import { AddSeasonDiscountComponent } from './components/add-season-discount/add-season-discount.component';
 import { AddCategoryDiscountComponent } from './components/add-category-discount/add-category-discount.component';
+import { AddRuleComponent } from './components/add-rule/add-rule.component';
 
 
 @NgModule({
-  declarations: [ProductCategoriesComponent, HomeComponent, StoresComponent, DiscountComponent, AddSeasonDiscountComponent, AddCategoryDiscountComponent],
+  declarations: [ProductCategoriesComponent, HomeComponent, StoresComponent, DiscountComponent, AddSeasonDiscountComponent, AddCategoryDiscountComponent, AddRuleComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

@@ -29,3 +29,6 @@ export const VERIFY_ACC_URL = `${USERS_URL}/public/verify-account`;
 // Discounts
 export const SEASON_DISCOUNTS_URL = `${BASE_URL}/api/season-discounts`;
 export const CATEGORY_DISCOUNTS_URL = `${BASE_URL}/api/category-discounts`;
+
+// Rule templates
+export const ADD_RULE_TEMPLATE_URL = `${BASE_URL}/api/rule-templates/classify-buyers`;

@@ -1,0 +1,31 @@
+<div class="container">
+    <h1 class="ui header">Add rules</h1>
+    <h3 class="ui header">Rules for buyer classification</h3>
+
+    <h4 class="ui header">Add template restriction:</h4>
+    <!-- todo: ovde ide forma -->
+
+    <!-- todo: button za dodavanje u listu (tabelu) -->
+
+    <h4 class="ui header">Template restrictions:</h4>
+    <table class="ui table celled striped">
+        <thead>
+            <th>Old category</th>
+            <th>New category</th>
+            <th>Orders size</th>
+            <th>Money spent</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rule of rules">
+                <td>{{ rule.buyerCategory }}</td>
+                <td>{{ rule.oldCategory }}</td>
+                <td>{{ rule.ordersSize }}</td>
+                <td>{{ rule.moneySpent }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="ui button primary" (click)="submitRules()" [disabled]="rules.length === 0">
+        Generate rules
+    </button>
+</div>

@@ -10,6 +10,7 @@ export const SELLERS_PATH = 'sellers';
 export const PRODUCT_CATEGORIES_PATH = 'product-categories';
 export const STORES_PATH = 'stores';
 export const DISCOUNTS_PATH = 'discounts';
+export const ADD_RULE_PATH = 'add-rule';
 
 // Seller paths
 export const SELLER_HOME_PATH = 'seller';
