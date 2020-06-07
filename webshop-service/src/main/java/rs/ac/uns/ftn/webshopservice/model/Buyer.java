@@ -6,7 +6,7 @@ import lombok.Setter;
 import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("2")
@@ -23,5 +23,5 @@ public class Buyer extends User {
     private Double totalMoneySpent;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<Order> orders;
+    private List<Order> orders;
 }

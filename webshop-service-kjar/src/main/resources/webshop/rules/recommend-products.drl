@@ -7,12 +7,12 @@ import rs.ac.uns.ftn.webshopservice.model.Order;
 import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 global ArrayList<Product> g_recommendations;
 global ArrayList<Product> g_products;
 
 
-// TODO: Implement this 
 rule "Recommend by categories"
     agenda-group "recommendations"
     salience 10
@@ -20,22 +20,21 @@ rule "Recommend by categories"
     lock-on-active true
     when
         $buyer: Buyer($buyerOrders: orders)
-        // TODO: pronaci prve 2 kategorije koje korisnik najvise 
-        // konzumira i onda dodati sve elemente tih kategorija u g_rec
-        $oftenCategories: List() from collect(
-            Order($product: product) from $buyerOrders
+
+        // Get last order from buyer's list of orders and then get that order's producut category
+        $lastOrdersCategory: String() from (
+            (Product) ((Order) $buyerOrders.toArray()[$buyerOrders.size() - 1]).getProduct()
+        ).getCategory().getName()
+
+        $productsWithCategory: List() from collect(
+            Product(category.name == $lastOrdersCategory) from g_products
         )
-
-        // ovde mozes onda ici na fazon - prolazak kroz produkte i not member of $oftenCategory
-        // i onda ga dodas u listu
-        // $recommendedProducts: List() from collect()
-
     then
-        g_recommendations.addAll(g_products);
+        g_recommendations.addAll($productsWithCategory);
+
+        System.out.println($lastOrdersCategory);
         System.out.println($buyerOrders.size());
-        System.out.println($oftenCategories.size());
-        // System.out.println(g_recommendations.size());
-        System.out.println("[DROOLS] Recommended " + g_recommendations.size() + " products by categories");
+        System.out.println("[DROOLS] Recommended " + g_recommendations.size() + " products by last order's category");
 end
 
 

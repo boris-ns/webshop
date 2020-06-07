@@ -43,8 +43,8 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	- [x] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti - ovo pravilo se aktivira poslednje u grupi pravila za kupovinu i sluzi da postavi flag na true ako je broj artikala pao ispod 20
 
 - Sistem preporuke za kupovinu artikala
-	Sistem preporuke se sastoji od pravila koja se izvrsavaju u nizu (koriscenjem 'salience' atributa) i sluze kao filter za sve dostupne artikle. U svakom sledecem koraku (pravilu) niz preporuke ce se smanjiti ukoliko su uslovi ispunjeni. Izlaz iz poslednjeg pravila predstavlja konacnu listu preporucenih artikala.
-	- [ ] Preporuciti artikle iz kategorije za koju korisnik ima najvise porudzbina
+	Sistem preporuke se sastoji od pravila koja se izvrsavaju u nizu (koriscenjem 'salience' atributa) i sluze kao filter za sve dostupne artikle. U svakom sledecem koraku (pravilu) lista preporuka ce se smanjiti ukoliko su uslovi ispunjeni. Izlaz iz poslednjeg pravila predstavlja konacnu listu preporucenih artikala.
+	- [x] Preporuciti artikle iz kategorije kojoj je pripadala poslednja korisnikova porudzbina 
 	- [x] Preporuciti artikle koji su na snizenju
 	- [x] Ako bar 60% korisnikovih narudzbina ima besplatnu postarinu, preporuciti mu artikle sa besplatnom postarinom (ovo vazi samo za korisnike sa REGULAR kategorijom) 
 	- [x] Preporuciti artikle po cenovnom rangu - naci srednju vrednost korisnikovih porudzbina i preporuciti artikle koji imaju cenu u rangu +-20% od srednje vrednosti
