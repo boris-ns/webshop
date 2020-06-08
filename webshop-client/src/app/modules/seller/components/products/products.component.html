@@ -18,6 +18,7 @@
             <th>Price</th>
             <th>Shipping</th>
             <th>Quantity</th>
+            <th>Restock</th>
             <th>Details</th>
             <th>Actions</th>
         </thead>
@@ -28,6 +29,7 @@
                 <td>{{ product.price }}</td>
                 <td>{{ product.shippingPrice }}$</td>
                 <td>{{ product.quantity }}</td>
+                <td [ngClass]="{'needs-restock-cell': product.needsRestock}">{{ product.needsRestock }}</td>
                 <td>
                     <button class="ui icon button" (click)="onClickShowDetails(product)">
                         <i class="expand icon"></i>

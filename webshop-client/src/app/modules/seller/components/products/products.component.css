@@ -1,3 +1,7 @@
+.container {
+    margin: 10px;
+}
+
 .modal {
     position: fixed; /* Stay in place */
     margin:auto;
@@ -15,4 +19,8 @@
 
 .bold {
     font-weight: bold;
+}
+
+.needs-restock-cell {
+    background-color: rgb(255, 62, 62);
 }
