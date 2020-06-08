@@ -36,8 +36,8 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	- [x] racunanje nove cene ako se narucuje vise od jednog proizvoda
 	- [x] uracunavanje popusta za ceste kupce (ako je kupac narucio 10 ili vise artikala iz jedne prodavnice, dobice popust koji je definisan prilikom registracije prodavnice)
 	- [x] uracunavanje popusta na osnovu kupona
-	- [ ] uracunavanje sezonskog popusta
-	- [ ] uracunavanje popusta na kategoriju
+	- [ ] uracunavanje sezonskog popusta - admin kreira sezonski popust, gde zadaje od kad do kad ce on vaziti
+	- [ ] uracunavanje popusta na kategoriju - admin kreira poopust na kategoriju gde zadaje od kad do kad ce on vaziti
 	- [x] ograniciti popust na maksimalnu zadatu vrednost (ovo je napravljeno kao zasebno pravilo koje se aktivira nakon svake promene popusta, realizovano je kao zasebno pravilo tako da se ne mora voditi racuna o maksimalnom popustu tokom kreiranja ostalih pravila - uslovi ce biti jednostavniji)
 	- [x] zavrsavanje kupovine - pravilo koje ce se pretposlednje aktivirati i izvrsice racunanje konacne cene proizvoda i smanjice broj artikala u magacinu, sto ce dovesti do aktivacije pravila ispod (obavestavanje prodavca)
 	- [x] obavestiti prodavca ako je količina artikala u magacinu ispod određene vrednosti - ovo pravilo se aktivira poslednje u grupi pravila za kupovinu i sluzi da postavi flag na true ako je broj artikala pao ispod 20
@@ -53,12 +53,18 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 
 - računanje svih popusta prilikom kupovine: klasičan popust na artikal, popust na količinu, sezonski popust, popust na kategoriju, popust za česte kupce kod jednog prodavca i popust na osnovu kupona. Ovde bi se vodilo računa da ukupni popust ne može da pređe neku predefinisanu vrednost, a i da se ne mogu baš sve vrste popusta iskoristiti istovremeno.
 
+## Interakcija pravila
+
+Pravilo koje sluzi za ogranicavanje popusta na maksimalnu zadatu vrednost se aktivira nakon svake promene popusta i njegov cilj je da postavi vrednost popusta na maksimalnu dozvoljenu ukoliko je granica predjena. Ovo pravilo je realizovano kao zasebno pravilo da se ne mora voditi racuna o maksimalnom popustu tokom kreiranja ostalih pravila cime postizemo jednostavnije uslove.
+
+Pravilo za zavrsavanje kupovine se aktivira kao pretposlednje u nizu pravila za racunanje popusta. Njegov zadatak je da izvrsi racunanje konacne cene proizvoda i da smanji broj dostupnih artikala u magacinu. Smanjenje broja artikala dovodi do aktivacije sledeceg, poslednjeg, pravila - obavestavanje prodavca ako je kolicina artikala u magacinu ispod odredjene vrednosti.
+
+Sistem preporuke se sastoji od pravila koja se izvrsavaju u nizu (koriscenjem 'salience' atributa) i sluze kao filter za sve dostupne artikle. U svakom sledecem koraku (pravilu) lista preporuka ce se smanjiti ukoliko su uslovi ispunjeni. Izlaz iz poslednjeg pravila predstavlja konacnu listu preporucenih artikala.
+
 ## Primer rezonovanja za kupovinu artikla:
 - korisnik filtrira i pretrazuje artikle
 - kada naiđe na artikal koji želi, naručuje ga
-- pokreće se rezoner koji će da računa cenu tog artikla za datog korisnika na osnovu njegovih ostvarenih popusta i ostalih popusta koji postoje za artikal
-- rezoner vraća konačnu cenu korisniku
-- korisnik potvrđuje kupovinu
-- pokreće se pravilo za kupovinu koje treba da kasnije aktivira pravila za promenu kategorije kupca i pravilo za obaveštavanje prodavca ako je broj artikala u magacinu manji od predefinisane vrednosti čime postižemo forward chaining.
-
-
+- pokreće se rezoner koji će da računa popuste artikla na osnovu klase kupca i samog artikla
+- nakon izvrsavanja pravila za racunanje popusta, pokrecu se pravila za racunanje nove cene, smanjivanje kolicina artikala u magacinu i obavestavanje prodavca ako su zalihe artikla male
+- nako izvrsavanja grupe pravila za kupovinu aktivira se grupa pravila za promenu kategorija kupca
+- rezoner vraca korisniku originalnu cenu, novu cenu i ostvareni popust
