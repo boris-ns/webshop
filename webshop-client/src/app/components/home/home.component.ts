@@ -23,7 +23,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getProducts();
-    this.getRecommendedProducts();
+
+    if (this.isUserLoggedIn()) {
+      this.getRecommendedProducts();
+    }
   }
 
   isUserLoggedIn(): boolean {
