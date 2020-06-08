@@ -2,6 +2,7 @@ import { AddRuleDTO } from './../../../../models/add-rule.dto.model';
 import { ToastrService } from 'ngx-toastr';
 import { RuletemplateService } from './../../services/ruletemplate.service';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-rule',
@@ -10,22 +11,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddRuleComponent implements OnInit {
 
-  buyerCategory: string =  '';
-  newCategory: string = '';
-  ordersSize: number = 0;
-  moneySpent: number = 0.0;
-
   rules: AddRuleDTO[] = [];
+  addForm: FormGroup;
 
   constructor(private ruleTemplateService: RuletemplateService,
-              private toastr: ToastrService) { 
+              private toastr: ToastrService,
+              private fb: FormBuilder) { 
+    this.createForm();
   }
 
   ngOnInit() {
   }
 
-  addRule() {
+  private createForm(): void {
+    this.addForm = this.fb.group({
+      buyerCategory: ['', Validators.required],
+      newCategory: ['', Validators.required],
+      ordersSize: ['', Validators.required],
+      moneySpent: ['', Validators.required]
+    });
+  }
 
+  addRule() {
+    const rule: AddRuleDTO = {
+      buyerCategory: this.addForm.value.buyerCategory,
+      newCategory: this.addForm.value.newCategory,
+      ordersSize: this.addForm.value.ordersSize,
+      moneySpent: this.addForm.value.moneySpent
+    };
+
+    this.rules.push(rule);
+    this.addForm.reset();
   }
 
   submitRules() {

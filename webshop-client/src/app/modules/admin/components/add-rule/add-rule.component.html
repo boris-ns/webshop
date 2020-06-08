@@ -3,11 +3,67 @@
     <h3 class="ui header">Rules for buyer classification</h3>
 
     <h4 class="ui header">Add template restriction:</h4>
-    <!-- todo: ovde ide forma -->
 
-    <!-- todo: button za dodavanje u listu (tabelu) -->
+    <form [formGroup]="addForm" (submit)="addRule()">
+        <div class="ui left icon input input-field">
+            <label>Current buyer category</label>
+            <select class="ui dropdown" formControlName="buyerCategory">
+                <option value="REGULAR">REGULAR</option>
+                <option value="SILVER">SILVER</option>
+                <option value="GOLD">GOLD</option>
+                <option value="DIAMOND">DIAMOND</option>
+            </select>
+
+            <small class="text-danger"
+                *ngIf="addForm.controls.buyerCategory.touched && addForm.controls.buyerCategory.errors?.required">
+                Current buyer category is required
+            </small>
+        </div>
+
+        <div class="ui left icon input input-field">
+            <label>New buyer category</label>
+            <select class="ui dropdown" formControlName="newCategory">
+                <option value="REGULAR">REGULAR</option>
+                <option value="SILVER">SILVER</option>
+                <option value="GOLD">GOLD</option>
+                <option value="DIAMOND">DIAMOND</option>
+            </select>
+
+            <small class="text-danger"
+                *ngIf="addForm.controls.newCategory.touched && addForm.controls.newCategory.errors?.required">
+                New buyer category is required
+            </small>
+        </div>
+
+        <div class="ui input input-field">
+            <label>Orders size</label>
+            <input type="number" min="0" placeholder="0" formControlName="ordersSize" />
+
+            <small class="text-danger"
+                *ngIf="addForm.controls.ordersSize.touched && addForm.controls.ordersSize.errors?.required">
+                Orders size is required
+            </small>
+        </div>
+
+        <div class="ui input input-field">
+            <label>Total money spent</label>
+            <input type="number" min="0" placeholder="0" formControlName="moneySpent" />
+
+            <small class="text-danger"
+                *ngIf="addForm.controls.moneySpent.touched && addForm.controls.moneySpent.errors?.required">
+                Money spent is required
+            </small>
+        </div>
+
+        <div>
+            <button type="submit" class="ui button primary" [disabled]="addForm.invalid">
+                Add rule
+            </button>
+        </div>
+    </form>
 
     <h4 class="ui header">Template restrictions:</h4>
+
     <table class="ui table celled striped">
         <thead>
             <th>Old category</th>
@@ -18,7 +74,7 @@
         <tbody>
             <tr *ngFor="let rule of rules">
                 <td>{{ rule.buyerCategory }}</td>
-                <td>{{ rule.oldCategory }}</td>
+                <td>{{ rule.newCategory }}</td>
                 <td>{{ rule.ordersSize }}</td>
                 <td>{{ rule.moneySpent }}</td>
             </tr>
