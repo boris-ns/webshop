@@ -1,0 +1,33 @@
+package webshop.rules;
+
+import rs.ac.uns.ftn.webshopservice.model.Buyer;
+import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
+import rs.ac.uns.ftn.webshopservice.model.events.TransactionEvent;
+
+declare SuspiciousEvent
+    @role(event)
+    buyerId: Long
+end
+
+declare AlarmActivated
+    buyerId: Long
+end
+
+
+rule "20 or more transaction in 1h"
+    agenda-group "transaction-events"
+    when
+        $transaction: TransactionEvent($buyerId: buyerId)
+        Number(intValue >= 2) from accumulate(
+            $t: TransactionEvent(
+                this != $transaction,
+                buyerId == $buyerId,
+                this meets[1h] $transaction
+            ),
+            count($t)
+        )
+        not (SuspiciousEvent(buyerId == $buyerId))
+    then
+        insert(new SuspiciousEvent($buyerId));
+        System.out.println("[DROOLS-CEP] Created new suspicious event for buyer with id=" + $buyerId);
+end

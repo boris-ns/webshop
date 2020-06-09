@@ -5,6 +5,7 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.webshopservice.config.beans.cepsession.CepSession;
 import rs.ac.uns.ftn.webshopservice.config.consts.KieAgendaGroups;
 import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
@@ -12,6 +13,7 @@ import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ResourceNotFoundException;
 import rs.ac.uns.ftn.webshopservice.mappers.ProductMapper;
 import rs.ac.uns.ftn.webshopservice.model.*;
+import rs.ac.uns.ftn.webshopservice.model.events.TransactionEvent;
 import rs.ac.uns.ftn.webshopservice.repository.OrderRepository;
 import rs.ac.uns.ftn.webshopservice.repository.ProductRepository;
 import rs.ac.uns.ftn.webshopservice.repository.UserRepository;
@@ -39,6 +41,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private KieContainer kieContainer;
+
+    @Autowired
+    private CepSession cepSession;
 
 
     @Override
@@ -134,6 +139,13 @@ public class ProductServiceImpl implements ProductService {
         kieClassifyBuyers.dispose();
 
         userRepository.save(buyer);
+
+        TransactionEvent event = new TransactionEvent(buyer.getId(), productOrder.getPrice());
+//        KieSession kieTransactionSession = KieSessionCreator.getTransactionEventsSession();
+//        kieTransactionSession.insert(event);
+        KieSession kieTransactionSession = cepSession.getCepSession();
+        kieTransactionSession.insert(event);
+        int fired = kieTransactionSession.fireAllRules();
 
         return productOrder;
     }
