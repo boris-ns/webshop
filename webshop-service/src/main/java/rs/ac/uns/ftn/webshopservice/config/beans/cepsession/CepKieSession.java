@@ -15,9 +15,7 @@ public class CepKieSession {
 
     @Bean
     public CepSession getCepKieSession() {
-        KieSession kieSession = kieContainer.newKieSession();
-        kieSession.getAgenda().getAgendaGroup(KieAgendaGroups.TRANSACTION_EVENTS).setFocus();
-
+        KieSession kieSession = kieContainer.newKieSession("CepSession");
         return new CepSession(kieSession);
     }
 }

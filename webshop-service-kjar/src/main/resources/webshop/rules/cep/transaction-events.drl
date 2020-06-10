@@ -15,7 +15,8 @@ end
 
 // TODO: Zavrsiti implementaciju, zasad ne radi, jos probavam
 rule "20 or more transaction in 1h"
-    agenda-group "transaction-events"
+    // agenda-group "transaction-events"
+    no-loop false
     when
         // dodati atribut 'checked' pa ces znati dal je to najnoviji event
         // i kad ga obradis samo modify setchechked(False) - nope
@@ -28,12 +29,13 @@ rule "20 or more transaction in 1h"
             $t: TransactionEvent(
                 buyerId == $buyerId
                 // this after $transaction,
-            ) over window:time( 10m ),
+                
+            ) over window:time( 1m ),
             count($t)
         )
         // not (SuspiciousEvent(buyerId == $buyerId))
     then
-        //insert(new SuspiciousEvent($buyerId));
-        System.out.println("[DROOLS-CEP] Created new suspicious event for buyer with id=" + $buyerId);
+        // insert(new SuspiciousEvent($buyerId));
+        System.out.println("[DROOLS-CEP] Created new suspicious event for buyer with id=" /*+ $buyerId */);
         System.out.println("\t20 or more products were bought within 1 hour: " + $temp + " products");
 end

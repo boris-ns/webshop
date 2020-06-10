@@ -2,4 +2,12 @@
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule" 
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    
+	<kbase name="WebshopDefaultKbase" packages="webshop.rules">
+		<ksession name="DefaultSession"></ksession>
+	</kbase>
+
+	<kbase name="WebshopCepKbase" eventProcessingMode="stream" packages="webshop.rules.cep">
+		<ksession name="CepSession"></ksession>
+	</kbase>
+
 </kmodule>

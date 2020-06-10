@@ -107,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
         Order productOrder = new Order(product, order.getCoupon(), order.getQuantity());
 
         // Calculate discount for order
-        KieSession kieSession = kieContainer.newKieSession();
+        KieSession kieSession = kieContainer.newKieSession("DefaultSession");
         kieSession.insert(productOrder);
         kieSession.insert(buyer);
         kieSession.insert(product);
@@ -130,7 +130,7 @@ public class ProductServiceImpl implements ProductService {
 
         // If session created from templates doesn't exist, use the default one
         if (kieClassifyBuyers == null) {
-            kieClassifyBuyers = kieContainer.newKieSession();
+            kieClassifyBuyers = kieContainer.newKieSession("DefaultSession");
         }
 
         kieClassifyBuyers.insert(buyer);
@@ -141,9 +141,8 @@ public class ProductServiceImpl implements ProductService {
         userRepository.save(buyer);
 
         TransactionEvent event = new TransactionEvent(buyer.getId(), productOrder.getPrice());
-//        KieSession kieTransactionSession = KieSessionCreator.getTransactionEventsSession();
-//        kieTransactionSession.insert(event);
         KieSession kieTransactionSession = cepSession.getCepSession();
+        cepSession.getEvents().add(event);
         kieTransactionSession.insert(event);
         int fired = kieTransactionSession.fireAllRules();
 
@@ -156,7 +155,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = this.getAll();
         ArrayList<Product> recommendations = new ArrayList<>();
 
-        KieSession kieSession = kieContainer.newKieSession();
+        KieSession kieSession = kieContainer.newKieSession("DefaultSession");
         kieSession.setGlobal("g_recommendations", recommendations);
         kieSession.setGlobal("g_products", products);
         kieSession.insert(buyer);
