@@ -7,6 +7,7 @@ import org.kie.api.definition.type.Expires;
 import org.kie.api.definition.type.Role;
 import org.kie.api.definition.type.Timestamp;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Role(Role.Type.EVENT)
@@ -15,7 +16,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TransactionEvent {
+public class TransactionEvent implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Date executionTime;
     private Long buyerId;
