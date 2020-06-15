@@ -42,7 +42,7 @@ rule "3 or more suspicious events in the last 12h"
         $numOfEvents: Number(intValue >= 3) from accumulate(
             $s: SuspiciousEvent(buyerId == $buyerId),
             count($s)
-        )
+        ) over window:time(12h)
         not AlarmActivated(buyerId == $buyerId)
     then
         insert(new AlarmActivated($buyerId));
