@@ -54,7 +54,7 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 - CEP
 	- [x] Obavesti korisnika ako je sa njegovog naloga pristiglo 20 ili vise porudzbina u roku od 1h
 	- [ ] Obavesti korisnika ako je sa njegovog naloga napravljeno 5 ili vise transakcija u vrednosti od $100+ u roku od pola sata
-	- [ ] Obavesti korisnika ako je u roku od 12h nastalo bar 3 sumnjiva dogadjaja na njegovom nalogu 
+	- [x] Obavesti korisnika ako je u roku od 12h nastalo bar 3 sumnjiva dogadjaja na njegovom nalogu 
 
 ## Interakcija pravila
 

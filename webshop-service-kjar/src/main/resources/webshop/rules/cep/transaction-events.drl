@@ -33,3 +33,20 @@ rule "20 or more transaction in 1h"
         System.out.println("[DROOLS-CEP] Created new suspicious event for buyer with id=" + $buyerId);
         System.out.println("\t20 or more products were bought within 1 hour: " + $numOfProducts + " products");
 end
+
+
+rule "3 or more suspicious events in the last 12h"
+    no-loop false
+    when
+        SuspiciousEvent($buyerId: buyerId)
+        $numOfEvents: Number(intValue >= 3) from accumulate(
+            $s: SuspiciousEvent(buyerId == $buyerId),
+            count($s)
+        )
+        not AlarmActivated(buyerId == $buyerId)
+    then
+        insert(new AlarmActivated($buyerId));
+        g_mailSenderService.sendWarningMail($buyerId, "Reason: 3 or more suspicious events occured with usage of your account.");
+        System.out.println("[DROOLS-CEP] Alarm triggered. 3 or more suspicious events occured");
+        System.out.println("\tNumber of events=" + $numOfEvents + ", User id=" + $buyerId);
+end
