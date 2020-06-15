@@ -3,6 +3,9 @@ package webshop.rules.cep;
 import rs.ac.uns.ftn.webshopservice.model.Buyer;
 import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import rs.ac.uns.ftn.webshopservice.model.events.TransactionEvent;
+import rs.ac.uns.ftn.webshopservice.service.MailSenderService;
+
+global MailSenderService g_mailSenderService;
 
 declare SuspiciousEvent
     @role(event)
@@ -13,29 +16,20 @@ declare AlarmActivated
     buyerId: Long
 end
 
-// TODO: Zavrsiti implementaciju, zasad ne radi, jos probavam
 rule "20 or more transaction in 1h"
-    // agenda-group "transaction-events"
     no-loop false
     when
-        // dodati atribut 'checked' pa ces znati dal je to najnoviji event
-        // i kad ga obradis samo modify setchechked(False) - nope
-
-        // problem je verovatno sto event koji se doda se unisti od strane jave kad se fja buy zavrsi
-        // mozda u CepSession klasu dodati listu eventa i tu ces ih sve cuvati onda
-        // na taj nacin ce ostati sacuvani u memoriji jer ce spring da brine o njima
-        $transaction: TransactionEvent($buyerId: buyerId)
-        $temp: Number() from accumulate(
+        TransactionEvent($buyerId: buyerId)
+        $numOfProducts: Number(intValue >= 2) from accumulate(
             $t: TransactionEvent(
                 buyerId == $buyerId
-                // this after $transaction,
-                
             ) over window:time( 1m ),
             count($t)
         )
-        // not (SuspiciousEvent(buyerId == $buyerId))
+        not (SuspiciousEvent(buyerId == $buyerId))
     then
-        // insert(new SuspiciousEvent($buyerId));
-        System.out.println("[DROOLS-CEP] Created new suspicious event for buyer with id=" /*+ $buyerId */);
-        System.out.println("\t20 or more products were bought within 1 hour: " + $temp + " products");
+        insert(new SuspiciousEvent($buyerId));
+        g_mailSenderService.sendWarningMail($buyerId, "Reason: 20 or more transaction are made within 1h.");
+        System.out.println("[DROOLS-CEP] Created new suspicious event for buyer with id=" + $buyerId);
+        System.out.println("\t20 or more products were bought within 1 hour: " + $numOfProducts + " products");
 end

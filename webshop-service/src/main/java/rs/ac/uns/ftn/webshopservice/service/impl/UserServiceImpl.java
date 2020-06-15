@@ -47,29 +47,26 @@ public class UserServiceImpl implements UserService {
     private TimeProvider timeProvider;
 
     @Override
-    public UserDTO findById(Long id) throws ApiRequestException {
+    public User findById(Long id) {
         try {
-            User user = userRepository.findById(id).get();
-            return new UserDTO(user);
+            return userRepository.findById(id).get();
         } catch (NoSuchElementException e) {
-            throw new ApiRequestException("User with id '" + id + "' doesn't exist.");
+            throw new ResourceNotFoundException("User with id '" + id + "' doesn't exist.");
         }
     }
 
     @Override
-    public UserDTO findByUsername(String username) throws ApiRequestException {
+    public User findByUsername(String username) {
         try {
-            User user = userRepository.findByUsername(username);
-            return new UserDTO(user);
+            return userRepository.findByUsername(username);
         } catch (UsernameNotFoundException e) {
-            throw new ApiRequestException("User with username '" + username + "' doesn't exist.");
+            throw new ResourceNotFoundException("User with username '" + username + "' doesn't exist.");
         }
     }
 
     @Override
-    public List<UserDTO> findAll() {
-        return userRepository.findAll().stream()
-                .map(user -> new UserDTO(user)).collect(Collectors.toList());
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override

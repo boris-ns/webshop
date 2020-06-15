@@ -52,7 +52,7 @@ U sistemu neće postojati predefinisana baza znanja, već će se ona vremenom po
 	- [x] Preporuciti artikle koji je ostalo malo u prodavnici (ovo pravilo se izvrsava poslenje u nizu pravila za preporuke, ako je ostalo bar 40% artikala ciji je kvantitet manji ili jednak od 20, zanemaricemo sve ostale artikle i preporucicemo samo ove)
 
 - CEP
-	- [ ] Obavesti korisnika ako je sa njegovog naloga pristiglo 20 ili vise porudzbina u roku od 1h
+	- [x] Obavesti korisnika ako je sa njegovog naloga pristiglo 20 ili vise porudzbina u roku od 1h
 	- [ ] Obavesti korisnika ako je sa njegovog naloga napravljeno 5 ili vise transakcija u vrednosti od $100+ u roku od pola sata
 	- [ ] Obavesti korisnika ako je u roku od 12h nastalo bar 3 sumnjiva dogadjaja na njegovom nalogu 
 

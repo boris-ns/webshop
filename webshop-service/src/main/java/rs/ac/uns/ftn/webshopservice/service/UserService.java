@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDTO findById(Long id);
-    UserDTO findByUsername(String username);
-    List<UserDTO> findAll();
+    User findById(Long id);
+    User findByUsername(String username);
+    List<User> findAll();
     User addUser(UserRegistrationDTO userInfo);
     boolean activateAccount(String token);
 }
