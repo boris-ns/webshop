@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.webshopservice.config.beans.cepsession.CepSession;
 import rs.ac.uns.ftn.webshopservice.config.consts.KieAgendaGroups;
+import rs.ac.uns.ftn.webshopservice.dto.request.FilterProductsDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
@@ -164,5 +165,20 @@ public class ProductServiceImpl implements ProductService {
         kieSession.dispose();
 
         return recommendations;
+    }
+
+    @Override
+    public List<Product> filter(FilterProductsDTO filter) {
+//        if (filter.getIsFreeShipping() == null || !filter.getIsFreeShipping()) {
+//            filter.setIsFreeShipping(null);
+//        }
+
+        // TODO: sredi ovo oko filter.getisfreeshipping
+        // mozes proslediti null, tada ce sql to hendlovati
+
+        return productRepository.filter(
+                filter.getName(), filter.getCategoryName(), filter.getDownPrice(),
+                filter.getTopPrice(), filter.getIsFreeShipping()
+        );
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.webshopservice.dto.request.FilterProductsDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
 import rs.ac.uns.ftn.webshopservice.dto.response.OrderDTO;
@@ -60,6 +61,12 @@ public class ProductController {
     @PreAuthorize("hasRole('ROLE_BUYER')")
     public ResponseEntity<List<ProductDTO>> recommendations() {
         List<Product> products = productService.recommendations();
+        return new ResponseEntity<>(ProductMapper.toListDto(products), HttpStatus.OK);
+    }
+
+    @PostMapping("/public/filter")
+    public ResponseEntity<List<ProductDTO>> filter(@RequestBody FilterProductsDTO filter) {
+        List<Product> products = productService.filter(filter);
         return new ResponseEntity<>(ProductMapper.toListDto(products), HttpStatus.OK);
     }
 }

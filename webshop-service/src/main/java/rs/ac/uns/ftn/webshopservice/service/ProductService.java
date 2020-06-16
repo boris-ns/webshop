@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.webshopservice.service;
 
+import rs.ac.uns.ftn.webshopservice.dto.request.FilterProductsDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
 import rs.ac.uns.ftn.webshopservice.model.Order;
@@ -16,4 +17,5 @@ public interface ProductService {
     void delete(Long id);
     Order buy(PlaceOrderDTO order);
     List<Product> recommendations();
+    List<Product> filter(FilterProductsDTO filter);
 }
