@@ -7,6 +7,7 @@ import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ResourceNotFoundException;
 import rs.ac.uns.ftn.webshopservice.model.ProductCategory;
 import rs.ac.uns.ftn.webshopservice.repository.ProductCategoryRepository;
+import rs.ac.uns.ftn.webshopservice.repository.ProductRepository;
 import rs.ac.uns.ftn.webshopservice.service.ProductCategoryService;
 
 import java.util.List;
@@ -16,6 +17,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
     private ProductCategoryRepository productCategoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public ProductCategory findById(Long id) {
@@ -44,8 +48,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         ProductCategory category = productCategoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product category with id " + id + " doesn't exist."));
 
-        // @TODO: Dodati proveru da li postoji neki artikal koji ima ovu kategoriju
-        // ako ima onda ne moze da se brise
+        if (productRepository.findByCategoryId(id).size() != 0) {
+            throw new ApiRequestException("Can't delete category because it has products attached to it");
+        }
 
         productCategoryRepository.delete(category);
     }
