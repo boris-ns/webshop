@@ -9,6 +9,7 @@ export const PRODUCT_ALL_CATEGORIES_URL = `${BASE_URL}/api/product-categories/pu
 
 // Stores
 export const STORES_URL = `${BASE_URL}/api/stores`;
+export const ADD_STORE_URL = `${STORES_URL}/public`;
 
 // Orders
 export const ORDERS_URL = `${BASE_URL}/api/orders`;

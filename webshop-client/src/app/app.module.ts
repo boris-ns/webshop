@@ -15,6 +15,7 @@ import { ActivateAccountComponent } from './components/activate-account/activate
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { BuyProductComponent } from './components/buy-product/buy-product.component';
+import { StoreRegistrationComponent } from './components/store-registration/store-registration.component';
  
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { BuyProductComponent } from './components/buy-product/buy-product.compon
     RegistrationComponent,
     ActivateAccountComponent,
     BuyProductComponent,
+    StoreRegistrationComponent,
   ],
   imports: [
     BrowserModule,

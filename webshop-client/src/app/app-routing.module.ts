@@ -1,8 +1,9 @@
+import { StoreRegistrationComponent } from './components/store-registration/store-registration.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { ADMIN_HOME_PATH, HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, SELLER_HOME_PATH, VERIFY_ACCOUNT, BUYER_HOME_PATH } from './config/router-paths';
+import { ADMIN_HOME_PATH, HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, SELLER_HOME_PATH, VERIFY_ACCOUNT, BUYER_HOME_PATH, STORE_REGISTRATION_PATH } from './config/router-paths';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: REGISTRATION_PATH,
     component: RegistrationComponent
+  },
+  {
+    path: STORE_REGISTRATION_PATH,
+    component: StoreRegistrationComponent
   },
   {
     path: VERIFY_ACCOUNT,

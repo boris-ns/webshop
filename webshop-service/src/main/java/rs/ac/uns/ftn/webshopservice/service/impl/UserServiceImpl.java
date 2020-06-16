@@ -13,6 +13,7 @@ import rs.ac.uns.ftn.webshopservice.exception.exceptions.ResourceNotFoundExcepti
 import rs.ac.uns.ftn.webshopservice.mappers.UserMapper;
 import rs.ac.uns.ftn.webshopservice.model.Buyer;
 import rs.ac.uns.ftn.webshopservice.model.ConfirmationToken;
+import rs.ac.uns.ftn.webshopservice.model.Owner;
 import rs.ac.uns.ftn.webshopservice.model.User;
 import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import rs.ac.uns.ftn.webshopservice.repository.AuthorityRepository;
@@ -101,6 +102,40 @@ public class UserServiceImpl implements UserService {
         user.getUserAuthorities().add(authorityRepository.findByName(UserRoles.ROLE_BUYER));
         user.setTotalMoneySpent(0.0);
         user.setCategory(BuyerCategory.REGULAR);
+
+        return user;
+    }
+
+    @Override
+    public User addOwner(UserRegistrationDTO userInfo) {
+        if (userRepository.findByUsername(userInfo.getUsername()) != null) {
+            throw new ApiRequestException("Username '" + userInfo.getUsername() + "' already exists.");
+        }
+
+        if (!userInfo.getPassword().equals(userInfo.getRepeatPassword())) {
+            throw new ApiRequestException("Provided passwords must be the same.");
+        }
+
+        if (userRepository.findByEmail(userInfo.getEmail()) != null) {
+            throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+        }
+
+        User user = createNewOwnerObject(userInfo);
+        userRepository.save(user);
+
+        ConfirmationToken token = new ConfirmationToken(user);
+        tokenRepository.save(token);
+
+        mailSenderService.sendRegistrationMail(token);
+
+        return user;
+    }
+
+    private User createNewOwnerObject(UserRegistrationDTO userInfo) {
+        Owner user = UserMapper.toOwnerEntity(userInfo);
+        user.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+        user.setLastPasswordResetDate(timeProvider.nowTimestamp());
+        user.getUserAuthorities().add(authorityRepository.findByName(UserRoles.ROLE_SELLER));
 
         return user;
     }

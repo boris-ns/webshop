@@ -2,6 +2,7 @@
 export const HOME_PATH = '';
 export const LOGIN_PATH = 'login';
 export const REGISTRATION_PATH = 'register';
+export const STORE_REGISTRATION_PATH = 'register-store';
 export const VERIFY_ACCOUNT = 'verify';
 
 // Admin paths
