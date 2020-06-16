@@ -167,4 +167,11 @@ public class UserServiceImpl implements UserService {
             throw new ApiRequestException("Confirmation token timed out.");
         }
     }
+
+    @Override
+    public void delete(Long id) {
+        User user = this.findById(id);
+        user.setEnabled(false);
+        userRepository.save(user);
+    }
 }

@@ -14,4 +14,5 @@ public interface UserService {
     User addUser(UserRegistrationDTO userInfo);
     User addOwner(UserRegistrationDTO userInfo);
     boolean activateAccount(String token);
+    void delete(Long id);
 }

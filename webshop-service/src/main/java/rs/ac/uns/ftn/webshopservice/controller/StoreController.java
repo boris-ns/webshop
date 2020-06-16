@@ -33,4 +33,11 @@ public class StoreController {
         storeService.addStore(storeDto);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity delete(@PathVariable Long id) {
+        storeService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

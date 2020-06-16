@@ -1,5 +1,5 @@
+import { StoreService } from './../../../../services/store.service';
 import { ToastrService } from 'ngx-toastr';
-import { StoresService } from './../../services/stores.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,7 +11,7 @@ export class StoresComponent implements OnInit {
 
   stores: [] = [];
 
-  constructor(private storesService: StoresService,
+  constructor(private storeService: StoreService,
               private toastr: ToastrService) { 
   }
 
@@ -20,7 +20,7 @@ export class StoresComponent implements OnInit {
   }
 
   private getStores() {
-    this.storesService.getAll().subscribe(data => {
+    this.storeService.getAll().subscribe(data => {
       this.stores = data;
     }, error => {
       this.toastr.error('There was an error while getting the stores.');
@@ -28,7 +28,11 @@ export class StoresComponent implements OnInit {
   }
 
   onClickDelete(storeId: number) {
-    // @TODO: Implementirati
-    console.log("DELETE", storeId);
+    this.storeService.delete(storeId).subscribe(data => {
+      this.toastr.success('Store has been successfully deleted');
+      this.getStores();
+    }, error => {
+      this.toastr.error(error.error.message);
+    });
   }
 }
