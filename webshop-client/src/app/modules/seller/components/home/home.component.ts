@@ -1,3 +1,5 @@
+import { SELLER_HOME_PATH, SELLER_MY_PRODUCTS_PATH } from './../../../../config/router-paths';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { 
+  }
 
   ngOnInit() {
+  }
+
+  onClickProducts() {
+    this.router.navigate([SELLER_HOME_PATH, SELLER_MY_PRODUCTS_PATH]);
   }
 
 }

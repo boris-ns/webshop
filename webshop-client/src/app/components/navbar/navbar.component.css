@@ -15,3 +15,10 @@
 .button {
     margin: 5px;
 }
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto; /* Hack to push buttons to the right side of the screen */
+    margin-right: 15px;
+}

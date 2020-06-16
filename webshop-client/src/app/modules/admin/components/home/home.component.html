@@ -1,1 +1,66 @@
-<p>admin home works!</p>
+<div class="container">
+    <h1 class="ui header">Admin panel</h1>
+
+    <div class="card-container">
+        <div class="row">
+            <div class="column">
+                <div class="ui card">
+                    <div class="content">
+                        <a class="header">Product categories</a>
+                        <div class="description">
+                            View, add and remove product categories
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <button class="ui button" (click)="onClickCategories()">Categories</button>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="column">
+                <div class="ui card">
+                    <div class="content">
+                        <a class="header">Stores</a>
+                        <div class="description">
+                            View and remove stores
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <button class="ui button" (click)="onClickStores()">Stores</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="ui card">
+                    <div class="content">
+                        <a class="header">Discounts</a>
+                        <div class="description">
+                            View, add and remove discounts
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <button class="ui button" (click)="onClickDiscounts()">Discounts</button>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="column">
+                <div class="ui card">
+                    <div class="content">
+                        <a class="header">Rules</a>
+                        <div class="description">
+                            Add new rules for Drools engine
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <button class="ui button" (click)="onClickAddRules()">Add rules</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

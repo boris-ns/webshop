@@ -1,34 +1,36 @@
 <div class="container">
     <span class="title">WebShop</span>
 
-    <!-- ADMIN -->
-    <div *ngIf="isAdminLoggedIn()">
-        <button class="ui button" (click)="onClickCategories()">Categories</button>
-        <button class="ui button" (click)="onClickStores()">Stores</button>
-        <button class="ui button" (click)="onClickDiscounts()">Discounts</button>
-        <button class="ui button" (click)="onClickAddRule()">Add rules</button>
-    </div>
-
-    <!-- BUYER -->
-    <div *ngIf="isBuyerLoggedIn()">
-        <button class="ui button" (click)="onClickMyOrders()">My orders</button>
-    </div>
-
-    <!-- SELLER -->
-    <div *ngIf="isSellerLoggedIn()">
-        <button class="ui button" (click)="onClickProducts()">Products</button>
-    </div>
-
-    <!-- ALL LOGGED IN USERS -->
-    <div *ngIf="isUserLoggedIn()">
-        <button class="ui button" (click)="onClickLogout()">Logout</button>
-    </div>
-
-    <!-- NON-LOGGED IN USERS -->
-    <div *ngIf="!isUserLoggedIn()">
-        <button class="ui button primary" (click)="onClickLogin()">Login</button>
-        <button class="ui button" (click)="onClickRegister()">Register</button>
-        <button class="ui button" (click)="onClickStoreRegistration()">Register store</button>
+    <div class="buttons">
+        <!-- ADMIN -->
+        <div *ngIf="isAdminLoggedIn()">
+            <button class="ui button secondary" (click)="onClickCategories()">Categories</button>
+            <button class="ui button secondary" (click)="onClickStores()">Stores</button>
+            <button class="ui button secondary" (click)="onClickDiscounts()">Discounts</button>
+            <button class="ui button secondary" (click)="onClickAddRule()">Add rules</button>
+        </div>
+    
+        <!-- BUYER -->
+        <div *ngIf="isBuyerLoggedIn()">
+            <button class="ui button secondary" (click)="onClickMyOrders()">My orders</button>
+        </div>
+    
+        <!-- SELLER -->
+        <div *ngIf="isSellerLoggedIn()">
+            <button class="ui button secondary" (click)="onClickProducts()">Products</button>
+        </div>
+    
+        <!-- ALL LOGGED IN USERS -->
+        <div *ngIf="isUserLoggedIn()">
+            <button class="ui button" (click)="onClickLogout()">Logout</button>
+        </div>
+    
+        <!-- NON-LOGGED IN USERS -->
+        <div *ngIf="!isUserLoggedIn()">
+            <button class="ui button primary" (click)="onClickLogin()">Login</button>
+            <button class="ui button" (click)="onClickRegister()">Register</button>
+            <button class="ui button" (click)="onClickStoreRegistration()">Register store</button>
+        </div>
     </div>
     
 </div>
