@@ -1,4 +1,5 @@
-import { PLACE_ORDER_URL, RECOMMENDED_PRODUCTS_URL } from './../config/api-paths';
+import { ProductsFilterDTO } from './../models/products-filter.dto.model';
+import { PLACE_ORDER_URL, RECOMMENDED_PRODUCTS_URL, FILTER_PRODUCTS_URL } from './../config/api-paths';
 import { PlaceOrderDTO } from './../models/place-order-dto.model';
 import { ALL_PRODUCTS_URL } from '../config/api-paths';
 import { Observable } from 'rxjs';
@@ -37,5 +38,9 @@ export class ProductsService {
 
   buy(order: PlaceOrderDTO): Observable<any> {
     return this.http.post(PLACE_ORDER_URL, order);
+  }
+
+  filter(filter: ProductsFilterDTO): Observable<any> {
+    return this.http.post(FILTER_PRODUCTS_URL, filter);
   }
 }

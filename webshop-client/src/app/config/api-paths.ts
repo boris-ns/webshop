@@ -21,6 +21,7 @@ export const MY_PRODUCTS_URL = `${PRODUCTS_URL}/my-store`;
 export const ALL_PRODUCTS_URL = `${PRODUCTS_URL}/public`;
 export const PLACE_ORDER_URL = `${PRODUCTS_URL}/place-order`;
 export const RECOMMENDED_PRODUCTS_URL = `${PRODUCTS_URL}/recommendations`;
+export const FILTER_PRODUCTS_URL = `${PRODUCTS_URL}/public/filter`;
 
 // Users
 export const USERS_URL = `${BASE_URL}/api/users`;

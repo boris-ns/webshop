@@ -1,5 +1,7 @@
 <div class="container">
+    <!-- RECOMMENDED PRODUCTS -->
     <h1 class="ui header" *ngIf="isUserLoggedIn()">Recommended products</h1>
+
     <div *ngIf="isUserLoggedIn()">
         <div class="ui cards">
             <div class="ui card" *ngFor="let product of recommendedProducts">
@@ -22,11 +24,39 @@
                 </div>
             </div>
         </div>
-    
     </div>
 
     <h1 class="ui header">All products</h1>
 
+    <!-- FILTER  -->
+    <div class="filter">
+        <div class="ui input">
+            <input type="text" placeholder="Product name" [(ngModel)]="filterName">
+        </div>
+
+        <select class="ui dropdown" [(ngModel)]="filterCategory">
+            <option>None</option>
+            <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name }}</option>
+        </select>
+
+        <div class="ui input">
+            <input type="number" min="0" placeholder="Down price" [(ngModel)]="filterDownPrice">
+        </div>
+
+        <div class="ui input">
+            <input type="number" min="0" placeholder="Top price" [(ngModel)]="filterTopPrice">
+        </div>
+
+        <div class="ui checkbox">
+            <input type="checkbox" name="freeShipping" [(ngModel)]="filterFreeShipping">
+            <label>Free shipping</label>
+        </div>
+
+        <button class="ui button primary" (click)="onClickSearch()">Search</button>
+        <button class="ui button" (click)="onClickClearSearch()">Clear</button>
+    </div>
+
+    <!-- ALL PRODUCTS -->
     <div class="ui cards">
         <div class="ui card" *ngFor="let product of products">
             <div class="image">

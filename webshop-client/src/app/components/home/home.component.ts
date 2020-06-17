@@ -1,3 +1,5 @@
+import { ProductsFilterDTO } from './../../models/products-filter.dto.model';
+import { ProductCategoriesService } from './../../services/product-categories.service';
 import { ToastrService } from 'ngx-toastr';
 import { ROLE_BUYER } from './../../config/user-roles-keys';
 import { AuthService } from './../../services/auth.service';
@@ -15,14 +17,23 @@ export class HomeComponent implements OnInit {
   products: [] = [];
   productToBuy: any = {};
   showBuyDialog = false;
+  categories: [] = [];
+
+  filterName: string;
+  filterCategory: string;
+  filterDownPrice: number;
+  filterTopPrice: number;
+  filterFreeShipping: boolean;
 
   constructor(private productsService: ProductsService,
               private authService: AuthService,
+              private categoriesService: ProductCategoriesService,
               private toastr: ToastrService) { 
   }
 
   ngOnInit() {
     this.getProducts();
+    this.getCategories();
 
     if (this.isUserLoggedIn()) {
       this.getRecommendedProducts();
@@ -37,7 +48,15 @@ export class HomeComponent implements OnInit {
     this.productsService.getAll().subscribe(data => {
       this.products = data;
     }, error => {
-      this.toastr.error('There was and error while getting the products.');
+      this.toastr.error('There was an error while getting the products.');
+    });
+  }
+
+  private getCategories(): void {
+    this.categoriesService.getAll().subscribe(data => {
+      this.categories = data;
+    }, error => {
+      this.toastr.error('There was an error while getting the product categories');
     });
   }
 
@@ -56,5 +75,33 @@ export class HomeComponent implements OnInit {
 
   onClickModalClose() {
     this.showBuyDialog = false;
+  }
+
+  onClickSearch(): void {
+    const filter: ProductsFilterDTO = {
+      name: this.filterName,
+      categoryName: (this.filterCategory === 'None') ? null : this.filterCategory,
+      downPrice: this.filterDownPrice,
+      topPrice: this.filterTopPrice,
+      isFreeShipping: this.filterFreeShipping
+    }
+
+    console.log(filter);
+
+    this.productsService.filter(filter).subscribe(data => {
+      this.products = data;
+    }, error => {
+      this.toastr.error('There was an error while filtering products');
+    });
+  }
+
+  onClickClearSearch(): void {
+    this.filterName = null;
+    this.filterCategory = null;
+    this.filterDownPrice = null;
+    this.filterTopPrice = null;
+    this.filterFreeShipping = null;
+  
+    this.getProducts();
   }
 }
