@@ -19,5 +19,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "(:downPrice IS NULL OR p.price >= :downPrice) AND " +
             "(:upPrice IS NULL OR p.price <= :upPrice) AND " +
             "(:freeShipping IS NULL OR (:freeShipping = TRUE AND p.shippingPrice = 0))")
-    List<Product> filter(String name, String categoryName, Float downPrice, Float upPrice, Boolean freeShipping);
+    List<Product> filter(String name, String categoryName, Double downPrice, Double upPrice, Boolean freeShipping);
 }

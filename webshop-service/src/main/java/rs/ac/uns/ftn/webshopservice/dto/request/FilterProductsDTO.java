@@ -11,7 +11,7 @@ public class FilterProductsDTO {
 
     private String name;
     private String categoryName;
-    private Float downPrice;
-    private Float topPrice;
+    private Double downPrice;
+    private Double topPrice;
     private Boolean isFreeShipping;
 }
