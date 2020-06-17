@@ -1,8 +1,10 @@
 package rs.ac.uns.ftn.webshopservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.webshopservice.dto.request.AddStoreDTO;
+import rs.ac.uns.ftn.webshopservice.dto.request.EditStoreDTO;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ApiRequestException;
 import rs.ac.uns.ftn.webshopservice.exception.exceptions.ResourceNotFoundException;
 import rs.ac.uns.ftn.webshopservice.model.Owner;
@@ -66,5 +68,27 @@ public class StoreServiceImpl implements StoreService {
         List<Product> products = productRepository.findByStoreId(store.getId());
         products.stream().forEach(product -> productRepository.delete(product));
         storeRepository.delete(store);
+    }
+
+    @Override
+    public Store edit(EditStoreDTO storeDto) {
+        Owner owner = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Store store = this.findById(storeDto.getStoreId());
+
+        if (!owner.getStore().getId().equals(store.getId())) {
+            throw new ApiRequestException("You can only change data from your own store");
+        }
+
+        if (storeDto.getName() != null && !storeDto.getName().isEmpty()) {
+            store.setName(storeDto.getName());
+            storeRepository.save(store);
+        }
+
+        if (storeDto.getFrequentBuyerDiscount() != null) {
+            store.setFrequentBuyerDiscount(storeDto.getFrequentBuyerDiscount() / 100);
+            store = storeRepository.save(store);
+        }
+
+        return store;
     }
 }

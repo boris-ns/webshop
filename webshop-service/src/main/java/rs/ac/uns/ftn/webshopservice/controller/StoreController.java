@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.webshopservice.dto.request.AddStoreDTO;
+import rs.ac.uns.ftn.webshopservice.dto.request.EditStoreDTO;
 import rs.ac.uns.ftn.webshopservice.dto.response.StoreDTO;
 import rs.ac.uns.ftn.webshopservice.mappers.StoreMapper;
 import rs.ac.uns.ftn.webshopservice.model.Store;
@@ -39,5 +40,12 @@ public class StoreController {
     public ResponseEntity delete(@PathVariable Long id) {
         storeService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    @PreAuthorize("hasRole('ROLE_SELLER')")
+    public ResponseEntity<StoreDTO> edit(@Valid @RequestBody EditStoreDTO storeDto) {
+        Store store = storeService.edit(storeDto);
+        return new ResponseEntity<>(StoreMapper.toDto(store), HttpStatus.OK);
     }
 }
