@@ -169,12 +169,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> filter(FilterProductsDTO filter) {
-//        if (filter.getIsFreeShipping() == null || !filter.getIsFreeShipping()) {
-//            filter.setIsFreeShipping(null);
-//        }
-
-        // TODO: sredi ovo oko filter.getisfreeshipping
-        // mozes proslediti null, tada ce sql to hendlovati
+        // @HACK @NOTE: Za free shipping slati null ili true, nemoj false iz nekog razloga onda ne radi
+        if (filter.getIsFreeShipping() != null && !filter.getIsFreeShipping()) {
+            filter.setIsFreeShipping(null);
+        }
 
         return productRepository.filter(
                 filter.getName(), filter.getCategoryName(), filter.getDownPrice(),
