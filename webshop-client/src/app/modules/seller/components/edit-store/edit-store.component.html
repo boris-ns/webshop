@@ -1,0 +1,18 @@
+<div class="container">
+    <h1 class="ui header">Edit store information</h1>
+
+    <label>Store name</label>
+    <div class="ui input">
+        <input type="text" placeholder="Store name" [(ngModel)]="editStore.name" />
+    </div>
+
+    <label>Frequent buyer discount (%)</label>
+    <div class="ui input">
+        <input type="number" min="0" max="100" placeholder="Frequent buyer discount" [(ngModel)]="editStore.frequentBuyerDiscount" />
+    </div>
+
+    <div>
+        <button class="ui button primary" (click)="onClickEdit()">Edit</button>
+        <button class="ui button" (click)="onClickReset()">Reset</button>
+    </div>
+</div>

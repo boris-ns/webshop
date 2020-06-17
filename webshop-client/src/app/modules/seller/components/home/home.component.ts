@@ -1,4 +1,4 @@
-import { SELLER_HOME_PATH, SELLER_MY_PRODUCTS_PATH } from './../../../../config/router-paths';
+import { SELLER_HOME_PATH, SELLER_MY_PRODUCTS_PATH, EDIT_STORE_PATH } from './../../../../config/router-paths';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -19,4 +19,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate([SELLER_HOME_PATH, SELLER_MY_PRODUCTS_PATH]);
   }
 
+  onClickEditStore() {
+    this.router.navigate([SELLER_HOME_PATH, EDIT_STORE_PATH]);
+  }
 }

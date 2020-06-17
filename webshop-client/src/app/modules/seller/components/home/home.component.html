@@ -1,5 +1,29 @@
 <div class="container">
-    <h1 class="ui header">Welcome seller</h1>
+    <h1 class="ui header">Seller panel</h1>
 
-    <button class="ui button primary" (click)="onClickProducts()">See products</button>
+    <div class="card-container">
+        <div class="ui card">
+            <div class="content">
+                <a class="header">Products</a>
+                <div class="description">
+                    View, add and remove products
+                </div>
+            </div>
+            <div class="extra content">
+                <button class="ui button" (click)="onClickProducts()">Products</button>
+            </div>
+        </div>
+
+        <div class="ui card">
+            <div class="content">
+                <a class="header">Edit store</a>
+                <div class="description">
+                    Edit store information
+                </div>
+            </div>
+            <div class="extra content">
+                <button class="ui button" (click)="onClickEditStore()">Edit store</button>
+            </div>
+        </div>
+    </div>
 </div>
