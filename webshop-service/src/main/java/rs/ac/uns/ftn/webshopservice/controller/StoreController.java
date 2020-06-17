@@ -29,6 +29,13 @@ public class StoreController {
         return new ResponseEntity<>(StoreMapper.toListDto(stores), HttpStatus.OK);
     }
 
+    @GetMapping("/my")
+    @PreAuthorize("hasRole('ROLE_SELLER')")
+    public ResponseEntity<StoreDTO> getMyStore() {
+        Store store = storeService.getMyStore();
+        return new ResponseEntity<>(StoreMapper.toDto(store), HttpStatus.OK);
+    }
+
     @PostMapping("/public")
     public ResponseEntity addStore(@Valid @RequestBody AddStoreDTO storeDto) {
         storeService.addStore(storeDto);

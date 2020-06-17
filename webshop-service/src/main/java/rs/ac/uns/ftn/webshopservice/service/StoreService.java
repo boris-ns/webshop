@@ -9,6 +9,7 @@ import java.util.List;
 public interface StoreService {
 
     Store findById(Long id);
+    Store getMyStore();
     List<Store> getAll();
     Store addStore(AddStoreDTO storeDto);
     void delete(Long id);

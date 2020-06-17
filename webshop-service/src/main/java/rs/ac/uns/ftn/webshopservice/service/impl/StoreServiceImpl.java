@@ -38,6 +38,12 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public Store getMyStore() {
+        Owner owner = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return owner.getStore();
+    }
+
+    @Override
     public List<Store> getAll() {
         return storeRepository.findAll();
     }
