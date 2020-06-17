@@ -6,15 +6,11 @@ import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class EditStoreDTO {
-
-    @NotNull(message = "Store id is required")
-    private Long storeId;
 
     private String name;
 

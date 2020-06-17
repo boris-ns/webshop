@@ -73,11 +73,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store edit(EditStoreDTO storeDto) {
         Owner owner = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Store store = this.findById(storeDto.getStoreId());
-
-        if (!owner.getStore().getId().equals(store.getId())) {
-            throw new ApiRequestException("You can only change data from your own store");
-        }
+        Store store = owner.getStore();
 
         if (storeDto.getName() != null && !storeDto.getName().isEmpty()) {
             store.setName(storeDto.getName());
