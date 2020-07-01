@@ -9,26 +9,41 @@ global MailSenderService g_mailSenderService;
 
 declare SuspiciousEvent
     @role(event)
+    @expires(12h)
     buyerId: Long
 end
 
 declare AlarmActivated
+    @expires(1m)
     buyerId: Long
+    reason: String
 end
+
+// napraviti novi tip eventa 
+// susp event ce se dodavati samo kada se aktivira slanje upozorenja i stavimo expiresIn(12h) zbog 3. pravila
+
+// kad bi moglo nekako na svaki 20. da se aktivira i napravi novi susp event
+
+// kreirati novi type event koji ce se deaktivirati za 1h i njega dodatiumesto suspevent
 
 rule "20 or more transaction in 1h"
     no-loop false
     when
         TransactionEvent($buyerId: buyerId)
+
+        // @Hack: Every 20th transaction event send warning
+        // @TODO: Change value from 2 to 20 
         $numOfProducts: Number(intValue >= 2) from accumulate(
             $t: TransactionEvent(
                 buyerId == $buyerId
-            ) over window:time( 1m ),
+            ) over window:time( 1m ), // @TODO: Change value from 1m to 1h
             count($t)
         )
-        not (SuspiciousEvent(buyerId == $buyerId))
+        // not (SuspiciousEvent(buyerId == $buyerId))
+        not (AlarmActivated(buyerId == $buyerId, reason == "20 or more transaction in 1h"))
     then
         insert(new SuspiciousEvent($buyerId));
+        insert(new AlarmActivated($buyerId, "20 or more transaction in 1h"));
         g_mailSenderService.sendWarningMail($buyerId, "Reason: 20 or more transaction are made within 1h.");
         System.out.println("[DROOLS-CEP] Created new suspicious event for buyer with id=" + $buyerId);
         System.out.println("\t20 or more products were bought within 1 hour: " + $numOfProducts + " products");
@@ -40,12 +55,12 @@ rule "3 or more suspicious events in the last 12h"
     when
         SuspiciousEvent($buyerId: buyerId)
         $numOfEvents: Number(intValue >= 3) from accumulate(
-            $s: SuspiciousEvent(buyerId == $buyerId),
+            $s: SuspiciousEvent(buyerId == $buyerId) over window:time(12h),
             count($s)
-        ) over window:time(12h)
+        )
         not AlarmActivated(buyerId == $buyerId)
     then
-        insert(new AlarmActivated($buyerId));
+        insert(new AlarmActivated($buyerId, "3 or more susp.events"));
         g_mailSenderService.sendWarningMail($buyerId, "Reason: 3 or more suspicious events occured with usage of your account.");
         System.out.println("[DROOLS-CEP] Alarm triggered. 3 or more suspicious events occured");
         System.out.println("\tNumber of events=" + $numOfEvents + ", User id=" + $buyerId);
