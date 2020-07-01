@@ -28,16 +28,18 @@ export class EditProductComponent implements OnInit {
   private getProduct() {
     this.productService.getProduct(this.productId).subscribe(data => {
       this.editProduct = data;
-      console.log(this.editProduct);
     }, error => {
       this.toastr.error(error.error.message);
     });
   }
 
   onClickEdit() {
+
+    console.log(this.editProduct);
+
     this.productService.edit(this.editProduct).subscribe(data => {
       this.editProduct = data;
-      console.log(this.editProduct);
+      this.toastr.success('Product has been edited');
     }, error => {
       this.toastr.error(error.error.message);
     });

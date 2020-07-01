@@ -91,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
 
         if (productDto.getName() != null && !productDto.getName().isEmpty()) product.setName(productDto.getName());
         if (productDto.getPrice() != null) product.setPrice(productDto.getPrice());
-        if (productDto.getShippingPrice() != null) product.setPrice(productDto.getShippingPrice());
+        if (productDto.getShippingPrice() != null) product.setShippingPrice(productDto.getShippingPrice());
         if (productDto.getQuantity() != null) product.setQuantity(productDto.getQuantity());
         if (productDto.getMaxOrderQuantity() != null) product.setMaxOrderQuantity(productDto.getMaxOrderQuantity());
         if (productDto.getQuantityDiscount() != null) product.setQuantityDiscount(productDto.getQuantityDiscount() / 100);
