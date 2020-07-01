@@ -25,6 +25,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping("/public/{id}")
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
+        Product product = productService.getById(id);
+        return new ResponseEntity<>(ProductMapper.toDto(product), HttpStatus.OK);
+    }
+
     @GetMapping("/public")
     public ResponseEntity<List<ProductDTO>> getAll() {
         List<Product> products = productService.getAll();

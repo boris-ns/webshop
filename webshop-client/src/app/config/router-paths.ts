@@ -17,6 +17,7 @@ export const ADD_RULE_PATH = 'add-rule';
 export const SELLER_HOME_PATH = 'seller';
 export const SELLER_MY_PRODUCTS_PATH = 'products';
 export const EDIT_STORE_PATH = 'edit-store';
+export const EDIT_PRODUCT_PATH = 'edit-product';
 
 // Buyer paths
 export const BUYER_HOME_PATH = 'buyer';

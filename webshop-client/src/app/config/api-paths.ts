@@ -23,6 +23,8 @@ export const ALL_PRODUCTS_URL = `${PRODUCTS_URL}/public`;
 export const PLACE_ORDER_URL = `${PRODUCTS_URL}/place-order`;
 export const RECOMMENDED_PRODUCTS_URL = `${PRODUCTS_URL}/recommendations`;
 export const FILTER_PRODUCTS_URL = `${PRODUCTS_URL}/public/filter`;
+export const GET_PRODUCT_URL = `${PRODUCTS_URL}/public`;
+export const EDIT_PRODUCT_URL = `${PRODUCTS_URL}`;
 
 // Users
 export const USERS_URL = `${BASE_URL}/api/users`;

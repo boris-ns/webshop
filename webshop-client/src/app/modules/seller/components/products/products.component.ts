@@ -1,3 +1,5 @@
+import { EDIT_PRODUCT_PATH, SELLER_HOME_PATH } from './../../../../config/router-paths';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from '../../../../services/products.service';
 import { Component, OnInit } from '@angular/core';
@@ -15,6 +17,7 @@ export class ProductsComponent implements OnInit {
   productOnModal = {};
 
   constructor(private productsService: ProductsService,
+              private router: Router,
               private toastr: ToastrService) { 
   }
 
@@ -55,5 +58,9 @@ export class ProductsComponent implements OnInit {
     }, error => {
       this.toastr.error(error.error.message);
     });
+  }
+
+  onClickEdit(id: number): void {
+    this.router.navigate([SELLER_HOME_PATH, EDIT_PRODUCT_PATH, id]);
   }
 }

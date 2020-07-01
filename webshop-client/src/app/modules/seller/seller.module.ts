@@ -6,11 +6,12 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { EditStoreComponent } from './components/edit-store/edit-store.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
 
 
 
 @NgModule({
-  declarations: [HomeComponent, ProductsComponent, AddProductComponent, EditStoreComponent],
+  declarations: [HomeComponent, ProductsComponent, AddProductComponent, EditStoreComponent, EditProductComponent],
   imports: [
     CommonModule,
     SellerRoutingModule,

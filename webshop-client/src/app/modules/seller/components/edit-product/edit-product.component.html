@@ -1,0 +1,62 @@
+<div class="container">
+    <h1 class="ui header">Edit product</h1>
+
+    <label>Product name</label>
+    <div class="ui input">
+        <input type="text" [(ngModel)]="editProduct.name" />
+    </div>
+
+    <label>Price</label>
+    <div class="ui input">
+        <input type="number" min="0" [(ngModel)]="editProduct.price" />
+    </div>
+
+    <label>Shipping price</label>
+    <div class="ui input">
+        <input type="number" min="0" [(ngModel)]="editProduct.shippingPrice" />
+    </div>
+
+    <label>Quantity</label>
+    <div class="ui input">
+        <input type="number" min="0" [(ngModel)]="editProduct.quantity" />
+    </div>
+
+    <label>Max order quantity</label>
+    <div class="ui input">
+        <input type="number" min="0" [(ngModel)]="editProduct.maxOrderQuantity" />
+    </div>
+
+    <label>Quantity discount</label>
+    <div class="ui input">
+        <input type="number" min="0" max="100" [(ngModel)]="editProduct.quantityDiscount" />
+    </div>
+
+    <label>Order quantity discount</label>
+    <div class="ui input">
+        <input type="number" min="0" max="100" [(ngModel)]="editProduct.orderQuantityDiscount" />
+    </div>
+
+    <label>Discount</label>
+    <div class="ui input">
+        <input type="number" min="0" max="100" [(ngModel)]="editProduct.discount" />
+    </div>
+
+    <label>Max discount</label>
+    <div class="ui input">
+        <input type="number" min="0" max="100" [(ngModel)]="editProduct.maxDiscount" />
+    </div>
+
+    <label>Coupon</label>
+    <div class="ui input">
+        <input type="text" [(ngModel)]="editProduct.coupon" />
+    </div>
+
+    <label>Coupon discount</label>
+    <div class="ui input">
+        <input type="number" min="0" max="100" [(ngModel)]="editProduct.couponDiscount" />
+    </div>
+
+    <div>
+        <button class="ui button primary" (click)="onClickEdit()">Edit</button>
+    </div>
+</div>

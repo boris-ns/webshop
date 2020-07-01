@@ -36,7 +36,7 @@
                     </button>
                 </td>
                 <td>
-                    <button class="ui icon button"><i class="edit icon"></i></button>
+                    <button class="ui icon button" (click)="onClickEdit(product.id)"><i class="edit icon"></i></button>
                     <button class="ui icon button red" (click)="onClickDelete(product.id)"><i class="trash icon"></i></button>
                 </td>
             </tr>
