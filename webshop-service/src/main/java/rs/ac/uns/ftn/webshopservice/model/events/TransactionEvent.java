@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Role(Role.Type.EVENT)
 @Timestamp("executionTime")
-@Expires("30s")
+@Expires("1h")
 @NoArgsConstructor
 @Getter
 @Setter
