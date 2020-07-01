@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.webshopservice.config.beans.cepsession.CepSession;
 import rs.ac.uns.ftn.webshopservice.config.consts.KieAgendaGroups;
+import rs.ac.uns.ftn.webshopservice.dto.request.EditProductDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.FilterProductsDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
@@ -73,6 +74,35 @@ public class ProductServiceImpl implements ProductService {
         product.setStore(user.getStore());
         product.setCategory(category);
         product.setNeedsRestock(false);
+
+        product = productRepository.save(product);
+        return product;
+    }
+
+    @Override
+    public Product edit(EditProductDTO productDto) {
+        Owner owner = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Store store = owner.getStore();
+        Product product = this.getById(productDto.getId());
+
+        if (!product.getStore().getId().equals(store.getId())) {
+            throw new ApiRequestException("You are not allowed edit this products");
+        }
+
+        if (productDto.getName() != null && !productDto.getName().isEmpty()) product.setName(productDto.getName());
+        if (productDto.getPrice() != null) product.setPrice(productDto.getPrice());
+        if (productDto.getShippingPrice() != null) product.setPrice(productDto.getShippingPrice());
+        if (productDto.getQuantity() != null) product.setQuantity(productDto.getQuantity());
+        if (productDto.getMaxOrderQuantity() != null) product.setMaxOrderQuantity(productDto.getMaxOrderQuantity());
+        if (productDto.getQuantityDiscount() != null) product.setQuantityDiscount(productDto.getQuantityDiscount() / 100);
+        if (productDto.getOrderQuantityDiscount() != null) product.setOrderQuantityDiscount(productDto.getOrderQuantityDiscount() / 100);
+        if (productDto.getDiscount() != null) product.setDiscount(productDto.getDiscount() / 100);
+        if (productDto.getMaxDiscount() != null) product.setMaxDiscount(productDto.getMaxDiscount() / 100);
+        if (productDto.getCoupon() != null && !productDto.getCoupon().isEmpty()) product.setCoupon(productDto.getCoupon());
+        if (productDto.getCouponDiscount() != null) product.setCouponDiscount(productDto.getCouponDiscount() / 100);
+
+        if (product.getQuantity() >= 20) product.setNeedsRestock(false);
+        else product.setNeedsRestock(true);
 
         product = productRepository.save(product);
         return product;

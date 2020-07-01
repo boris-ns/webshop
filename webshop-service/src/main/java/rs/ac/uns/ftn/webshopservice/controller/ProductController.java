@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.webshopservice.dto.request.EditProductDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.FilterProductsDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.PlaceOrderDTO;
 import rs.ac.uns.ftn.webshopservice.dto.request.ProductToAddDTO;
@@ -42,6 +43,13 @@ public class ProductController {
     public ResponseEntity<ProductDTO> add(@RequestBody ProductToAddDTO product) {
         Product newProduct = productService.add(product);
         return new ResponseEntity<>(new ProductDTO(newProduct), HttpStatus.OK);
+    }
+
+    @PutMapping
+    @PreAuthorize("hasRole('ROLE_SELLER')")
+    public ResponseEntity<ProductDTO> edit(@Valid @RequestBody EditProductDTO productDto) {
+        Product product = productService.edit(productDto);
+        return new ResponseEntity<>(ProductMapper.toDto(product), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
