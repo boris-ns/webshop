@@ -19,6 +19,7 @@ import rs.ac.uns.ftn.webshopservice.model.events.TransactionEvent;
 import rs.ac.uns.ftn.webshopservice.repository.OrderRepository;
 import rs.ac.uns.ftn.webshopservice.repository.ProductRepository;
 import rs.ac.uns.ftn.webshopservice.repository.UserRepository;
+import rs.ac.uns.ftn.webshopservice.service.ProductCategoryDiscountService;
 import rs.ac.uns.ftn.webshopservice.service.ProductCategoryService;
 import rs.ac.uns.ftn.webshopservice.service.ProductService;
 import rs.ac.uns.ftn.webshopservice.service.SeasonDiscountService;
@@ -44,6 +45,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private SeasonDiscountService seasonDiscountService;
+
+    @Autowired
+    private ProductCategoryDiscountService categoryDiscountService;
 
     @Autowired
     private KieContainer kieContainer;
@@ -150,6 +154,10 @@ public class ProductServiceImpl implements ProductService {
         SeasonDiscount seasonDiscount = seasonDiscountService.findActive();
         if (seasonDiscount != null)
             kieSession.insert(seasonDiscount);
+
+        ProductCategoryDiscount categoryDiscount = categoryDiscountService.findActive(product.getCategory());
+        if (categoryDiscount != null)
+            kieSession.insert(categoryDiscount);
 
         kieSession.getAgenda().getAgendaGroup(KieAgendaGroups.ORDER_DISCOUNTS).setFocus();
         kieSession.fireAllRules();

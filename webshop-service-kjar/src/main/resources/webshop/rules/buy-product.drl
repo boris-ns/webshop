@@ -5,6 +5,7 @@ import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import rs.ac.uns.ftn.webshopservice.model.Product;
 import rs.ac.uns.ftn.webshopservice.model.Order;
 import rs.ac.uns.ftn.webshopservice.model.SeasonDiscount;
+import rs.ac.uns.ftn.webshopservice.model.ProductCategoryDiscount;
 
 
 rule "GOLD buyers have 5% discount on all articles"
@@ -125,6 +126,19 @@ rule "Season discount"
     then
         modify($order) { setDiscount($order.getDiscount() + $discount.getDiscount()) }
         System.out.println("[DROOLS] Added season discount " + ($discount.getDiscount() * 100) + "%");
+end
+
+
+rule "Product category discount"
+    agenda-group "order-discounts"
+    no-loop true
+    lock-on-active true
+    when
+        $discount: ProductCategoryDiscount()
+        $order: Order()
+    then
+        modify($order) { setDiscount($order.getDiscount() + $discount.getDiscount()) }
+        System.out.println("[DROOLS] Added product category discount " + ($discount.getDiscount() * 100) + "%");
 end
 
 
