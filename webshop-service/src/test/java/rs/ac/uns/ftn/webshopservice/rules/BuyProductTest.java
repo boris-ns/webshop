@@ -14,7 +14,7 @@ import rs.ac.uns.ftn.webshopservice.model.Product;
 import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import rs.ac.uns.ftn.webshopservice.utils.ModelFactory;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -45,6 +45,7 @@ public class BuyProductTest {
         kieSession.dispose();
 
         double discount = 0.05 + product.getStore().getFrequentBuyerDiscount();
+        assertEquals(discount, order.getDiscount(), 0.1);
         assertEquals(productPrice - (productPrice * discount), order.getPrice(), 0.1);
         assertEquals(3, firedRules);
     }
@@ -63,6 +64,7 @@ public class BuyProductTest {
         kieSession.dispose();
 
         double discount = 0.1 + product.getStore().getFrequentBuyerDiscount();
+        assertEquals(discount, order.getDiscount(), 0.1);
         assertEquals(productPrice - (productPrice * discount), order.getPrice(), 0.1);
         assertEquals(3, firedRules);
     }
@@ -117,7 +119,90 @@ public class BuyProductTest {
         int firedRules = kieSession.fireAllRules();
         kieSession.dispose();
 
+        assertEquals(product.getDiscount(), order.getDiscount());
         assertEquals(productPrice, order.getPrice(), 0.1);
         assertEquals(2, firedRules);
+    }
+
+    @Test
+    public void testCouponDiscount() {
+        Buyer buyer = ModelFactory.getBuyerForSilverCategory();
+        Product product = ModelFactory.products.get(4);
+        Order order = new Order(product, "asd15", 1);
+
+        double productPrice = product.getPrice() - product.getPrice() * product.getCouponDiscount();
+
+        KieSession kieSession = createSession(buyer, order, product);
+        int firedRules = kieSession.fireAllRules();
+        kieSession.dispose();
+
+        assertEquals(product.getCouponDiscount(), order.getDiscount());
+        assertEquals(productPrice, order.getPrice(), 0.1);
+        assertEquals(2, firedRules);
+    }
+
+    @Test
+    public void testDiscountForFrequentCustomers() {
+        Buyer buyer = ModelFactory.getBuyerForSilverCategory();
+        Product product = ModelFactory.products.get(3);
+        Order order = new Order(product, "coupon", 1);
+
+        double productPrice = product.getPrice() - product.getPrice() * product.getStore().getFrequentBuyerDiscount();
+
+        KieSession kieSession = createSession(buyer, order, product);
+        int firedRules = kieSession.fireAllRules();
+        kieSession.dispose();
+
+        assertEquals(product.getStore().getFrequentBuyerDiscount(), order.getDiscount());
+        assertEquals(productPrice, order.getPrice(), 0.1);
+        assertEquals(2, firedRules);
+    }
+
+    @Test
+    public void testCheckForMaximumDiscount() {
+        Buyer buyer = ModelFactory.getBuyerForSilverCategory();
+        Product product = ModelFactory.products.get(0);
+        final int quantity = 3;
+        Order order = new Order(product, "coupon", quantity);
+        order.setDiscount(0.5f);
+
+        double productPrice = product.getPrice() * quantity;
+
+        KieSession kieSession = createSession(buyer, order, product);
+        int firedRules = kieSession.fireAllRules();
+        kieSession.dispose();
+
+        assertEquals(productPrice - (productPrice * 0.5), order.getPrice(), 0.1);
+        assertEquals(5, firedRules);
+    }
+
+    @Test
+    public void testNotifySellerIfProductQuantityIsLessThan20() {
+        Buyer buyer = ModelFactory.getBuyerForSilverCategory();
+        Product product = ModelFactory.products.get(5);
+        Order order = new Order(product, "coupon", 1);
+
+        assertFalse(product.getNeedsRestock());
+
+        KieSession kieSession = createSession(buyer, order, product);
+        int firedRules = kieSession.fireAllRules();
+        kieSession.dispose();
+
+        assertTrue(product.getNeedsRestock());
+        assertEquals(2, firedRules);
+    }
+
+    @Test
+    public void testFinishBuyingProducts() {
+        Buyer buyer = ModelFactory.getBuyerForSilverCategory();
+        Product product = ModelFactory.products.get(6);
+        Order order = new Order(product, "coupon", 1);
+
+        KieSession kieSession = createSession(buyer, order, product);
+        int firedRules = kieSession.fireAllRules();
+        kieSession.dispose();
+
+        assertEquals(product.getPrice(), order.getPrice());
+        assertEquals(1, firedRules);
     }
 }
