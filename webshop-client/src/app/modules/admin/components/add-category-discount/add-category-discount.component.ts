@@ -31,7 +31,8 @@ export class AddCategoryDiscountComponent implements OnInit {
     this.addForm = this.fb.group({
       categoryId: ['', Validators.required],
       dateFrom: ['', Validators.required],
-      dateTo: ['', Validators.required]
+      dateTo: ['', Validators.required],
+      discount: ['', Validators.required]
     });
   }
 
@@ -55,7 +56,8 @@ export class AddCategoryDiscountComponent implements OnInit {
       ],
       to: [
         endDate[2], endDate[1], endDate[0]
-      ]
+      ],
+      discount: this.addForm.value.discount
     };
 
     this.discountService.addCategoryDiscount(discount).subscribe(data => {

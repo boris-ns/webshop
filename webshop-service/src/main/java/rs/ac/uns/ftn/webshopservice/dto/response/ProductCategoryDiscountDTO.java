@@ -14,11 +14,13 @@ public class ProductCategoryDiscountDTO {
     private String from;
     private String to;
     private ProductCategoryDTO category;
+    private Float discount;
 
     public ProductCategoryDiscountDTO(ProductCategoryDiscount discount) {
         this.id = discount.getId();
         this.from = discount.getDateFrom().toString();
         this.to = discount.getDateTo().toString();
         this.category = new ProductCategoryDTO(discount.getCategory());
+        this.discount = discount.getDiscount();
     }
 }

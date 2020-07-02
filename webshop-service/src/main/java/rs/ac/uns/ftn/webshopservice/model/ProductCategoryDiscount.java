@@ -24,12 +24,17 @@ public class ProductCategoryDiscount {
     @Column(name = "date_to", nullable = false)
     private Date dateTo;
 
+    @Column(name = "discount", nullable = false)
+    private Float discount;
+
     @OneToOne
     private ProductCategory category;
 
-    public ProductCategoryDiscount(ProductCategory category, Date from, Date to) {
+
+    public ProductCategoryDiscount(ProductCategory category, Date from, Date to, Float discount) {
         this.category = category;
         this.dateFrom = from;
         this.dateTo = to;
+        this.discount = discount;
     }
 }
