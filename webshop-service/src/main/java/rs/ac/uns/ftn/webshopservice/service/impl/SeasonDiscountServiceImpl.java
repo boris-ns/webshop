@@ -9,6 +9,7 @@ import rs.ac.uns.ftn.webshopservice.model.SeasonDiscount;
 import rs.ac.uns.ftn.webshopservice.repository.SeasonDiscountRepository;
 import rs.ac.uns.ftn.webshopservice.service.SeasonDiscountService;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -30,11 +31,17 @@ public class SeasonDiscountServiceImpl implements SeasonDiscountService {
     }
 
     @Override
+    public SeasonDiscount findActive() {
+        return discountRepository.findActive(new Date()).orElseGet(null);
+    }
+
+    @Override
     public SeasonDiscount add(AddSeasonDiscountDTO discount) {
         SeasonDiscount newDiscount = new SeasonDiscount();
         newDiscount.setName(discount.getName());
         newDiscount.setDateFrom(new GregorianCalendar(discount.getFrom()[2], discount.getFrom()[1] - 1, discount.getFrom()[0]).getTime());
         newDiscount.setDateTo(new GregorianCalendar(discount.getTo()[2], discount.getTo()[1] - 1, discount.getTo()[0]).getTime());
+        newDiscount.setDiscount(discount.getDiscount() / 100);
 
         if (newDiscount.getDateFrom().after(newDiscount.getDateTo())) {
             throw new ApiRequestException("Start date can't be after end date.");

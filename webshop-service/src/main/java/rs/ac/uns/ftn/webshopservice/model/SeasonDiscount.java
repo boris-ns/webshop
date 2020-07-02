@@ -27,9 +27,13 @@ public class SeasonDiscount {
     @Column(name = "date_to", nullable = false)
     private Date dateTo;
 
-    public SeasonDiscount(String name, Date from, Date to) {
+    @Column(name = "discount", nullable = false)
+    private Float discount;
+
+    public SeasonDiscount(String name, Date from, Date to, Float discount) {
         this.name = name;
         this.dateFrom = from;
         this.dateTo = to;
+        this.discount = discount;
     }
 }

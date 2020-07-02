@@ -9,6 +9,7 @@ public interface SeasonDiscountService {
 
     List<SeasonDiscount> getAll();
     SeasonDiscount findById(Long id);
+    SeasonDiscount findActive();
     SeasonDiscount add(AddSeasonDiscountDTO discount);
     void delete(Long id);
 }

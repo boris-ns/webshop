@@ -14,11 +14,13 @@ public class SeasonDiscountDTO {
     private String from;
     private String to;
     private String name;
+    private Float discount;
 
     public SeasonDiscountDTO(SeasonDiscount sd) {
         this.id = sd.getId();
         this.from = sd.getDateFrom().toString();
         this.to = sd.getDateTo().toString();
         this.name = sd.getName();
+        this.discount = sd.getDiscount();
     }
 }

@@ -31,6 +31,16 @@
             </small>
         </div>
 
+        <div class="ui left icon input input-field">
+            <input type="number" min="0" max="100" placeholder="Discount" formControlName="discount" />
+            <i class="users icon"></i>
+
+            <small class="text-danger"
+                *ngIf="addForm.controls.discount.touched && addForm.controls.discount.errors?.required">
+                Name is required
+            </small>
+        </div>
+
         <div>
             <button type="submit" class="ui button primary" [disabled]="addForm.invalid">
                 Add
