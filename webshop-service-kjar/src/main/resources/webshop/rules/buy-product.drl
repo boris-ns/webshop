@@ -151,9 +151,9 @@ rule "Notify seller if product quantity is small"
     agenda-group "order-discounts"
     no-loop true
     salience -11
-    lock-on-active true
     when
-        Order(product.quantity < 20, $product: product)
+        $product: Product(quantity < 20)
+        // Order(product.quantity < 20, $product: product)
     then
         modify($product) { setNeedsRestock(true) }
         System.out.println("[DROOLS] Notify seller becase product quantity is smaller than 20");
