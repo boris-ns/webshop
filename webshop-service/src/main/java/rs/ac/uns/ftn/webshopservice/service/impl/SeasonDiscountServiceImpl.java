@@ -32,7 +32,7 @@ public class SeasonDiscountServiceImpl implements SeasonDiscountService {
 
     @Override
     public SeasonDiscount findActive() {
-        return discountRepository.findActive(new Date()).orElseGet(null);
+        return discountRepository.findActive(new Date());
     }
 
     @Override

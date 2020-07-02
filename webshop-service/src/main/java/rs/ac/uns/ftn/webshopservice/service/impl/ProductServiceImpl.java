@@ -21,6 +21,7 @@ import rs.ac.uns.ftn.webshopservice.repository.ProductRepository;
 import rs.ac.uns.ftn.webshopservice.repository.UserRepository;
 import rs.ac.uns.ftn.webshopservice.service.ProductCategoryService;
 import rs.ac.uns.ftn.webshopservice.service.ProductService;
+import rs.ac.uns.ftn.webshopservice.service.SeasonDiscountService;
 import rs.ac.uns.ftn.webshopservice.utils.KieSessionCreator;
 
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductCategoryService productCategoryService;
+
+    @Autowired
+    private SeasonDiscountService seasonDiscountService;
 
     @Autowired
     private KieContainer kieContainer;
@@ -142,6 +146,11 @@ public class ProductServiceImpl implements ProductService {
         kieSession.insert(productOrder);
         kieSession.insert(buyer);
         kieSession.insert(product);
+
+        SeasonDiscount seasonDiscount = seasonDiscountService.findActive();
+        if (seasonDiscount != null)
+            kieSession.insert(seasonDiscount);
+
         kieSession.getAgenda().getAgendaGroup(KieAgendaGroups.ORDER_DISCOUNTS).setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
