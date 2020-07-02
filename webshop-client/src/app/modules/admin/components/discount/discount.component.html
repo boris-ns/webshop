@@ -18,6 +18,7 @@
             <th>Name</th>
             <th>From</th>
             <th>To</th>
+            <th>Discount</th>
             <th>Actions</th>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@
                 <td>{{ discount.name }}</td>
                 <td>{{ discount.from | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ discount.to | date: 'dd/MM/yyyy'}}</td>
+                <td>{{ discount.discount * 100 }}%</td>
                 <td>
                     <button class="ui button icon red" (click)="onClickDeleteSeasonDiscount(discount.id)">
                         <i class="trash icon"></i>
@@ -51,6 +53,7 @@
             <th>Category</th>
             <th>From</th>
             <th>To</th>
+            <th>Discount</th>
             <th>Actions</th>
         </thead>
         <tbody>
@@ -58,6 +61,7 @@
                 <td>{{ discount.category.name }}</td>
                 <td>{{ discount.from | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ discount.to | date: 'dd/MM/yyyy'}}</td>
+                <td>{{ discount.discount * 100 }}%</td>
                 <td>
                     <button class="ui button icon red" (click)="onClickDeleteCategoryDiscount(discount.id)">
                         <i class="trash icon"></i>
