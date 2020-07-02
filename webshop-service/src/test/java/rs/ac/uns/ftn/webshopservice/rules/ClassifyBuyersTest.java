@@ -22,7 +22,7 @@ public class ClassifyBuyersTest {
     private KieContainer kieContainer;
 
     private KieSession createSession(Buyer buyer) {
-        KieSession kieClassifyBuyers = kieContainer.newKieSession();
+        KieSession kieClassifyBuyers = kieContainer.newKieSession("DefaultSession");
         kieClassifyBuyers.getAgenda().getAgendaGroup(KieAgendaGroups.CLASSIFY_BUYERS).setFocus();
         kieClassifyBuyers.insert(buyer);
         return kieClassifyBuyers;

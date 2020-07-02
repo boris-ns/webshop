@@ -23,8 +23,8 @@ public class ModelFactory {
 
     public static final List<Product> products = List.of(
             new Product(1L, "Lamp", Double.valueOf(100f), Double.valueOf(0), 100, 10, 3, 0.1f, 3, 0f, 0.5f, "asd15", 0.05f, false, stores.get(0), productCategories.get(0)),
-            new Product(2L, "Sofa", Double.valueOf(100f), Double.valueOf(0), 100, 10, 3, 0.1f, 3, 0f, 0.5f, "asd15", 0.05f, false, stores.get(1), productCategories.get(1)),
-            new Product(3L, "Monitor", Double.valueOf(100f), Double.valueOf(0), 100, 10, 3, 0.1f, 3, 0f, 0.5f, "asd15", 0.05f, false, stores.get(2), productCategories.get(2)),
+            new Product(2L, "Sofa", Double.valueOf(100f), Double.valueOf(10), 100, 10, 3, 0.1f, 3, 0f, 0.5f, "asd15", 0.05f, false, stores.get(1), productCategories.get(1)),
+            new Product(3L, "Monitor", Double.valueOf(100f), Double.valueOf(0), 100, 10, 3, 0.1f, 3, 0.1f, 0.5f, "asd15", 0.05f, false, stores.get(2), productCategories.get(2)),
             new Product(4L, "Stereo", Double.valueOf(100f), Double.valueOf(0), 100, 10, 3, 0.1f, 3, 0f, 0.5f, "asd15", 0.05f, false, stores.get(0), productCategories.get(0)),
             new Product(5L, "Table", Double.valueOf(100f), Double.valueOf(0), 100, 10, 3, 0.1f, 3, 0f, 0.5f, "asd15", 0.05f, false, stores.get(1), productCategories.get(1))
     );
