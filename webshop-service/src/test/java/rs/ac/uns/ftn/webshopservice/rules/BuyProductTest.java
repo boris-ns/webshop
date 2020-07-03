@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import rs.ac.uns.ftn.webshopservice.config.consts.KieAgendaGroups;
-import rs.ac.uns.ftn.webshopservice.model.Buyer;
-import rs.ac.uns.ftn.webshopservice.model.Order;
-import rs.ac.uns.ftn.webshopservice.model.Product;
+import rs.ac.uns.ftn.webshopservice.model.*;
 import rs.ac.uns.ftn.webshopservice.model.enums.BuyerCategory;
 import rs.ac.uns.ftn.webshopservice.utils.ModelFactory;
+
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -204,5 +204,43 @@ public class BuyProductTest {
 
         assertEquals(product.getPrice(), order.getPrice());
         assertEquals(1, firedRules);
+    }
+
+    @Test
+    public void testSeasonDiscount() {
+        Buyer buyer = ModelFactory.getBuyerForSilverCategory();
+        Product product = ModelFactory.products.get(6);
+        Order order = new Order(product, "coupon", 1);
+
+        final float discount = 0.01f;
+        SeasonDiscount seasonDiscount = new SeasonDiscount("Discount", new Date(), new Date(), discount);
+
+        KieSession kieSession = createSession(buyer, order, product);
+        kieSession.insert(seasonDiscount);
+        int firedRules = kieSession.fireAllRules();
+        kieSession.dispose();
+
+        double expectedPrice = product.getPrice() - product.getPrice() * discount;
+        assertEquals(expectedPrice, order.getPrice(), 0.1);
+        assertEquals(2, firedRules);
+    }
+
+    @Test
+    public void testProductCategoryDiscount() {
+        Buyer buyer = ModelFactory.getBuyerForSilverCategory();
+        Product product = ModelFactory.products.get(6);
+        Order order = new Order(product, "coupon", 1);
+
+        final float discount = 0.01f;
+        ProductCategoryDiscount categoryDiscount = new ProductCategoryDiscount(product.getCategory(), new Date(), new Date(), discount);
+
+        KieSession kieSession = createSession(buyer, order, product);
+        kieSession.insert(categoryDiscount);
+        int firedRules = kieSession.fireAllRules();
+        kieSession.dispose();
+
+        double expectedPrice = product.getPrice() - product.getPrice() * discount;
+        assertEquals(expectedPrice, order.getPrice(), 0.1);
+        assertEquals(2, firedRules);
     }
 }
