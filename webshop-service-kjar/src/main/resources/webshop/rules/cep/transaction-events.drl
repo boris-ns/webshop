@@ -27,12 +27,6 @@ declare LongAlarmActivated
     reason: String
 end
 
-// napraviti novi tip eventa 
-// susp event ce se dodavati samo kada se aktivira slanje upozorenja i stavimo expiresIn(12h) zbog 3. pravila
-
-// kad bi moglo nekako na svaki 20. da se aktivira i napravi novi susp event
-
-// kreirati novi type event koji ce se deaktivirati za 1h i njega dodatiumesto suspevent
 
 rule "20 or more transaction in 1h"
     no-loop false
@@ -42,10 +36,10 @@ rule "20 or more transaction in 1h"
 
         // @Hack: Every 20th transaction event send warning
         // @TODO: Change value from 2 to 20 
-        $numOfProducts: Number(intValue >= 2) from accumulate(
+        $numOfProducts: Number(intValue >= 20) from accumulate(
             $t: TransactionEvent(
                 buyerId == $buyerId
-            ) over window:time( 1m ), // @TODO: Change value from 1m to 1h
+            ) over window:time( 1h ), // @TODO: Change value from 1m to 1h
             count($t)
         )
         // not (SuspiciousEvent(buyerId == $buyerId))
@@ -67,11 +61,11 @@ rule "5 or more transactions with value over $100 within 1 hour"
 
         // @Hack: Every 5th transaction event send warning
         // @TODO: Change value from 2 to 5 
-        $numOfProducts: Number(intValue >= 2) from accumulate(
+        $numOfProducts: Number(intValue >= 5) from accumulate(
             $t: TransactionEvent(
                 buyerId == $buyerId,
                 price >= 100
-            ) over window:time( 1m ), // @TODO: Change value from 1m to 1h
+            ) over window:time( 1h ), // @TODO: Change value from 1m to 1h
             count($t)
         )
         not (AlarmActivated(buyerId == $buyerId, reason == "5 or more transaction that value $100+ in 1h"))
